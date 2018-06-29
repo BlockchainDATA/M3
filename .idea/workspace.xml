@@ -2,16 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0f4e0410-6504-4664-afb9-252e5e3db465" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/routing_api_jar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/routing_jar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/routing-api/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/routing/META-INF/MANIFEST.MF" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/routing/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routing-api/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/routing-api/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routing/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/routing/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/web/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routing-api/src/main/java/eco/data/m3/routing/api/rest/request/ConnectNodeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/routing-api/src/main/java/eco/data/m3/routing/api/rest/request/ConnectNodeService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routing-api/src/main/java/eco/data/m3/routing/api/rest/response/ConnectNodeResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/routing-api/src/main/java/eco/data/m3/routing/api/rest/response/ConnectNodeResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routing-api/src/main/java/eco/data/m3/routing/api/rest/response/ConnectRemoteNodeResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/routing-api/src/main/java/eco/data/m3/routing/api/rest/response/ConnectRemoteNodeResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routing-api/src/main/java/eco/data/m3/routing/api/rest/response/CreateNodeResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/routing-api/src/main/java/eco/data/m3/routing/api/rest/response/CreateNodeResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routing-api/src/main/java/eco/data/m3/routing/api/rest/response/GetContentResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/routing-api/src/main/java/eco/data/m3/routing/api/rest/response/GetContentResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routing-api/src/main/java/eco/data/m3/routing/api/rest/response/GetNodeInfoResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/routing-api/src/main/java/eco/data/m3/routing/api/rest/response/GetNodeInfoResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routing-api/src/main/java/eco/data/m3/routing/api/rest/response/GetNodeRouteResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/routing-api/src/main/java/eco/data/m3/routing/api/rest/response/GetNodeRouteResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routing-api/src/main/java/eco/data/m3/routing/api/rest/response/GetStorageInfoResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/routing-api/src/main/java/eco/data/m3/routing/api/rest/response/GetStorageInfoResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routing-api/src/main/java/eco/data/m3/routing/api/rest/response/IndexDataGetResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/routing-api/src/main/java/eco/data/m3/routing/api/rest/response/IndexDataGetResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routing-api/src/main/java/eco/data/m3/routing/api/rest/response/IndexDataListResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/routing-api/src/main/java/eco/data/m3/routing/api/rest/response/IndexDataListResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routing-api/src/main/java/eco/data/m3/routing/api/rest/response/IndexDataUploadResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/routing-api/src/main/java/eco/data/m3/routing/api/rest/response/IndexDataUploadResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routing-api/src/main/java/eco/data/m3/routing/api/rest/response/ListNodesResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/routing-api/src/main/java/eco/data/m3/routing/api/rest/response/ListNodesResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routing-api/src/main/java/eco/data/m3/routing/api/rest/response/ListServerResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/routing-api/src/main/java/eco/data/m3/routing/api/rest/response/ListServerResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routing-api/src/main/java/eco/data/m3/routing/api/rest/response/RefreshNodeResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/routing-api/src/main/java/eco/data/m3/routing/api/rest/response/RefreshNodeResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routing-api/src/main/java/eco/data/m3/routing/api/rest/response/SaveNodeStateResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/routing-api/src/main/java/eco/data/m3/routing/api/rest/response/SaveNodeStateResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routing-api/src/main/java/eco/data/m3/routing/api/rest/response/ShutdownAllNodesResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/routing-api/src/main/java/eco/data/m3/routing/api/rest/response/ShutdownAllNodesResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routing-api/src/main/java/eco/data/m3/routing/api/rest/response/ShutdownNodeResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/routing-api/src/main/java/eco/data/m3/routing/api/rest/response/ShutdownNodeResponse.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.gradle/" />
     <ignored path="$PROJECT_DIR$/build/" />
@@ -86,7 +94,7 @@
         <entry file="file://$PROJECT_DIR$/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="304">
-              <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
+              <caret line="16" selection-start-line="16" selection-end-line="16" />
             </state>
           </provider>
         </entry>
@@ -96,18 +104,30 @@
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
               <first_editor relative-caret-position="76">
-                <caret line="4" column="11" lean-forward="true" selection-start-line="4" selection-start-column="11" selection-end-line="4" selection-end-column="11" />
+                <caret line="4" column="11" selection-start-line="4" selection-start-column="11" selection-end-line="4" selection-end-column="11" />
               </first_editor>
               <second_editor />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="551">
               <caret line="29" column="5" selection-start-line="29" selection-start-column="5" selection-end-line="29" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="760">
+                <caret line="40" column="17" selection-start-line="40" selection-start-column="17" selection-end-line="40" selection-end-column="17" />
+              </first_editor>
+              <second_editor />
             </state>
           </provider>
         </entry>
@@ -1362,7 +1382,6 @@
         <option value="$PROJECT_DIR$/cli/README.md" />
         <option value="$PROJECT_DIR$/EC/README.md" />
         <option value="$PROJECT_DIR$/android/README.md" />
-        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/routing/src/main/java/eco/data/m3/routing/DefaultConfiguration.java" />
         <option value="$PROJECT_DIR$/routing/build.gradle" />
         <option value="$PROJECT_DIR$/web/build.gradle" />
@@ -1380,6 +1399,7 @@
         <option value="$PROJECT_DIR$/routing/README.md" />
         <option value="$PROJECT_DIR$/routing-api/README.md" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
@@ -1395,7 +1415,7 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="166" />
     <option name="width" value="1378" />
     <option name="height" value="1047" />
@@ -1420,6 +1440,11 @@
               <item name="M3" type="b2602c69:ProjectViewProjectNode" />
               <item name="M3" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="android" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+            </path>
+            <path>
+              <item name="M3" type="b2602c69:ProjectViewProjectNode" />
+              <item name="M3" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="EC" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
             </path>
             <path>
               <item name="M3" type="b2602c69:ProjectViewProjectNode" />
@@ -1524,15 +1549,15 @@
       <workItem from="1530252609112" duration="1513000" />
       <workItem from="1530254950041" duration="2528000" />
       <workItem from="1530257901487" duration="1135000" />
-      <workItem from="1530259069562" duration="6215000" />
+      <workItem from="1530259069562" duration="6708000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="11391000" />
+    <option name="totallyTimeSpent" value="11884000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="186" y="61" width="1378" height="1047" extended-state="0" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="6" />
@@ -1556,10 +1581,10 @@
       <window_info anchor="bottom" id="Version Control" order="5" />
       <window_info anchor="bottom" id="Run" order="9" />
       <window_info anchor="bottom" id="Terminal" order="1" />
-      <window_info active="true" content_ui="combo" id="Project" order="5" visible="true" weight="0.25644916" />
+      <window_info active="true" content_ui="combo" id="Project" order="5" visible="true" weight="0.18017058" />
       <window_info id="Web" order="4" side_tool="true" />
       <window_info anchor="bottom" id="Find" order="7" weight="0.3293348" />
-      <window_info anchor="right" id="Gradle" order="3" visible="true" weight="0.29514417" />
+      <window_info anchor="right" id="Gradle" order="3" visible="true" weight="0.20735608" />
       <window_info anchor="right" id="Theme Preview" order="5" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="7" type="SLIDING" weight="0.4" />
@@ -1891,16 +1916,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="561">
-            <caret line="41" lean-forward="true" selection-start-line="41" selection-end-line="41" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/routing-api/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
@@ -1941,7 +1956,7 @@
     <entry file="file://$PROJECT_DIR$/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="304">
-          <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
+          <caret line="16" selection-start-line="16" selection-end-line="16" />
         </state>
       </provider>
     </entry>
@@ -1949,7 +1964,7 @@
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
           <first_editor relative-caret-position="76">
-            <caret line="4" column="11" lean-forward="true" selection-start-line="4" selection-start-column="11" selection-end-line="4" selection-end-column="11" />
+            <caret line="4" column="11" selection-start-line="4" selection-start-column="11" selection-end-line="4" selection-end-column="11" />
           </first_editor>
           <second_editor />
         </state>
@@ -1959,6 +1974,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="551">
           <caret line="29" column="5" selection-start-line="29" selection-start-column="5" selection-end-line="29" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="760">
+            <caret line="40" column="17" selection-start-line="40" selection-start-column="17" selection-end-line="40" selection-end-column="17" />
+          </first_editor>
+          <second_editor />
         </state>
       </provider>
     </entry>

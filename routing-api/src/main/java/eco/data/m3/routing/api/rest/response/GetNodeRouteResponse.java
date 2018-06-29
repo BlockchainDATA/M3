@@ -19,6 +19,11 @@ package eco.data.m3.routing.api.rest.response;
 import eco.data.m3.routing.api.core.RouteInfo;
 import eco.data.m3.routing.api.rest.BaseResponse;
 
+/**
+* @Author: xquan
+* @Description: Rest Response, pair with the request with the same prefix.
+* @Date: Created in 2018-6-29
+**/
 public class GetNodeRouteResponse extends BaseResponse{
 
 	private RouteInfo route ;

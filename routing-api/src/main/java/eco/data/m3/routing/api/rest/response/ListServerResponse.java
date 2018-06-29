@@ -22,6 +22,11 @@ import eco.data.m3.routing.api.core.NodeInfo;
 import eco.data.m3.routing.api.core.ServerInfo;
 import eco.data.m3.routing.api.rest.BaseResponse;
 
+/**
+* @Author: xquan
+* @Description: Rest Response, pair with the request with the same prefix.
+* @Date: Created in 2018-6-29
+**/
 public class ListServerResponse extends BaseResponse{
 
 	private List<ServerInfo> servers ;

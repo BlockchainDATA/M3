@@ -21,6 +21,11 @@ import java.util.List;
 import eco.data.m3.routing.api.core.NodeInfo;
 import eco.data.m3.routing.api.rest.BaseResponse;
 
+/**
+* @Author: xquan
+* @Description: Rest Response, pair with the request with the same prefix.
+* @Date: Created in 2018-6-29
+**/
 public class ListNodesResponse extends BaseResponse{
 
 	private List<NodeInfo> nodes ;
