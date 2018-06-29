@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="routing:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/routing_jar</output-path>
+    <root id="archive" name="routing.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/routing/META-INF/MANIFEST.MF" />
+      </element>
+    </root>
+  </artifact>
+</component>
