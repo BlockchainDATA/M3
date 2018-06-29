@@ -1,0 +1,8 @@
+rootProject.name = 'M3'
+include 'routing'
+include 'routing-api'
+include 'EC'
+include 'cli'
+include 'android'
+include 'web'
+
