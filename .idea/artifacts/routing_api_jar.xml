@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="routing-api:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/routing_api_jar</output-path>
+    <root id="archive" name="routing-api.jar" />
+  </artifact>
+</component>
