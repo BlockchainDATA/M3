@@ -36,8 +36,17 @@ An Android client example to use M3 client on the Android Devices.
 
 An iOS client example to use M3 client on the iOS devices.      
 
-## Compile
+## Build
 
 The project needs the gradle build tool to maintain codes.
 
-We recommend you to use the IntelliJ IDEA the use the project.
+### IntelliJ IDEA
+
+We recommend you to use the IntelliJ IDEA to open this project.
+
+The Community and Ultimate Version have already been integrated with gradle, and can both open this project directly.
+
+### Eclipse IDE
+
+Later
+
