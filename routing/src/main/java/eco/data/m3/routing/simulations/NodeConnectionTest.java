@@ -61,9 +61,18 @@ public class NodeConnectionTest
             System.out.println(kad3.getRoutingTable());
             System.out.println("\n\nKad 4: " + kad4.getNode().getNodeId() + " Routing Table: ");
             System.out.println(kad4.getRoutingTable());
+
+            Thread.sleep(1000);
+
+            kad4.shutdown(false);
+            kad3.shutdown(false);
+            kad1.shutdown(false);
+            kad2.shutdown(false);
         }
         catch (IOException e)
         {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
