@@ -40,6 +40,8 @@ An iOS client example to use M3 client on the iOS devices.
 
 The project needs the gradle build tool to maintain codes.
 
+![See build instruction details](docs/Start.md). 
+
 ### IntelliJ IDEA
 
 We recommend you to use the IntelliJ IDEA to open this project.
