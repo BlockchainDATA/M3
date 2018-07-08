@@ -28,6 +28,6 @@ public class OSinfoTest extends TestCase {
 
     @Test
     public void testOsinfo(){
-        assertTrue( OSinfo.isWindows()||OSinfo.isLinux()||OSinfo.isMacOS());
+        assertTrue( OSinfo.isWindows()||OSinfo.isLinux()||OSinfo.isMacOS()||OSinfo.isMacOSX());
     }
 }

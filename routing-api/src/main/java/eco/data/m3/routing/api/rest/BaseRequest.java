@@ -33,7 +33,7 @@ public class BaseRequest {
 	public String getServiceAddr(String host)
 	{
 		String serviceName = getServiceName();
-		return "http://" + host + ":8080/kadserv/service/" + serviceName;
+		return "http://" + host + ":8080/routing-web/service/" + serviceName;
 	}
 	
 	public String toJSON()

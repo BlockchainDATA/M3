@@ -28,6 +28,6 @@ public class ListServerService extends BaseRequest{
 
 	public String getServiceAddr(String host)
 	{
-		return "http://" + host + ":8080/kadserv/serverlist.json";
+		return "http://" + host + ":8080/routing-web/serverlist.json";
 	}
 }
