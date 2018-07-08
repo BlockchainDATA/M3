@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" version="3.1">
+  <display-name>routing-web</display-name>  
+  
+  	<servlet>
+       <servlet-name>ConnectNodeService</servlet-name>
+       <servlet-class>eco.data.m3.web.service.node.ConnectNodeService</servlet-class>
+	</servlet>
+	<servlet-mapping>
+       <servlet-name>ConnectNodeService</servlet-name>
+       <url-pattern>/service/ConnectNodeService</url-pattern>
+	</servlet-mapping>
+  
+  	<servlet>
+       <servlet-name>ConnectRemoteNodeService</servlet-name>
+       <servlet-class>eco.data.m3.web.service.node.ConnectRemoteNodeService</servlet-class>
+	</servlet>
+	<servlet-mapping>
+       <servlet-name>ConnectRemoteNodeService</servlet-name>
+       <url-pattern>/service/ConnectRemoteNodeService</url-pattern>
+	</servlet-mapping>
+  
+  	<servlet>
+       <servlet-name>CreateNodeService</servlet-name>
+       <servlet-class>eco.data.m3.web.service.node.CreateNodeService</servlet-class>
+	</servlet>
+	<servlet-mapping>
+       <servlet-name>CreateNodeService</servlet-name>
+       <url-pattern>/service/CreateNodeService</url-pattern>
+	</servlet-mapping>
+  
+  	<servlet>
+       <servlet-name>GetContentService</servlet-name>
+       <servlet-class>eco.data.m3.web.service.node.GetContentService</servlet-class>
+	</servlet>
+	<servlet-mapping>
+       <servlet-name>GetContentService</servlet-name>
+       <url-pattern>/service/GetContentService</url-pattern>
+	</servlet-mapping>
+  
+  	<servlet>
+       <servlet-name>GetNodeInfoService</servlet-name>
+       <servlet-class>eco.data.m3.web.service.node.GetNodeInfoService</servlet-class>
+	</servlet>
+	<servlet-mapping>
+       <servlet-name>GetNodeInfoService</servlet-name>
+       <url-pattern>/service/GetNodeInfoService</url-pattern>
+	</servlet-mapping>
+  
+  	<servlet>
+       <servlet-name>GetNodeRouteService</servlet-name>
+       <servlet-class>eco.data.m3.web.service.node.GetNodeRouteService</servlet-class>
+	</servlet>
+	<servlet-mapping>
+       <servlet-name>GetNodeRouteService</servlet-name>
+       <url-pattern>/service/GetNodeRouteService</url-pattern>
+	</servlet-mapping>
+  
+  	<servlet>
+       <servlet-name>GetStorageInfoService</servlet-name>
+       <servlet-class>eco.data.m3.web.service.node.GetStorageInfoService</servlet-class>
+	</servlet>
+	<servlet-mapping>
+       <servlet-name>GetStorageInfoService</servlet-name>
+       <url-pattern>/service/GetStorageInfoService</url-pattern>
+	</servlet-mapping>
+  
+  	<servlet>
+       <servlet-name>ListNodesService</servlet-name>
+       <servlet-class>eco.data.m3.web.service.node.ListNodesService</servlet-class>
+	</servlet>
+	<servlet-mapping>
+       <servlet-name>ListNodesService</servlet-name>
+       <url-pattern>/service/ListNodesService</url-pattern>
+	</servlet-mapping>
+  
+  	<servlet>
+       <servlet-name>RefreshNodeService</servlet-name>
+       <servlet-class>eco.data.m3.web.service.node.RefreshNodeService</servlet-class>
+	</servlet>
+	<servlet-mapping>
+       <servlet-name>RefreshNodeService</servlet-name>
+       <url-pattern>/service/RefreshNodeService</url-pattern>
+	</servlet-mapping>
+  
+  	<servlet>
+       <servlet-name>SaveNodeStateService</servlet-name>
+       <servlet-class>eco.data.m3.web.service.node.SaveNodeStateService</servlet-class>
+	</servlet>
+	<servlet-mapping>
+       <servlet-name>SaveNodeStateService</servlet-name>
+       <url-pattern>/service/SaveNodeStateService</url-pattern>
+	</servlet-mapping>
+  
+  	<servlet>
+       <servlet-name>ShutdownAllNodesService</servlet-name>
+       <servlet-class>eco.data.m3.web.service.node.ShutdownAllNodesService</servlet-class>
+	</servlet>
+	<servlet-mapping>
+       <servlet-name>ShutdownAllNodesService</servlet-name>
+       <url-pattern>/service/ShutdownAllNodesService</url-pattern>
+	</servlet-mapping>	
+  
+  	<servlet>
+       <servlet-name>ShutdownNodeService</servlet-name>
+       <servlet-class>eco.data.m3.web.service.node.ShutdownNodeService</servlet-class>
+	</servlet>
+	<servlet-mapping>
+       <servlet-name>ShutdownNodeService</servlet-name>
+       <url-pattern>/service/ShutdownNodeService</url-pattern>
+	</servlet-mapping>	
+  
+  	<servlet>
+       <servlet-name>StoreContentService</servlet-name>
+       <servlet-class>eco.data.m3.web.service.node.StoreContentService</servlet-class>
+	</servlet>
+	<servlet-mapping>
+       <servlet-name>StoreContentService</servlet-name>
+       <url-pattern>/service/StoreContentService</url-pattern>
+	</servlet-mapping>
+  
+  	<servlet>
+       <servlet-name>IndexDataListService</servlet-name>
+       <servlet-class>eco.data.m3.web.service.node.IndexDataListService</servlet-class>
+	</servlet>
+	<servlet-mapping>
+       <servlet-name>IndexDataListService</servlet-name>
+       <url-pattern>/service/IndexDataListService</url-pattern>
+	</servlet-mapping>	
+  
+  	<servlet>
+       <servlet-name>IndexDataUploadService</servlet-name>
+       <servlet-class>eco.data.m3.web.service.node.IndexDataUploadService</servlet-class>
+	</servlet>
+	<servlet-mapping>
+       <servlet-name>IndexDataUploadService</servlet-name>
+       <url-pattern>/service/IndexDataUploadService</url-pattern>
+	</servlet-mapping>
+  
+  	<servlet>
+       <servlet-name>IndexDataGetService</servlet-name>
+       <servlet-class>eco.data.m3.web.service.node.IndexDataGetService</servlet-class>
+	</servlet>
+	<servlet-mapping>
+       <servlet-name>IndexDataGetService</servlet-name>
+       <url-pattern>/service/IndexDataGetService</url-pattern>
+	</servlet-mapping>
+	
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+</web-app>
