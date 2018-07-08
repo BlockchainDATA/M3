@@ -107,7 +107,7 @@ public class KadServer
      * @return Integer The communication ID of this message
      *
      * @throws IOException
-     * @throws kademlia.exceptions.KadServerDownException
+     * @throws KadServerDownException
      */
     public synchronized int sendMessage(Node to, Message msg, Receiver recv) throws IOException, KadServerDownException
     {
@@ -157,6 +157,8 @@ public class KadServer
         {
             throw new IllegalStateException("Kad Server is not running.");
         }
+        System.out.println("Reply To Node : " + to.getSocketAddress());
+
         sendMessage(to, msg, comm);
     }
 
@@ -198,7 +200,7 @@ public class KadServer
     {
         try
         {
-            while (isRunning)
+            while   (isRunning)
             {
                 try
                 {

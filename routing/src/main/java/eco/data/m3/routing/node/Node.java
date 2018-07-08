@@ -101,10 +101,9 @@ public class Node implements Streamable, Serializable
         byte[] ip = new byte[4];
         in.readFully(ip);
         this.inetAddress = InetAddress.getByAddress(ip);
-
-        /* Read in the port */
         this.port = in.readInt();
         
+        /* Load IP from Packet */
         this.inetAddress = packet.getAddress();
         this.port = packet.getPort();
     }
