@@ -15,6 +15,7 @@ import eco.data.m3.routing.message.SimpleReceiver;
 public class SimpleMessageTest
 {
 
+
     public static void main(String[] args)
     {
         try

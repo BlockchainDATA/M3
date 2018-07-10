@@ -64,7 +64,7 @@ public class KadService {
     public String getStorageRoot() {
         String cache_path = "";
         if (OSinfo.isWindows()) {
-            cache_path = "C:\\Users\\xquan\\kademlia\\";
+
         } else if (OSinfo.isLinux()) {
             cache_path = "/root/kademlia/";
         } else
@@ -79,6 +79,7 @@ public class KadService {
 
     }
 
+    //TODO
     private void saveNodesToDisk() {
 
     }

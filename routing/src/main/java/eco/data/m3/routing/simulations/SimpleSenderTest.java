@@ -26,19 +26,21 @@ public class SimpleSenderTest
             JKademliaNode kad1 = new JKademliaNode("Joshua", new KademliaId("12345678901234567890"), 7574);
 
 //            Node remoteNode = new Node(new KademliaId("12345678901234567891"), InetAddress.getByName(args[0]) , Integer.parseInt(args[1])); 
-            Node remoteNode = new Node(new KademliaId("12345678901234567891"), InetAddress.getByName("47.75.153.56") , 7572); 
-//            Node remoteNode = new Node(new KademliaId("12345678901234567891"), InetAddress.getByName("127.0.0.1") , 7572); 
+//            Node remoteNode = new Node(new KademliaId("12345678901234567891"), InetAddress.getByName("47.75.153.56") , 7572);
+            Node remoteNode = new Node(new KademliaId("12345678901234567891"), InetAddress.getByName("127.0.0.1") , 7572);
 
             StringBuffer sb = new StringBuffer();
             for(int i=0; i<40960; i++)
             	sb.append(i%10);
             String content = sb.toString();
             
-            for(int i=0; i<10; i++) {
-            	System.out.println("Send Message "+ i);
-            	kad1.getServer().sendMessage(remoteNode, new SimpleMessage(content), new SimpleReceiver());
-            	Thread.sleep(1);
-            }
+//            for(int i=0; i<1000; i++) {
+//            	System.out.println("Send Message "+ i);
+//            	kad1.getServer().sendMessage(remoteNode, new SimpleMessage(content), new SimpleReceiver());
+            	Thread.sleep(1000);
+//            }
+
+            kad1.bootstrap(remoteNode);
         }
         catch (IOException e)
         {
