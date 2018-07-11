@@ -24,7 +24,7 @@ import eco.data.m3.routing.api.rest.BaseResponse;
 /**
 * @author: xquan
 * Rest Response, pair with the request with the same prefix.
-* @since: Created in 2018-6-29
+* @since: 2018-6-29
 **/
 public class ListNodesResponse extends BaseResponse{
 

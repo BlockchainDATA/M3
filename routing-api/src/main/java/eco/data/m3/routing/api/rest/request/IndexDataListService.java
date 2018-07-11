@@ -22,7 +22,7 @@ import eco.data.m3.routing.api.rest.BaseRequest;
 * @author: xquan
 * Rest Request
 	List index data list from the index server.
-* @since: Created in 2018-6-29
+* @since: 2018-6-29
 **/
 public class IndexDataListService extends BaseRequest{
 	

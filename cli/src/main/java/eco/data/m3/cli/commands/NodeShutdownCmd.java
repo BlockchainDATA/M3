@@ -28,7 +28,7 @@ import picocli.CommandLine.Parameters;
 /**
 * @author: xquan
 * Shutdown a specified Node Command.
-* @since: Created in 2018-6-30
+* @since: 2018-6-30
 **/
 @Command(name = "nshutdown", description="Shutdown node.")
 public class NodeShutdownCmd implements Runnable {

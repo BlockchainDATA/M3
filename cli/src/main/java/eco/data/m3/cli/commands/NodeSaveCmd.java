@@ -30,7 +30,7 @@ import picocli.CommandLine.Parameters;
 /**
 * @author: xquan
 * Save Node's Info Command. Save node's state.
-* @since: Created in 2018-6-30
+* @since: 2018-6-30
 **/
 @Command(name = "nsave", description="Save node's state.")
 public class NodeSaveCmd implements Runnable {

@@ -23,7 +23,7 @@ import java.lang.reflect.Field;
 * Property Printer. 
 * Use Java Reflection to load a object's field and value, then print to string.
 * Used for show item info.
-* @since: Created in 2018-6-30
+* @since: 2018-6-30
 **/
 public class PropertyPrinter {
 

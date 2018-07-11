@@ -21,7 +21,7 @@ import com.google.gson.Gson;
 /**
 * @author: xquan
 * Base Rest Request.
-* @since: Created in 2018-6-29
+* @since: 2018-6-29
 **/
 public class BaseRequest {
 	

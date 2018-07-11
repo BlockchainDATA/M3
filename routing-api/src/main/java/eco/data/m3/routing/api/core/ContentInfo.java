@@ -21,7 +21,7 @@ import java.util.Date;
 /**
  * @author: xquan
  * Content Saved in DHT Network Information.
- * @since: Created in 2018-6-29
+ * @since: 2018-6-29
  **/
 public class ContentInfo {
 

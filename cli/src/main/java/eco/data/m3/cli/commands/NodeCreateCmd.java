@@ -27,7 +27,7 @@ import picocli.CommandLine.Option;
 /**
 * @author: xquan
 * Create Node Command. Create Kad Node on current host.
-* @since: Created in 2018-6-30
+* @since: 2018-6-30
 **/
 @Command(name = "ncreate", description="Create Kad Node on current host.")
 public class NodeCreateCmd implements Runnable {

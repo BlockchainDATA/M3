@@ -33,7 +33,7 @@ import picocli.CommandLine.Option;
 * @author: xquan
 * List Servers Command. 
 * Currently only get a server list configuration file on the index server.
-* @since: Created in 2018-6-30
+* @since: 2018-6-30
 **/
 @Command(name = "slist", description="List available servers.")
 public class ServerListCmd implements Runnable {

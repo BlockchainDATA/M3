@@ -25,7 +25,7 @@ import picocli.CommandLine.Command;
 /**
 * @author: xquan
 * Shutdown All Nodes Command.
-* @since: Created in 2018-6-30
+* @since: 2018-6-30
 **/
 @Command(name = "nshutall", description="Shutdown All node.")
 public class NodeShutdownAllCmd implements Runnable {

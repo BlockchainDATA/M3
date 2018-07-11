@@ -21,7 +21,7 @@ import java.io.Serializable;
 /**
  * @author: xquan
  * basic Node Information of a Kad Node.
- * @since: Created in 2018-6-29
+ * @since: 2018-6-29
  **/
 public class NodeInfo implements Serializable{
 	

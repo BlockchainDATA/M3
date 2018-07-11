@@ -28,7 +28,7 @@ import picocli.CommandLine.Parameters;
 /**
 * @author: xquan
 * Connect Command. Joint node to local parent node.
-* @since: Created in 2018-6-30
+* @since: 2018-6-30
 **/
 @Command(name = "nconnect", description="Joint node to local parent node.")
 public class NodeConnectCmd implements Runnable {

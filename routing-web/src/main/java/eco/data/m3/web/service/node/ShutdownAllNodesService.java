@@ -26,7 +26,7 @@ import eco.data.m3.web.service.RequestResult;
  * @author: xquan
  * Shutdown All Nodes Service.
  * Shutdown All Nodes on this host.
- * @since: Created in 2018-7-3
+ * @since: 2018-7-3
  **/
 public class ShutdownAllNodesService extends BaseServlet{
 	

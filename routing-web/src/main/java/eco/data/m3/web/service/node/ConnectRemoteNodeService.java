@@ -27,7 +27,7 @@ import eco.data.m3.web.service.RequestResult;
  * @author: xquan
  * Connect Remote Node Service.
  * Let a Node Joint to a specified remote Node.
- * @since: Created in 2018-7-3
+ * @since: 2018-7-3
  **/
 public class ConnectRemoteNodeService extends BaseServlet{
 	

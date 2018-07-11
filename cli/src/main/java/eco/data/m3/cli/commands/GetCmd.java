@@ -29,7 +29,7 @@ import picocli.CommandLine.Parameters;
 /**
 * @author: xquan
 * Get Saved Data's Content Command.
-* @since: Created in 2018-6-30
+* @since: 2018-6-30
 **/
 @Command(name = "get", description="Get Content.")
 public class GetCmd implements Runnable {

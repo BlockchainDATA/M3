@@ -22,7 +22,7 @@ import eco.data.m3.routing.api.core.ErrorCode;
  * @author: xquan
  * Servlet Response Result.
  * This class will be formated to Gson String.
- * @since: Created in 2018-7-3
+ * @since: 2018-7-3
  **/
 public class RequestResult {
 

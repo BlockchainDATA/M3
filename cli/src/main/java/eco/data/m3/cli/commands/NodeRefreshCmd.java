@@ -28,7 +28,7 @@ import picocli.CommandLine.Parameters;
 /**
 * @author: xquan
 * Refresh Node Command. Refresh node info.
-* @since: Created in 2018-6-30
+* @since: 2018-6-30
 **/
 @Command(name = "nrefresh", description="Refresh node info.")
 public class NodeRefreshCmd implements Runnable {

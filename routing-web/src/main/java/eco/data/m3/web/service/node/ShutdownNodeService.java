@@ -27,7 +27,7 @@ import eco.data.m3.web.service.RequestResult;
  * @author: xquan
  * Shutdown Node Service.
  * Shutdown a specified node Service.
- * @since: Created in 2018-7-3
+ * @since: 2018-7-3
  **/
 public class ShutdownNodeService extends BaseServlet{
 	

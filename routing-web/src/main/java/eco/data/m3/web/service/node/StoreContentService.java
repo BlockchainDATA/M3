@@ -29,7 +29,7 @@ import eco.data.m3.web.service.RequestResult;
  * Store Content Service.
  * Store Content through a node to the DHT network.
  * Only String accepted.
- * @since: Created in 2018-7-3
+ * @since: 2018-7-3
  **/
 public class StoreContentService extends BaseServlet{
 

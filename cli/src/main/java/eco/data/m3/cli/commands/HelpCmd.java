@@ -25,7 +25,7 @@ import picocli.CommandLine.Command;
 /**
 * @author: xquan
 * Help Command.
-* @since: Created in 2018-6-30
+* @since: 2018-6-30
 **/
 @Command(name = "help", header = "%n@|green Hello world demo|@", description="Show Help Content.")
 public class HelpCmd implements Runnable {

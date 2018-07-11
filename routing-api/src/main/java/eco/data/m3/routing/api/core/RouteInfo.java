@@ -19,7 +19,7 @@ package eco.data.m3.routing.api.core;
 /**
  * @author: xquan
  * Route Infomation a Kad node maintained in its DHT route table.
- * @since: Created in 2018-6-29
+ * @since: 2018-6-29
  **/
 public class RouteInfo {
 

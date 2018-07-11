@@ -29,7 +29,7 @@ import picocli.CommandLine.Option;
 /**
 * @author: xquan
 * List Nodes Command. List nodes on current host.
-* @since: Created in 2018-6-30
+* @since: 2018-6-30
 **/
 @Command(name = "nlist", description="List nodes on this host.")
 public class NodeListCmd implements Runnable {

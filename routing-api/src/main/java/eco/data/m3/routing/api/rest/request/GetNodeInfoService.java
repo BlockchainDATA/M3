@@ -22,7 +22,7 @@ import eco.data.m3.routing.api.rest.BaseRequest;
 * @author: xquan
 * Rest Request
 	Get a node's information.
-* @since: Created in 2018-6-29
+* @since: 2018-6-29
 **/
 public class GetNodeInfoService extends BaseRequest{
 

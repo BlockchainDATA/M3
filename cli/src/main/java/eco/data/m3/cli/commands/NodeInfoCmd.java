@@ -29,7 +29,7 @@ import picocli.CommandLine.Parameters;
 /**
 * @author: xquan
 * Node Information Command. Get node's info.
-* @since: Created in 2018-6-30
+* @since: 2018-6-30
 **/
 @Command(name = "ninfo", description="Get node's info.")
 public class NodeInfoCmd implements Runnable {

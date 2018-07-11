@@ -42,7 +42,7 @@ import java.util.*;
 /**
 * @author: xquan
 * Main Routing Service, Wrap all Kademlia api into a service interface.
-* @since: Created in 2018-6-29
+* @since: 2018-6-29
 **/
 public class KadService {
 

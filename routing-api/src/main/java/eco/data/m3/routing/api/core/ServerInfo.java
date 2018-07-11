@@ -21,7 +21,7 @@ import java.io.Serializable;
 /**
  * @author: xquan
  * A Kad Server's information.
- * @since: Created in 2018-6-29
+ * @since: 2018-6-29
  **/
 public class ServerInfo implements Serializable{
 

@@ -30,7 +30,7 @@ import com.google.gson.JsonSyntaxException;
 /**
 * @author: xquan
 * A Rest Client for communicate Node Server.
-* @since: Created in 2018-6-29
+* @since: 2018-6-29
 **/
 public class RestClient {
 	

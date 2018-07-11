@@ -21,7 +21,7 @@ import java.util.Locale;
 /**
 * @author: xquan
 * A Convert Util for Hex and String convertion.
-* @since: Created in 2018-6-29
+* @since: 2018-6-29
 **/
 public class CHexConvert  
 {        

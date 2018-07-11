@@ -23,7 +23,7 @@ import static picocli.CommandLine.*;
 /**
 * @author: xquan
 * A Command Example.
-* @since: Created in 2018-6-30
+* @since: 2018-6-30
 **/
 @Command(name = "Greet", header = "%n@|green Hello world demo|@", description="Show Greet Info")
 public class Greet implements Runnable {

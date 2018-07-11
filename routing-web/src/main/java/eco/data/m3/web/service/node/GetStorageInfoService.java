@@ -28,7 +28,7 @@ import eco.data.m3.web.service.RequestResult;
  * @author: xquan
  * Get Storage Info Service.
  * Get a Storage Info saved in DHT Network.
- * @since: Created in 2018-7-3
+ * @since: 2018-7-3
  **/
 public class GetStorageInfoService extends BaseServlet{
 

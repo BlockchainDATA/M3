@@ -29,7 +29,7 @@ import eco.data.m3.web.service.RequestResult;
  * @author: xquan
  * List Nodes Service.
  * List Nodes on this host.
- * @since: Created in 2018-7-3
+ * @since: 2018-7-3
  **/
 public class ListNodesService extends BaseServlet{
 

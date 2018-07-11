@@ -36,7 +36,7 @@ import eco.data.m3.routing.api.core.ErrorCode;
  * Base Servlet Template.
  * Supply Basic Servlet functions.
  * Response will formated to GSon String.
- * @since: Created in 2018-7-3
+ * @since: 2018-7-3
  **/
 public abstract class BaseServlet extends HttpServlet{
  

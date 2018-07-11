@@ -19,7 +19,7 @@ package eco.data.m3.routing.api.core;
 /**
  * @author: xquan
  * File Index Information saved in DHT network.
- * @since: Created in 2018-6-29
+ * @since: 2018-6-29
  **/
 public class FileIndexInfo {
 

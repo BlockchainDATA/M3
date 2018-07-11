@@ -22,7 +22,7 @@ import java.security.NoSuchAlgorithmException;
 /**
 * @author: xquan
 * A MD5Util.
-* @since: Created in 2018-6-29
+* @since: 2018-6-29
 **/
 public class MD5Util {
 

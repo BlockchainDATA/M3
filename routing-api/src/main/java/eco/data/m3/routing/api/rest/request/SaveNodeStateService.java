@@ -22,7 +22,7 @@ import eco.data.m3.routing.api.rest.BaseRequest;
 * @author: xquan
 * Rest Request
 	Save a node's state to disk.
-* @since: Created in 2018-6-29
+* @since: 2018-6-29
 **/
 public class SaveNodeStateService extends BaseRequest{
 

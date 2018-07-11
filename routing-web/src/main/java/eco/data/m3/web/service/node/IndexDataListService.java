@@ -29,7 +29,7 @@ import eco.data.m3.web.service.RequestResult;
  * @author: xquan
  * List Index Data Service.
  * List Index Data Saved in index Server.
- * @since: Created in 2018-7-3
+ * @since: 2018-7-3
  **/
 public class IndexDataListService extends BaseServlet{
 

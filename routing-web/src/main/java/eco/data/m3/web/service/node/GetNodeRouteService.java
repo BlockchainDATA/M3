@@ -28,7 +28,7 @@ import eco.data.m3.web.service.RequestResult;
  * @author: xquan
  * Get Node's Route Service.
  * Get Node's Route Information.
- * @since: Created in 2018-7-3
+ * @since: 2018-7-3
  **/
 public class GetNodeRouteService extends BaseServlet{
 
