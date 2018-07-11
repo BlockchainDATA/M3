@@ -24,9 +24,9 @@ import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
 /**
-* @Author: xquan
-* @Description: Host Command, Show the Host which is current controlled.
-* @Date: Created in 2018-6-30
+* @author: xquan
+* Host Command, Show the Host which is current controlled.
+* @since: Created in 2018-6-30
 **/
 @Command(name = "host", description="Change Current Host Address.")
 public class HostCmd implements Runnable {

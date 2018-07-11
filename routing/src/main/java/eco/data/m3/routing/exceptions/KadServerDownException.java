@@ -4,7 +4,7 @@ package eco.data.m3.routing.exceptions;
  * An exception to be thrown whenever the Kad Server is down
  *
  * @author Joshua Kissoon
- * @created 20140428
+ * @since 20140428
  */
 public class KadServerDownException extends RoutingException
 {

@@ -27,9 +27,9 @@ import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
 /**
-* @Author: xquan
-* @Description: Get Saved Data's Content Command.
-* @Date: Created in 2018-6-30
+* @author: xquan
+* Get Saved Data's Content Command.
+* @since: Created in 2018-6-30
 **/
 @Command(name = "get", description="Get Content.")
 public class GetCmd implements Runnable {

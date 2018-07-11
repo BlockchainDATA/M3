@@ -1,6 +1,6 @@
 /**
  * @author Joshua Kissoon
- * @created 20140215
+ * @since 20140215
  * @desc Represents a Kademlia Node ID
  */
 package eco.data.m3.routing.node;

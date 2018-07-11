@@ -19,10 +19,10 @@ package eco.data.m3.routing.api.rest.request;
 import eco.data.m3.routing.api.rest.BaseRequest;
 
 /**
-* @Author: xquan
-* @Description: Rest Request
+* @author: xquan
+* Rest Request
 	Store content to dht network through a node .
-* @Date: Created in 2018-6-29
+* @since: Created in 2018-6-29
 **/
 public class StoreContentService extends BaseRequest{
 

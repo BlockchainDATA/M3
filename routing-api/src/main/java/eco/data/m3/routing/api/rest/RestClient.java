@@ -28,9 +28,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
 /**
-* @Author: xquan
-* @Description: A Rest Client for communicate Node Server.
-* @Date: Created in 2018-6-29
+* @author: xquan
+* A Rest Client for communicate Node Server.
+* @since: Created in 2018-6-29
 **/
 public class RestClient {
 	

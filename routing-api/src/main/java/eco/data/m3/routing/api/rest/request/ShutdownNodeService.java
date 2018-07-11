@@ -19,10 +19,10 @@ package eco.data.m3.routing.api.rest.request;
 import eco.data.m3.routing.api.rest.BaseRequest;
 
 /**
-* @Author: xquan
-* @Description: Rest Request
+* @author: xquan
+* Rest Request
 	Shutdown a specified node on a host.
-* @Date: Created in 2018-6-29
+* @since: Created in 2018-6-29
 **/
 public class ShutdownNodeService extends BaseRequest{
 

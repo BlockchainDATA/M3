@@ -21,8 +21,8 @@ import org.junit.Test;
 
 
 /**
-* @Author: xquan
-* @Description: Os Infomation Test. 
+* @author: xquan
+* Os Infomation Test. 
 **/
 public class MD5UtilTest extends TestCase {
 

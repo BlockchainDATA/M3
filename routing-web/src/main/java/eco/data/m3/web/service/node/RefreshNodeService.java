@@ -24,10 +24,10 @@ import eco.data.m3.web.service.BaseServlet;
 import eco.data.m3.web.service.RequestResult;
 
 /**
- * @Author: xquan
- * @Description: Refresh Node Service.
+ * @author: xquan
+ * Refresh Node Service.
  * Refresh Node.
- * @Date: Created in 2018-7-3
+ * @since: Created in 2018-7-3
  **/
 public class RefreshNodeService extends BaseServlet{
 	

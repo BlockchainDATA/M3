@@ -65,7 +65,7 @@ public interface KademliaNode
 
     /**
      * Stores the specified value under the given key
-     * This value is stored on K nodes on the network, or all nodes if there are > K total nodes in the network
+     * This value is stored on K nodes on the network, or all nodes if there are more than K total nodes in the network
      *
      * @param content The content to put onto the DHT
      *
@@ -78,7 +78,7 @@ public interface KademliaNode
 
     /**
      * Stores the specified value under the given key
-     * This value is stored on K nodes on the network, or all nodes if there are > K total nodes in the network
+     * This value is stored on K nodes on the network, or all nodes if there are more than K total nodes in the network
      *
      * @param entry The StorageEntry with the content to put onto the DHT
      *
@@ -106,7 +106,7 @@ public interface KademliaNode
      * @return DHTContent The content
      *
      * @throws java.io.IOException
-     * @throws kademlia.exceptions.ContentNotFoundException
+     * @throws eco.data.m3.routing.exceptions.ContentNotFoundException
      */
     public JKademliaStorageEntry get(GetParameter param) throws NoSuchElementException, IOException, ContentNotFoundException;
 

@@ -19,9 +19,9 @@ package eco.data.m3.routing.api.utils;
 import java.util.Locale;  
 
 /**
-* @Author: xquan
-* @Description: A Convert Util for Hex and String convertion.
-* @Date: Created in 2018-6-29
+* @author: xquan
+* A Convert Util for Hex and String convertion.
+* @since: Created in 2018-6-29
 **/
 public class CHexConvert  
 {        

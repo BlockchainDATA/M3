@@ -25,10 +25,10 @@ import eco.data.m3.web.service.BaseServlet;
 import eco.data.m3.web.service.RequestResult;
 
 /**
- * @Author: xquan
- * @Description: Get Storage Info Service.
+ * @author: xquan
+ * Get Storage Info Service.
  * Get a Storage Info saved in DHT Network.
- * @Date: Created in 2018-7-3
+ * @since: Created in 2018-7-3
  **/
 public class GetStorageInfoService extends BaseServlet{
 

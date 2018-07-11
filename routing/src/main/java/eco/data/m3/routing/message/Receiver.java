@@ -6,7 +6,7 @@ import java.io.IOException;
  * A receiver waits for incoming messages and perform some action when the message is received
  *
  * @author Joshua Kissoon
- * @created 20140218
+ * @since 20140218
  */
 public interface Receiver
 {

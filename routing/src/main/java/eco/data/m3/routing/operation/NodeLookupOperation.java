@@ -25,7 +25,7 @@ import eco.data.m3.routing.node.KademliaId;
  * Nodes that fail to respond are removed from consideration
  *
  * @author Joshua Kissoon
- * @created 20140219
+ * @since 20140219
  */
 public class NodeLookupOperation implements Operation, Receiver
 {
@@ -78,7 +78,7 @@ public class NodeLookupOperation implements Operation, Receiver
 
     /**
      * @throws java.io.IOException
-     * @throws kademlia.exceptions.RoutingException
+     * @throws eco.data.m3.routing.exceptions.RoutingException
      */
     @Override
     public synchronized void execute() throws IOException, RoutingException

@@ -1,6 +1,7 @@
 package eco.data.m3.routing.simulations;
 
 import java.io.IOException;
+import java.io.PrintStream;
 import java.net.InetAddress;
 
 import eco.data.m3.routing.JKademliaNode;
@@ -13,7 +14,7 @@ import eco.data.m3.routing.message.SimpleReceiver;
  * Test 1: Try sending a simple message between nodes
  *
  * @author Joshua Kissoon
- * @created 20140218
+ * @since 20140218
  */
 public class SimpleSenderTest
 {
@@ -26,8 +27,8 @@ public class SimpleSenderTest
             JKademliaNode kad1 = new JKademliaNode("Joshua", new KademliaId("12345678901234567890"), 7574);
 
 //            Node remoteNode = new Node(new KademliaId("12345678901234567891"), InetAddress.getByName(args[0]) , Integer.parseInt(args[1])); 
-//            Node remoteNode = new Node(new KademliaId("12345678901234567891"), InetAddress.getByName("47.75.153.56") , 7572);
-            Node remoteNode = new Node(new KademliaId("12345678901234567891"), InetAddress.getByName("127.0.0.1") , 7572);
+            Node remoteNode = new Node(new KademliaId("12345678901234567891"), InetAddress.getByName("47.75.153.56") , 7572);
+//            Node remoteNode = new Node(new KademliaId("12345678901234567891"), InetAddress.getByName("127.0.0.1") , 7572);
 
             StringBuffer sb = new StringBuffer();
             for(int i=0; i<40960; i++)
@@ -40,7 +41,16 @@ public class SimpleSenderTest
             	Thread.sleep(1000);
 //            }
 
-            kad1.bootstrap(remoteNode);
+            for (int i=0; i<10; i++) {
+                try {
+                    kad1.bootstrap(remoteNode);
+                    break;
+                }catch (Exception ek)
+                {
+                    ek.printStackTrace();
+                    System.out.println("Retry : "+i);
+                }
+            }
         }
         catch (IOException e)
         {

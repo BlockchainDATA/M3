@@ -25,9 +25,9 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
 /**
-* @Author: xquan
-* @Description: Remote Connect Command. Joint node to remote parent node.
-* @Date: Created in 2018-6-30
+* @author: xquan
+* Remote Connect Command. Joint node to remote parent node.
+* @since: Created in 2018-6-30
 **/
 @Command(name = "nconnectr", description="Connect node to remote parent node.")
 public class NodeConnectRemoteCmd implements Runnable {

@@ -19,10 +19,10 @@ package eco.data.m3.web.service;
 import eco.data.m3.routing.api.core.ErrorCode;
 
 /**
- * @Author: xquan
- * @Description: Servlet Response Result.
+ * @author: xquan
+ * Servlet Response Result.
  * This class will be formated to Gson String.
- * @Date: Created in 2018-7-3
+ * @since: Created in 2018-7-3
  **/
 public class RequestResult {
 

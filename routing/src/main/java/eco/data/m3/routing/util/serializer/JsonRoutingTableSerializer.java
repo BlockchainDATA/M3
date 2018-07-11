@@ -18,15 +18,7 @@ import eco.data.m3.routing.routing.KademliaRoutingTable;
 
 /**
  * A KadSerializer that serializes routing tables to JSON format
- The generic serializer is not working for routing tables
-
- Why a JKademliaRoutingTable specific serializer?
- The routing table structure:
- - JKademliaRoutingTable
- -- Buckets[]
- --- Map<NodeId, Node>
- * ---- NodeId:KeyBytes
- * ---- Node: NodeId, InetAddress, Port
+ * The generic serializer is not working for routing tables
  *
  * The above structure seems to be causing some problem for Gson,
  * especially at the Map part.

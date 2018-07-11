@@ -26,10 +26,10 @@ import eco.data.m3.web.service.BaseServlet;
 import eco.data.m3.web.service.RequestResult;
 
 /**
- * @Author: xquan
- * @Description: Upload Index Data Service.
+ * @author: xquan
+ * Upload Index Data Service.
  * Upload Index Data to index server.
- * @Date: Created in 2018-7-3
+ * @since: Created in 2018-7-3
  **/
 public class IndexDataUploadService extends BaseServlet{
 	

@@ -19,9 +19,9 @@ package eco.data.m3.routing.api.rest;
 import com.google.gson.Gson;
 
 /**
-* @Author: xquan
-* @Description: Base Rest Request.
-* @Date: Created in 2018-6-29
+* @author: xquan
+* Base Rest Request.
+* @since: Created in 2018-6-29
 **/
 public class BaseRequest {
 	

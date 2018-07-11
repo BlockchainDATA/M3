@@ -10,8 +10,6 @@ import eco.data.m3.routing.node.Node;
  * -- Last seen time
  *
  * @author Joshua Kissoon
- * @since 20140425
- * @updated 20140426
  */
 public class Contact implements Comparable<Contact>
 {

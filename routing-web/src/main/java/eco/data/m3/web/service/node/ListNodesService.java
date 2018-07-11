@@ -26,10 +26,10 @@ import eco.data.m3.web.service.BaseServlet;
 import eco.data.m3.web.service.RequestResult;
 
 /**
- * @Author: xquan
- * @Description: List Nodes Service.
+ * @author: xquan
+ * List Nodes Service.
  * List Nodes on this host.
- * @Date: Created in 2018-7-3
+ * @since: Created in 2018-7-3
  **/
 public class ListNodesService extends BaseServlet{
 

@@ -8,7 +8,7 @@ import eco.data.m3.routing.node.KademliaId;
  * Testing connecting 2 nodes to each other
  *
  * @author Joshua Kissoon
- * @created 20140219
+ * @since 20140219
  */
 public class NodeConnectionTest
 {

@@ -19,9 +19,9 @@ package eco.data.m3.routing.api.core;
 import java.io.Serializable;
 
 /**
- * @Author: xquan
- * @Description: basic Node Information of a Kad Node.
- * @Date: Created in 2018-6-29
+ * @author: xquan
+ * basic Node Information of a Kad Node.
+ * @since: Created in 2018-6-29
  **/
 public class NodeInfo implements Serializable{
 	

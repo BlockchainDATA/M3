@@ -25,10 +25,10 @@ import eco.data.m3.web.service.BaseServlet;
 import eco.data.m3.web.service.RequestResult;
 
 /**
- * @Author: xquan
- * @Description: Get Node's Route Service.
+ * @author: xquan
+ * Get Node's Route Service.
  * Get Node's Route Information.
- * @Date: Created in 2018-7-3
+ * @since: Created in 2018-7-3
  **/
 public class GetNodeRouteService extends BaseServlet{
 

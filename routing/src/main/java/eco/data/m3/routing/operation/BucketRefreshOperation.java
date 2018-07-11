@@ -11,7 +11,7 @@ import eco.data.m3.routing.node.KademliaId;
  * This operation takes care of refreshing this node's K-Buckets
  *
  * @author Joshua Kissoon
- * @created 20140224
+ * @since 20140224
  */
 public class BucketRefreshOperation implements Operation
 {

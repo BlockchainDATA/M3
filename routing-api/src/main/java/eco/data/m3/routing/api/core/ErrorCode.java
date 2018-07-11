@@ -17,9 +17,9 @@
 package eco.data.m3.routing.api.core;
 
 /**
- * @Author: xquan
- * @Description: Error code when communicate between Server Node and Client.
- * @Date: Created in 2018-6-29
+ * @author: xquan
+ * Error code when communicate between Server Node and Client.
+ * @since: Created in 2018-6-29
  **/
 public enum ErrorCode {
 

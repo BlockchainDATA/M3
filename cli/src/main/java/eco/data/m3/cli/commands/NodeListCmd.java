@@ -27,9 +27,9 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
 /**
-* @Author: xquan
-* @Description: List Nodes Command. List nodes on current host.
-* @Date: Created in 2018-6-30
+* @author: xquan
+* List Nodes Command. List nodes on current host.
+* @since: Created in 2018-6-30
 **/
 @Command(name = "nlist", description="List nodes on this host.")
 public class NodeListCmd implements Runnable {

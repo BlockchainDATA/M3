@@ -39,8 +39,8 @@ import eco.data.m3.routing.util.serializer.JsonSerializer;
  * @author Joshua Kissoon
  * @since 20140215
  *
- * @todo When we receive a store message - if we have a newer version of the content, re-send this newer version to that node so as to update their version
- * @todo Handle IPv6 Addresses
+ * TODO When we receive a store message - if we have a newer version of the content, re-send this newer version to that node so as to update their version
+ * TODO Handle IPv6 Addresses
  *
  */
 public class JKademliaNode implements KademliaNode

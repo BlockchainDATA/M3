@@ -19,9 +19,9 @@ package eco.data.m3.routing.api.rest;
 import eco.data.m3.routing.api.core.ErrorCode;
 
 /**
-* @Author: xquan
-* @Description: Base Rest Response.
-* @Date: Created in 2018-6-29
+* @author: xquan
+* Base Rest Response.
+* @since: Created in 2018-6-29
 **/
 public class BaseResponse {
 

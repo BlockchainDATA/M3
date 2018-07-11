@@ -19,9 +19,9 @@ package eco.data.m3.routing.api.core;
 import java.io.Serializable;
 
 /**
- * @Author: xquan
- * @Description: A Kad Server's information.
- * @Date: Created in 2018-6-29
+ * @author: xquan
+ * A Kad Server's information.
+ * @since: Created in 2018-6-29
  **/
 public class ServerInfo implements Serializable{
 

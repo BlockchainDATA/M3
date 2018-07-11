@@ -19,10 +19,10 @@ package eco.data.m3.routing.api.rest.request;
 import eco.data.m3.routing.api.rest.BaseRequest;
 
 /**
-* @Author: xquan
-* @Description: Rest Request
+* @author: xquan
+* Rest Request
 	Save a node's state to disk.
-* @Date: Created in 2018-6-29
+* @since: Created in 2018-6-29
 **/
 public class SaveNodeStateService extends BaseRequest{
 

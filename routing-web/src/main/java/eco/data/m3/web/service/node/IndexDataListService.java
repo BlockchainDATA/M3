@@ -26,10 +26,10 @@ import eco.data.m3.web.service.BaseServlet;
 import eco.data.m3.web.service.RequestResult;
 
 /**
- * @Author: xquan
- * @Description: List Index Data Service.
+ * @author: xquan
+ * List Index Data Service.
  * List Index Data Saved in index Server.
- * @Date: Created in 2018-7-3
+ * @since: Created in 2018-7-3
  **/
 public class IndexDataListService extends BaseServlet{
 

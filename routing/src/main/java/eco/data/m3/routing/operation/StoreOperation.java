@@ -65,7 +65,7 @@ public class StoreOperation implements Operation
             else
             {
                 /**
-                 * @todo Create a receiver that receives a store acknowledgement message to count how many nodes a content have been stored at
+                 * TODO Create a receiver that receives a store acknowledgement message to count how many nodes a content have been stored at
                  */
                 this.server.sendMessage(n, msg, null);
             }
@@ -75,7 +75,7 @@ public class StoreOperation implements Operation
     /**
      * @return The number of nodes that have stored this content
      *
-     * @todo Implement this method
+     * TODO Implement this method
      */
     public int numNodesStoredAt()
     {

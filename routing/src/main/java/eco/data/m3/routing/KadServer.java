@@ -24,7 +24,6 @@ import eco.data.m3.routing.message.Receiver;
  * The server that handles sending and receiving messages between nodes on the Kad Network
  *
  * @author Joshua Kissoon
- * @created 20140215
  */
 public class KadServer
 {
@@ -157,7 +156,7 @@ public class KadServer
         {
             throw new IllegalStateException("Kad Server is not running.");
         }
-        System.out.println("Reply To Node : " + to.getSocketAddress());
+//        System.out.println("Reply To Node : " + to.getSocketAddress());
 
         sendMessage(to, msg, comm);
     }
@@ -182,6 +181,8 @@ public class KadServer
             {
                 throw new IOException("Message is too big");
             }
+
+//            System.out.println("** Send :"+to.getSocketAddress() +" -- " + msg.code());
 
             /* Everything is good, now create the packet and send it */
             DatagramPacket pkt = new DatagramPacket(data, 0, data.length);
@@ -242,7 +243,7 @@ public class KadServer
                         Message msg = messageFactory.createMessage(messCode, din, packet);
                         din.close();
                         
-                        System.out.println("Get Message " + total_msg++ +" : " + comm + " -- " + messCode + " -- " + packet.getSocketAddress() );
+//                        System.out.println("Get Message " + total_msg++ +" : " + comm + " -- " + messCode + " -- " + packet.getSocketAddress() );
 
                         /* Get a receiver for this message */
                         Receiver receiver;
