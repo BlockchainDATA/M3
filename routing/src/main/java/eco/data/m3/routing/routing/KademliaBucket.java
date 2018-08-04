@@ -7,7 +7,7 @@ import eco.data.m3.routing.node.Node;
  * A bucket used to store Contacts in the routing table.
  *
  * @author Joshua Kissoon
- * @created 20140215
+ * @since 20140215
  */
 public interface KademliaBucket
 {

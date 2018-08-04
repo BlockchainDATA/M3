@@ -12,7 +12,7 @@ import eco.data.m3.routing.node.KademliaId;
  * A message sent to other nodes requesting the K-Closest nodes to a key sent in this message.
  *
  * @author Joshua Kissoon
- * @created 20140218
+ * @since 20140218
  */
 public class NodeLookupMessage implements Message
 {

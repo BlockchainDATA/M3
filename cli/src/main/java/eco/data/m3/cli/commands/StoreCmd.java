@@ -29,10 +29,10 @@ import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
 /**
-* @Author: xquan
-* @Description: Store Content Command. 
+* @author: xquan
+* Store Content Command. 
 * It's a sample command and only store text content to the dht network.
-* @Date: Created in 2018-6-30
+* @since: 2018-6-30
 **/
 @Command(name = "store", description="Store Content.")
 public class StoreCmd implements Runnable {

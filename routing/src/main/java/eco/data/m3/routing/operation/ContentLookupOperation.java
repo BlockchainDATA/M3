@@ -93,7 +93,7 @@ public class ContentLookupOperation implements Operation, Receiver
 
     /**
      * @throws java.io.IOException
-     * @throws kademlia.exceptions.RoutingException
+     * @throws eco.data.m3.routing.exceptions.RoutingException
      */
     @Override
     public synchronized void execute() throws IOException, RoutingException
@@ -319,7 +319,7 @@ public class ContentLookupOperation implements Operation, Receiver
     /**
      * @return The list of all content found during the lookup operation
      *
-     * @throws kademlia.exceptions.ContentNotFoundException
+     * @throws eco.data.m3.routing.exceptions.ContentNotFoundException
      */
     public JKademliaStorageEntry getContentFound() throws ContentNotFoundException
     {

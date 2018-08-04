@@ -30,10 +30,10 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
 /**
-* @Author: xquan
-* @Description: List Servers Command. 
+* @author: xquan
+* List Servers Command. 
 * Currently only get a server list configuration file on the index server.
-* @Date: Created in 2018-6-30
+* @since: 2018-6-30
 **/
 @Command(name = "slist", description="List available servers.")
 public class ServerListCmd implements Runnable {

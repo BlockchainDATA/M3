@@ -23,9 +23,9 @@ import eco.data.m3.routing.api.rest.response.ShutdownAllNodesResponse;
 import picocli.CommandLine.Command;
 
 /**
-* @Author: xquan
-* @Description: Shutdown All Nodes Command.
-* @Date: Created in 2018-6-30
+* @author: xquan
+* Shutdown All Nodes Command.
+* @since: 2018-6-30
 **/
 @Command(name = "nshutall", description="Shutdown All node.")
 public class NodeShutdownAllCmd implements Runnable {

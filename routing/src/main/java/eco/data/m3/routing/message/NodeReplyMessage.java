@@ -13,7 +13,7 @@ import eco.data.m3.routing.node.Node;
  * When a NodeLookup Request comes in, we respond with a NodeReplyMessage.
  *
  * @author Joshua Kissoon
- * @created 20140218
+ * @since 20140218
  */
 public class NodeReplyMessage implements Message
 {

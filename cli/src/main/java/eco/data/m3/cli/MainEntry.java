@@ -40,12 +40,12 @@ import eco.data.m3.cli.commands.StoreCmd;
 import picocli.CommandLine;
 
 /**
-* @Author: xquan
-* @Description: Main Entry. 
+* @author: xquan
+* Main Entry. 
 * Command line's main entry.
 * Use picocli library to parse command line.
 * https://github.com/remkop/picocli
-* @Date: Created in 2018-6-30
+* @since: 2018-6-30
 **/
 public class MainEntry  {
 	

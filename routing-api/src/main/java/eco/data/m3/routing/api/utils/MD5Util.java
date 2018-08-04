@@ -20,9 +20,9 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
-* @Author: xquan
-* @Description: A MD5Util.
-* @Date: Created in 2018-6-29
+* @author: xquan
+* A MD5Util.
+* @since: 2018-6-29
 **/
 public class MD5Util {
 

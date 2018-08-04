@@ -24,10 +24,10 @@ import eco.data.m3.web.service.BaseServlet;
 import eco.data.m3.web.service.RequestResult;
 
 /**
- * @Author: xquan
- * @Description: Create Node Service.
+ * @author: xquan
+ * Create Node Service.
  * Create a Node.
- * @Date: Created in 2018-7-3
+ * @since: 2018-7-3
  **/
 public class CreateNodeService extends BaseServlet{
 	

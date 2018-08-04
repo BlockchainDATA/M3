@@ -26,9 +26,9 @@ import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
 /**
-* @Author: xquan
-* @Description: Get Node Route Info Command. Get node's route info.
-* @Date: Created in 2018-6-30
+* @author: xquan
+* Get Node Route Info Command. Get node's route info.
+* @since: 2018-6-30
 **/
 @Command(name = "nroute", description="Get node's route info.")
 public class NodeRouteCmd implements Runnable {

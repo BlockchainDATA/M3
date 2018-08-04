@@ -100,7 +100,7 @@ public interface KademliaDHT
      * @param content The Content to Remove
      *
      *
-     * @throws kademlia.exceptions.ContentNotFoundException
+     * @throws eco.data.m3.routing.exceptions.ContentNotFoundException
      */
     public void remove(KadContent content) throws ContentNotFoundException;
 

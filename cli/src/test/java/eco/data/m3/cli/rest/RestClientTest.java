@@ -43,12 +43,12 @@ import junit.framework.TestCase;
 import org.junit.Test;
 
 /**
-* @Author: xquan
-* @Description: Main Entry. 
+* @author: xquan
+* Main Entry. 
 * Command line's main entry.
 * Use picocli library to parse command line.
 * https://github.com/remkop/picocli
-* @Date: Created in 2018-6-30
+* @since: 2018-6-30
 **/
 
 public class RestClientTest extends TestCase {

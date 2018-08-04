@@ -20,7 +20,7 @@ public class PingOperation implements Operation
     private final Node toPing;
 
     /**
-     * @param server The Kademlia server used to send & receive messages
+     * @param server The Kademlia server used to send and receive messages
      * @param local  The local node
      * @param toPing The node to send the ping message to
      */

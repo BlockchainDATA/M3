@@ -17,9 +17,9 @@
 package eco.data.m3.routing.api.core;
 
 /**
- * @Author: xquan
- * @Description: Route Infomation a Kad node maintained in its DHT route table.
- * @Date: Created in 2018-6-29
+ * @author: xquan
+ * Route Infomation a Kad node maintained in its DHT route table.
+ * @since: 2018-6-29
  **/
 public class RouteInfo {
 

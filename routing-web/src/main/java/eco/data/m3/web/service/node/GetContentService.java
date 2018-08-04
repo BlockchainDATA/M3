@@ -26,10 +26,10 @@ import eco.data.m3.web.service.BaseServlet;
 import eco.data.m3.web.service.RequestResult;
 
 /**
- * @Author: xquan
- * @Description: Get Content Service.
+ * @author: xquan
+ * Get Content Service.
  * Get Saved Content from DHT Network.
- * @Date: Created in 2018-7-3
+ * @since: 2018-7-3
  **/
 public class GetContentService extends BaseServlet{
 

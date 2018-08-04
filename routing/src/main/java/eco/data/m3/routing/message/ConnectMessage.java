@@ -11,7 +11,7 @@ import eco.data.m3.routing.node.Node;
  * A message sent to another node requesting to connect to them.
  *
  * @author Joshua Kissoon
- * @created 20140218
+ * @since 20140218
  */
 public class ConnectMessage implements Message
 {

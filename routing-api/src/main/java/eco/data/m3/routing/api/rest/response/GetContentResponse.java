@@ -20,9 +20,9 @@ import eco.data.m3.routing.api.core.ContentInfo;
 import eco.data.m3.routing.api.rest.BaseResponse;
 
 /**
-* @Author: xquan
-* @Description: Rest Response, pair with the request with the same prefix.
-* @Date: Created in 2018-6-29
+* @author: xquan
+* Rest Response, pair with the request with the same prefix.
+* @since: 2018-6-29
 **/
 public class GetContentResponse extends BaseResponse{
 	

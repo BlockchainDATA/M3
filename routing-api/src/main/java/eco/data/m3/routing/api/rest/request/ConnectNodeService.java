@@ -19,10 +19,10 @@ package eco.data.m3.routing.api.rest.request;
 import eco.data.m3.routing.api.rest.BaseRequest;
 
 /**
-* @Author: xquan
-* @Description: Rest Request
+* @author: xquan
+* Rest Request
 	Connect a node to another in the same host.
-* @Date: Created in 2018-6-29
+* @since: 2018-6-29
 **/
 public class ConnectNodeService extends BaseRequest{
 

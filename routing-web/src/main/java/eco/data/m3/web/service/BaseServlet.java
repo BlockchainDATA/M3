@@ -32,11 +32,11 @@ import com.google.gson.Gson;
 import eco.data.m3.routing.api.core.ErrorCode;
 
 /**
- * @Author: xquan
- * @Description: Base Servlet Template.
+ * @author: xquan
+ * Base Servlet Template.
  * Supply Basic Servlet functions.
  * Response will formated to GSon String.
- * @Date: Created in 2018-7-3
+ * @since: 2018-7-3
  **/
 public abstract class BaseServlet extends HttpServlet{
  

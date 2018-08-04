@@ -25,11 +25,11 @@ import eco.data.m3.web.service.BaseServlet;
 import eco.data.m3.web.service.RequestResult;
 
 /**
- * @Author: xquan
- * @Description: Store Content Service.
+ * @author: xquan
+ * Store Content Service.
  * Store Content through a node to the DHT network.
  * Only String accepted.
- * @Date: Created in 2018-7-3
+ * @since: 2018-7-3
  **/
 public class StoreContentService extends BaseServlet{
 

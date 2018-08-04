@@ -12,7 +12,7 @@ import eco.data.m3.routing.node.Node;
  * - Mainly used to acknowledge a connect message
  *
  * @author Joshua Kissoon
- * @created 20140218
+ * @since 20140218
  */
 public class AcknowledgeMessage implements Message
 {

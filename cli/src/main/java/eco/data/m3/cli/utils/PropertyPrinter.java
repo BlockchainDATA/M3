@@ -19,11 +19,11 @@ package eco.data.m3.cli.utils;
 import java.lang.reflect.Field;
 
 /**
-* @Author: xquan
-* @Description: Property Printer. 
+* @author: xquan
+* Property Printer. 
 * Use Java Reflection to load a object's field and value, then print to string.
 * Used for show item info.
-* @Date: Created in 2018-6-30
+* @since: 2018-6-30
 **/
 public class PropertyPrinter {
 

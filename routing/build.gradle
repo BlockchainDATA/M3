@@ -13,8 +13,8 @@ repositories {
 
 jar {
     manifest {
-//        attributes 'Main-Class': 'eco.data.m3.routing.simulations.SimpleSenderTest'
-        attributes 'Main-Class': 'eco.data.m3.routing.simulations.SimReceiverTest'
+        attributes 'Main-Class': 'eco.data.m3.routing.simulations.SimpleSenderTest'
+//        attributes 'Main-Class': 'eco.data.m3.routing.simulations.SimReceiverTest'
     }
 }
 

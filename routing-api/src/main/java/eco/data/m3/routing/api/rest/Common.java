@@ -17,9 +17,9 @@
 package eco.data.m3.routing.api.rest;
 
 /**
-* @Author: xquan
-* @Description: Common Defines.
-* @Date: Created in 2018-6-29
+* @author: xquan
+* Common Defines.
+* @since: 2018-6-29
 **/
 public class Common {
 	

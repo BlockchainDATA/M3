@@ -17,9 +17,9 @@
 package eco.data.m3.routing.api.utils;
 
 /**
-* @Author: xquan
-* @Description: OSinfo Util.
-* @Date: Created in 2018-6-29
+* @author: xquan
+* OSinfo Util.
+* @since: 2018-6-29
 **/
 public class OSinfo {
     private static String OS = System.getProperty("os.name").toLowerCase();  

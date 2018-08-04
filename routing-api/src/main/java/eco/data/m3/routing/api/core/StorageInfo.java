@@ -17,9 +17,9 @@
 package eco.data.m3.routing.api.core;
 
 /**
-* @Author: xquan
-* @Description: A Storage Information.
-* @Date: Created in 2018-6-29
+* @author: xquan
+* A Storage Information.
+* @since: 2018-6-29
 **/
 public class StorageInfo {
 

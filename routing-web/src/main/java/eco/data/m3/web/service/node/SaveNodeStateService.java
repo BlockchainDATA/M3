@@ -24,10 +24,10 @@ import eco.data.m3.web.service.BaseServlet;
 import eco.data.m3.web.service.RequestResult;
 
 /**
- * @Author: xquan
- * @Description: Save Node State Service.
+ * @author: xquan
+ * Save Node State Service.
  * Save Node State to disk.
- * @Date: Created in 2018-7-3
+ * @since: 2018-7-3
  **/
 public class SaveNodeStateService extends BaseServlet{
 	

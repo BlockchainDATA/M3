@@ -9,7 +9,7 @@ import java.net.DatagramPacket;
  * A simple message used for testing the system; Default message constructed if the message type sent is not available
  *
  * @author Joshua Kissoon
- * @created 20140217
+ * @since 20140217
  */
 public class SimpleMessage implements Message
 {

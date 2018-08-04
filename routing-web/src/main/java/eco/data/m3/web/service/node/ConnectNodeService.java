@@ -24,10 +24,10 @@ import eco.data.m3.web.service.BaseServlet;
 import eco.data.m3.web.service.RequestResult;
 
 /**
- * @Author: xquan
- * @Description: Connect Node Service.
+ * @author: xquan
+ * Connect Node Service.
  * Let a Node Joint to a specified local Node.
- * @Date: Created in 2018-7-3
+ * @since: 2018-7-3
  **/
 public class ConnectNodeService extends BaseServlet{
 	

@@ -40,9 +40,9 @@ import java.net.UnknownHostException;
 import java.util.*;
 
 /**
-* @Author: xquan
-* @Description:
-* @Date: Created in 2018-6-29
+* @author: xquan
+* Main Routing Service, Wrap all Kademlia api into a service interface.
+* @since: 2018-6-29
 **/
 public class KadService {
 

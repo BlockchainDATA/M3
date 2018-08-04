@@ -21,9 +21,9 @@ import picocli.CommandLine;
 import static picocli.CommandLine.*;
 
 /**
-* @Author: xquan
-* @Description: A Command Example.
-* @Date: Created in 2018-6-30
+* @author: xquan
+* A Command Example.
+* @since: 2018-6-30
 **/
 @Command(name = "Greet", header = "%n@|green Hello world demo|@", description="Show Greet Info")
 public class Greet implements Runnable {

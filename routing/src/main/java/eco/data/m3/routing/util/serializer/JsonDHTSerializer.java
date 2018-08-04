@@ -22,15 +22,6 @@ import eco.data.m3.routing.dht.StorageEntryMetadata;
  * A KadSerializer that serializes DHT to JSON format
  * The generic serializer is not working for DHT
  *
- * Why a DHT specific serializer?
- * The DHT structure:
- * - DHT
- * -- StorageEntriesManager
- * --- Map<NodeId, List<StorageEntry>>
- * ---- NodeId:KeyBytes
- * ---- List<StorageEntry>
- * ----- StorageEntry: Key, OwnerId, Type, Hash
- *
  * The above structure seems to be causing some problem for Gson, especially at the Map part.
  *
  * Solution

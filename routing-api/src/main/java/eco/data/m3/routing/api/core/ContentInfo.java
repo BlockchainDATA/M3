@@ -19,9 +19,9 @@ package eco.data.m3.routing.api.core;
 import java.util.Date;
 
 /**
- * @Author: xquan
- * @Description: Content Saved in DHT Network Information.
- * @Date: Created in 2018-6-29
+ * @author: xquan
+ * Content Saved in DHT Network Information.
+ * @since: 2018-6-29
  **/
 public class ContentInfo {
 
