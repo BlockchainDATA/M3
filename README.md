@@ -1,8 +1,8 @@
 # M3
 
-M3 Project is the distribute storage module of DATA Project.
+M3 Project is the distribute storage module of DATA Project. For details of the M3, you can refer to our white paper:https://docsend.com/view/pk5w8wx
 
-Here is the introduction of the directory structure.
+The installation documentation can be find http://docs.data.eco/m3/
 
 ## Project Structure
 
