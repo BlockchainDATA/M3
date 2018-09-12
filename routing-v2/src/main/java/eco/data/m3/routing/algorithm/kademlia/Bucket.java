@@ -6,7 +6,7 @@ import java.util.NoSuchElementException;
 import java.util.TreeSet;
 
 import eco.data.m3.net.core.MId;
-import eco.data.m3.routing.core.Configuration;
+import eco.data.m3.routing.core.MConfiguration;
 import eco.data.m3.routing.core.Contact;
 
 public class Bucket {
@@ -20,13 +20,13 @@ public class Bucket {
     /* A set of last seen contacts that can replace any current contact that is unresponsive */
     private final TreeSet<Contact> replacementCache = new TreeSet<>();
 
-    private final Configuration config;
+    private final MConfiguration config;
 
     /**
      * @param depth  How deep in the routing tree is this bucket
      * @param config
      */
-    public Bucket(int depth, Configuration config)
+    public Bucket(int depth, MConfiguration config)
     {
         this.depth = depth;
         this.config = config;

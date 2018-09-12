@@ -8,7 +8,7 @@ import org.junit.Test;
 import eco.data.m3.net.core.MId;
 import eco.data.m3.routing.MHost;
 import eco.data.m3.routing.MNode;
-import eco.data.m3.routing.core.Content;
+import eco.data.m3.routing.core.MContent;
 import eco.data.m3.routing.core.GetParameter;
 import eco.data.m3.routing.core.DHTType;
 import eco.data.m3.routing.core.StorageEntry;
@@ -28,11 +28,11 @@ public class SaveStateTest {
         System.out.println(node1);
         System.out.println(node2);
 
-        Content c;
+        MContent c;
         synchronized (this)
         {
             System.out.println("\n\n\n\nSTORING CONTENT 1\n\n\n\n");
-            c = new Content(node2.getName(), "Some Data");
+            c = new MContent(node2.getName(), "Some Data");
             System.out.println(c);
             node1.putLocally(c);
         }
@@ -52,7 +52,7 @@ public class SaveStateTest {
         /* Trying to get a content stored on the restored node */
         GetParameter gp = new GetParameter(c.getKey(), node2.getName(), c.getType());
         StorageEntry content = node2.get(gp);
-        Content cc = Content.fromSerializedForm(content.getContent());
+        MContent cc = MContent.fromSerializedForm(content.getContent());
         System.out.println("Content received: " + cc);
 	}
 

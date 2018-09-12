@@ -7,7 +7,7 @@ import org.junit.Test;
 import eco.data.m3.net.core.MId;
 import eco.data.m3.routing.MHost;
 import eco.data.m3.routing.MNode;
-import eco.data.m3.routing.core.Content;
+import eco.data.m3.routing.core.MContent;
 import eco.data.m3.routing.core.DHTType;
 
 public class SaveStateTest2 {
@@ -50,17 +50,17 @@ public class SaveStateTest2 {
         synchronized (this)
         {
             System.out.println("\n\n\n\nSTORING CONTENT 1\n\n\n\n");
-            Content c = new Content(node2.getName(), "Some Data");
+            MContent c = new MContent(node2.getName(), "Some Data");
             System.out.println(c);
-            node2.put(c);
+            node2.putContent(c);
         }
 
         synchronized (this)
         {
             System.out.println("\n\n\n\nSTORING CONTENT 2\n\n\n\n");
-            Content c2 = new Content(node2.getName(), "Some other Data");
+            MContent c2 = new MContent(node2.getName(), "Some other Data");
             System.out.println(c2);
-            node4.put(c2);
+            node4.putContent(c2);
         }
 
         System.out.println(node1);

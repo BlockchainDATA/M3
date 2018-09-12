@@ -9,7 +9,7 @@ import eco.data.m3.net.core.MId;
  * @author xquan
  *
  */
-public class Content {
+public class MContent {
 
     public static final transient String TYPE = "DHTContent";
 
@@ -19,7 +19,7 @@ public class Content {
     private final long createTs = System.currentTimeMillis() / 1000L;
     private long updateTs = createTs;
 
-    public Content(String ownerId, String content)
+    public MContent(String ownerId, String content)
     {
         this.ownerId = ownerId;
         this.key = new MId();
@@ -27,14 +27,14 @@ public class Content {
     }
 
 
-    public Content(String ownerId, byte [] content)
+    public MContent(String ownerId, byte [] content)
     {
         this.ownerId = ownerId;
         this.key = new MId();
         setData(new String(content));
     }
 
-    public Content(String ownerId, MId key)
+    public MContent(String ownerId, MId key)
     {
         this.ownerId = ownerId;
         this.key = key;
@@ -114,9 +114,9 @@ public class Content {
      *
      * @return A new object from the given
      */
-    public static Content fromSerializedForm(byte[] data) {
+    public static MContent fromSerializedForm(byte[] data) {
         Gson gson = new Gson();
-        Content val = gson.fromJson(new String(data),Content.class);
+        MContent val = gson.fromJson(new String(data),MContent.class);
         return val;
 	}
 

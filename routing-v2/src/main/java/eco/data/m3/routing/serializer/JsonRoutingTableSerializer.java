@@ -14,7 +14,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
 import eco.data.m3.routing.algorithm.kademlia.KademliaRoutingTable;
-import eco.data.m3.routing.core.Configuration;
+import eco.data.m3.routing.core.MConfiguration;
 import eco.data.m3.routing.core.Contact;
 import eco.data.m3.routing.core.IRoutingTable;
 
@@ -26,9 +26,9 @@ public class JsonRoutingTableSerializer implements ISerializer<IRoutingTable> {
     {
     }.getType();
 
-    private final Configuration config;
+    private final MConfiguration config;
     
-	public JsonRoutingTableSerializer(Configuration config) {
+	public JsonRoutingTableSerializer(MConfiguration config) {
 		this.config = config;
 	}
 

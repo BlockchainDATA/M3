@@ -2,7 +2,7 @@ package eco.data.m3.routing.core;
 
 import java.io.File;
 
-public class Configuration {
+public class MConfiguration {
 
     private final static long RESTORE_INTERVAL = 60 * 1000; // in milliseconds
     private final static long RESPONSE_TIMEOUT = 100000;
@@ -55,7 +55,7 @@ public class Configuration {
     public String getNodeDataFolder(String ownerId)
     {
         /* Setup the main storage folder if it doesn't exist */
-        String path = System.getProperty("user.home") + File.separator + Configuration.LOCAL_FOLDER;
+        String path = System.getProperty("user.home") + File.separator + MConfiguration.LOCAL_FOLDER;
         File folder = new File(path);
         if (!folder.isDirectory())
         {

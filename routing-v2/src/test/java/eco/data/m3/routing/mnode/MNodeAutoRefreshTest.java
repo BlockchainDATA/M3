@@ -9,8 +9,8 @@ import org.junit.Test;
 import eco.data.m3.net.core.MId;
 import eco.data.m3.routing.MHost;
 import eco.data.m3.routing.MNode;
-import eco.data.m3.routing.core.Configuration;
-import eco.data.m3.routing.core.Content;
+import eco.data.m3.routing.core.MConfiguration;
+import eco.data.m3.routing.core.MContent;
 
 public class MNodeAutoRefreshTest {
 
@@ -30,7 +30,7 @@ public class MNodeAutoRefreshTest {
         node4.join(node2.getNodeId());
         node5.join(node4.getNodeId());
 
-        Content c = new Content(node1.getName(), new MId("AS84k678947584567465"));
+        MContent c = new MContent(node1.getName(), new MId("AS84k678947584567465"));
         c.setData("Setting the data");
 
         System.out.println("\n Content ID: " + c.getKey());
@@ -50,7 +50,7 @@ public class MNodeAutoRefreshTest {
         System.out.println(node5);
 
         /* Print the node states every few minutes */
-        Configuration config = new Configuration();
+        MConfiguration config = new MConfiguration();
         Timer timer = new Timer(true);
         timer.schedule(
                 new TimerTask()

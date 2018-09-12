@@ -5,12 +5,12 @@ public class StorageEntry {
     private String content;
     private final StorageEntryMetadata metadata;
 
-    public StorageEntry(final Content content)
+    public StorageEntry(final MContent content)
     {
         this(content, new StorageEntryMetadata(content));
     }
 
-    public StorageEntry(final Content content, final StorageEntryMetadata metadata)
+    public StorageEntry(final MContent content, final StorageEntryMetadata metadata)
     {
         this.setContent(content.toSerializedForm());
         this.metadata = metadata;

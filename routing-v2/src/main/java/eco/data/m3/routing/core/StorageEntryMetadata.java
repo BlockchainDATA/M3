@@ -15,7 +15,7 @@ public class StorageEntryMetadata {
     /* This value is the last time this content was last updated from the network */
     private long lastRepublished;
 
-    public StorageEntryMetadata(Content content)
+    public StorageEntryMetadata(MContent content)
     {
         this.key = content.getKey();
         this.ownerId = content.getOwnerId();

@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 
 import eco.data.m3.net.core.MId;
-import eco.data.m3.routing.core.Content;
+import eco.data.m3.routing.core.MContent;
 import eco.data.m3.routing.core.GetParameter;
 import eco.data.m3.routing.core.StorageEntryMetadata;
 import eco.data.m3.routing.exception.ContentExistException;
@@ -30,7 +30,7 @@ public class ContentManager {
      *
      * @param content The content to store a reference to
      */
-    public StorageEntryMetadata put(Content content) throws ContentExistException
+    public StorageEntryMetadata put(MContent content) throws ContentExistException
     {
         return this.put(new StorageEntryMetadata(content));
     }
@@ -90,7 +90,7 @@ public class ContentManager {
     /**
      * Check if a content exist in the DHT
      */
-    public synchronized boolean contains(Content content)
+    public synchronized boolean contains(MContent content)
     {
         return this.contains(new GetParameter(content));
     }
@@ -156,7 +156,7 @@ public class ContentManager {
         return entriesRet;
     }
 
-    public void remove(Content content) throws ContentNotFoundException
+    public void remove(MContent content) throws ContentNotFoundException
     {
         this.remove(new StorageEntryMetadata(content));
     }

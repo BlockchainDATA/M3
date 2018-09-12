@@ -4,14 +4,16 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.SocketException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import eco.data.m3.net.core.MId;
 import eco.data.m3.net.exception.MIdAlreadyExistException;
 import eco.data.m3.net.message.MessageFactory;
 import eco.data.m3.net.server.ServerConfig;
-import eco.data.m3.routing.core.Configuration;
+import eco.data.m3.routing.core.MConfiguration;
 import eco.data.m3.routing.core.NodeSetting;
 import eco.data.m3.routing.message.AcknowledgeMessage;
 import eco.data.m3.routing.message.ConnectMessage;
@@ -32,7 +34,7 @@ import eco.data.m3.routing.message.handler.StoreContentHandler;
  */
 public class MHost {
 	
-	private HashMap<String, MNode> nodeMap = new HashMap<>();
+	private LinkedHashMap<String, MNode> nodeMap = new LinkedHashMap<>();
 	
 	private MessageFactory messageFactory = new MessageFactory();
 	
@@ -54,32 +56,27 @@ public class MHost {
 	public MNode createNode(String name, MId mid) throws MIdAlreadyExistException, SocketException {
 		ServerConfig sc = new ServerConfig();
 		sc.setMessageFactory(messageFactory);
-		return createNode(name, mid, sc, new Configuration());
+		return createNode(name, mid, sc, new MConfiguration());
 	}
 	
 	public MNode createNode(String name, MId mid, ServerConfig config) throws MIdAlreadyExistException, SocketException {
 		config.setMessageFactory(messageFactory);
-		return createNode(name, mid, config, new Configuration());
+		return createNode(name, mid, config, new MConfiguration());
 	}
 	
-	public MNode createNode(String name, MId mid, ServerConfig server_config, Configuration node_config) throws MIdAlreadyExistException, SocketException {
+	public MNode createNode(String name, MId mid, ServerConfig server_config, MConfiguration node_config) throws MIdAlreadyExistException, SocketException {
+		if(nodeMap.get(name)!=null)
+			throw new MIdAlreadyExistException();
+		if(server_config.getMessageFactory()==null)
+			server_config.setMessageFactory(messageFactory);
+		
 		MNode node = new MNode(name, mid, server_config, node_config);
 		nodeMap.put(name, node);
 		return node;
 	}
 	
-	public MNode createNode(NodeSetting setting) throws FileNotFoundException, ClassNotFoundException, IOException {
-		MNode node;
-		if(setting.isLoadFromFile()) {
-			node = loadFromFile(setting.getName());
-		}else {
-			ServerConfig server_config = new ServerConfig();
-			server_config.setPort(setting.getPort());
-			
-			Configuration node_config = new Configuration();
-			node = createNode(setting.getName(), new MId(setting.getNodeId()), server_config, node_config);
-		}
-		return node;
+	public Collection<MNode> listNodes(){
+		return nodeMap.values();
 	}
 	
 	public MNode getNode(String name) {
@@ -99,12 +96,6 @@ public class MHost {
 		return node;		
 	}
 	
-	public void createHostNodes(List<NodeSetting> settings) throws FileNotFoundException, ClassNotFoundException, IOException {
-		for (NodeSetting setting : settings) {
-			createNode(setting);
-		}
-	}
-	
 	public void joinHostNodes(List<NodeSetting> settings) throws FileNotFoundException, ClassNotFoundException, IOException {
 		//Join
 		for (NodeSetting nodeSetting : settings) {
@@ -115,7 +106,7 @@ public class MHost {
 		}
 	}
 	
-	public void shutdown(boolean saveState) throws IOException {
+	public void shutdownAllNodes(boolean saveState) throws IOException {
 		List<MNode> nodes = new ArrayList<>(nodeMap.values());
 		for (MNode mNode : nodes) {
 			shutdownNode(mNode, saveState);

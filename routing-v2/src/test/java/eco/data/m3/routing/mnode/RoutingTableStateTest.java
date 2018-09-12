@@ -8,7 +8,7 @@ import org.junit.Test;
 import eco.data.m3.net.core.MId;
 import eco.data.m3.routing.MHost;
 import eco.data.m3.routing.MNode;
-import eco.data.m3.routing.core.Content;
+import eco.data.m3.routing.core.MContent;
 
 public class RoutingTableStateTest {
     
@@ -41,13 +41,13 @@ public class RoutingTableStateTest {
 	        }
     	}
 
-        public Content putContent(String content, MNode owner)
+        public MContent putContent(String content, MNode owner)
         {
-        	Content c = null;
+        	MContent c = null;
             try
             {
-                c = new Content(owner.getName(), "Some Data");
-                owner.put(c);
+                c = new MContent(owner.getName(), "Some Data");
+                owner.putContent(c);
                 return c;
             }
             catch (IOException e)

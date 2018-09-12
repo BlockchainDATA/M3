@@ -15,7 +15,7 @@ import eco.data.m3.net.message.Message;
 import eco.data.m3.net.message.MessageHandler;
 import eco.data.m3.net.server.Server;
 import eco.data.m3.routing.MNode;
-import eco.data.m3.routing.core.Configuration;
+import eco.data.m3.routing.core.MConfiguration;
 import eco.data.m3.routing.message.NodeLookupMessage;
 import eco.data.m3.routing.message.NodeReplyMessage;
 
@@ -36,7 +36,7 @@ public class NodeLookupOperation extends MessageHandler implements IOperation{
     private static final String FAILED = "Failed";
 
     private final MNode localNode;
-    private final Configuration config;
+    private final MConfiguration config;
 
     private final Message lookupMessage;        // Message sent to each peer
     private final Map<MId, String> nodes;

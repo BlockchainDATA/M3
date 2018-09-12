@@ -16,7 +16,7 @@ public interface IRoutingTable {
      *
      * @param config
      */
-    public void setConfiguration(Configuration config);
+    public void setConfiguration(MConfiguration config);
 
     /**
      * Adds a contact to the routing table based on how far it is from the LocalNode.

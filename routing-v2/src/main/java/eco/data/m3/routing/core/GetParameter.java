@@ -38,7 +38,7 @@ public class GetParameter {
      *
      * @param c
      */
-    public GetParameter(Content c)
+    public GetParameter(MContent c)
     {
         this.key = c.getKey();
 

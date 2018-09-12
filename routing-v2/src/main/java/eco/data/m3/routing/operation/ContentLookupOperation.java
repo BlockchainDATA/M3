@@ -17,7 +17,7 @@ import eco.data.m3.net.message.Message;
 import eco.data.m3.net.message.MessageHandler;
 import eco.data.m3.net.server.Server;
 import eco.data.m3.routing.MNode;
-import eco.data.m3.routing.core.Configuration;
+import eco.data.m3.routing.core.MConfiguration;
 import eco.data.m3.routing.core.GetParameter;
 import eco.data.m3.routing.core.StorageEntry;
 import eco.data.m3.routing.exception.ContentNotFoundException;

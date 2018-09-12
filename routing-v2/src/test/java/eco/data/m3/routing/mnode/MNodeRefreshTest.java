@@ -8,7 +8,7 @@ import org.junit.Test;
 import eco.data.m3.net.core.MId;
 import eco.data.m3.routing.MHost;
 import eco.data.m3.routing.MNode;
-import eco.data.m3.routing.core.Content;
+import eco.data.m3.routing.core.MContent;
 import eco.data.m3.routing.core.GetParameter;
 import eco.data.m3.routing.core.DHTType;
 import eco.data.m3.routing.core.StorageEntry;
@@ -24,12 +24,12 @@ public class MNodeRefreshTest {
 		node2.join(node1.getNodeId());
 
         /* Lets create the content and share it */
-        Content c = new Content(node2.getName(), "Some Data");
-        node2.put(c);
+        MContent c = new MContent(node2.getName(), "Some Data");
+        node2.putContent(c);
 
         /* Lets retrieve the content */
-        GetParameter gp = new GetParameter(c.getKey(), Content.TYPE);
-        gp.setType(Content.TYPE);
+        GetParameter gp = new GetParameter(c.getKey(), MContent.TYPE);
+        gp.setType(MContent.TYPE);
         gp.setOwnerId(c.getOwnerId());
         StorageEntry conte = node2.get(gp);
 

@@ -21,8 +21,8 @@ import eco.data.m3.net.server.Server;
 import eco.data.m3.net.server.ServerConfig;
 import eco.data.m3.routing.algorithm.kademlia.KademliaDHT;
 import eco.data.m3.routing.algorithm.kademlia.KademliaRoutingTable;
-import eco.data.m3.routing.core.Configuration;
-import eco.data.m3.routing.core.Content;
+import eco.data.m3.routing.core.MConfiguration;
+import eco.data.m3.routing.core.MContent;
 import eco.data.m3.routing.core.DHT;
 import eco.data.m3.routing.core.DHTType;
 import eco.data.m3.routing.core.GetParameter;
@@ -52,7 +52,7 @@ public class MNode {
     private final transient Server server;
     private final transient DHT dht;
     private transient IRoutingTable routingTable;
-    private transient Configuration config;
+    private transient MConfiguration config;
 
     /* Timer used to execute refresh operations */
     private transient Timer refreshOperationTimer;
@@ -78,7 +78,7 @@ public class MNode {
      *                     from disk <i>or</i> a network error occurred while
      *                     attempting to bootstrap to the network
      * */    
-    public MNode(String name, MId nodeId, ServerConfig server_config, Configuration node_config) throws MIdAlreadyExistException, SocketException {
+    public MNode(String name, MId nodeId, ServerConfig server_config, MConfiguration node_config) throws MIdAlreadyExistException, SocketException {
         this.name = name;
         this.nodeId = nodeId;
         this.config = node_config;
@@ -96,7 +96,7 @@ public class MNode {
     	startRefreshOperation();
     }
 
-    public MNode(String name, MId nodeId, DHT dht, IRoutingTable rt, ServerConfig server_config, Configuration node_config) throws MIdAlreadyExistException, SocketException {
+    public MNode(String name, MId nodeId, DHT dht, IRoutingTable rt, ServerConfig server_config, MConfiguration node_config) throws MIdAlreadyExistException, SocketException {
     	this.name = name;
     	this.nodeId = nodeId;
     	this.routingTable = rt;
@@ -153,7 +153,7 @@ public class MNode {
      */
     public static MNode loadFromFile(String ownerId, ServerConfig serverConfig) throws FileNotFoundException, IOException, ClassNotFoundException
     {
-        return MNode.loadFromFile(ownerId, serverConfig, new Configuration());
+        return MNode.loadFromFile(ownerId, serverConfig, new MConfiguration());
     }
 
     public Server getServer()
@@ -166,7 +166,7 @@ public class MNode {
         return this.dht;
     }
 
-    public Configuration getCurrentConfiguration()
+    public MConfiguration getCurrentConfiguration()
     {
         return this.config;
     }
@@ -181,7 +181,7 @@ public class MNode {
         this.statistician.setBootstrapTime(endTime - startTime);
     }
 
-    public int put(Content content) throws IOException
+    public int putContent(MContent content) throws IOException
     {
         return this.put(new StorageEntry(content));
     }
@@ -195,9 +195,13 @@ public class MNode {
         return sop.numNodesStoredAt();
     }
 
-    public void putLocally(Content content) throws IOException
+    public void putLocally(MContent content) throws IOException
     {
         this.dht.store(new StorageEntry(content));
+    }
+    
+    public MContent getContent(GetParameter param) throws NoSuchElementException, IOException, ContentNotFoundException{
+		return null;    	
     }
 
     public StorageEntry get(GetParameter param) throws NoSuchElementException, IOException, ContentNotFoundException
@@ -253,7 +257,7 @@ public class MNode {
      * @throws java.io.FileNotFoundException
      * @throws java.lang.ClassNotFoundException
      */
-    public static MNode loadFromFile(String ownerId, ServerConfig serverConfig, Configuration nodeConfig) throws FileNotFoundException, IOException, ClassNotFoundException
+    public static MNode loadFromFile(String ownerId, ServerConfig serverConfig, MConfiguration nodeConfig) throws FileNotFoundException, IOException, ClassNotFoundException
     {
         DataInputStream din;
 
@@ -322,7 +326,7 @@ public class MNode {
      *
      * @return String The name of the folder to store node states
      */
-    private static String getStateStorageFolderName(String name, Configuration iconfig)
+    private static String getStateStorageFolderName(String name, MConfiguration iconfig)
     {
         /* Setup the nodes storage folder if it doesn't exist */
         String path = iconfig.getNodeDataFolder(name) + File.separator + "nodeState";

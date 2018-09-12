@@ -6,7 +6,7 @@ import java.util.TreeSet;
 
 import eco.data.m3.net.core.KeyComparator;
 import eco.data.m3.net.core.MId;
-import eco.data.m3.routing.core.Configuration;
+import eco.data.m3.routing.core.MConfiguration;
 import eco.data.m3.routing.core.Contact;
 import eco.data.m3.routing.core.IRoutingTable;
 
@@ -20,9 +20,9 @@ public class KademliaRoutingTable implements IRoutingTable {
     private final MId nodeId;  // The current node
     private transient Bucket[] buckets;
 
-    private transient Configuration config;
+    private transient MConfiguration config;
 	
-	public KademliaRoutingTable(MId nodeId, Configuration config) {
+	public KademliaRoutingTable(MId nodeId, MConfiguration config) {
 		this.nodeId = nodeId;
 		this.config = config;
 
@@ -43,7 +43,7 @@ public class KademliaRoutingTable implements IRoutingTable {
 	}
 
 	@Override
-	public void setConfiguration(Configuration config) {
+	public void setConfiguration(MConfiguration config) {
         this.config = config;		
 	}
 

@@ -9,7 +9,7 @@ import org.junit.Test;
 import eco.data.m3.net.core.MId;
 import eco.data.m3.routing.MHost;
 import eco.data.m3.routing.MNode;
-import eco.data.m3.routing.core.Content;
+import eco.data.m3.routing.core.MContent;
 import eco.data.m3.routing.core.GetParameter;
 import eco.data.m3.routing.core.DHTType;
 import eco.data.m3.routing.core.StorageEntry;
@@ -34,18 +34,18 @@ public class MNodeContentSendingTest {
             data += UUID.randomUUID();
         }
         System.out.println(data);
-        Content c = new Content(node2.getName(), data);
-        node2.put(c);
+        MContent c = new MContent(node2.getName(), data);
+        node2.putContent(c);
 
         /**
          * Lets retrieve the content
          */
         System.out.println("Retrieving Content");
-        GetParameter gp = new GetParameter(c.getKey(), Content.TYPE);
+        GetParameter gp = new GetParameter(c.getKey(), MContent.TYPE);
         gp.setOwnerId(c.getOwnerId());
         System.out.println("Get Parameter: " + gp);
         StorageEntry conte = node2.get(gp);
-        System.out.println("Content Found: " + Content.fromSerializedForm(conte.getContent()));
+        System.out.println("Content Found: " + MContent.fromSerializedForm(conte.getContent()));
         System.out.println("Content Metadata: " + conte.getContentMetadata());
 	}
 

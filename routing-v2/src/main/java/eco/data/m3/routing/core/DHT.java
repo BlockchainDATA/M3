@@ -27,11 +27,11 @@ public class DHT {
 
     private transient ContentManager contentManager;
     private transient ISerializer<StorageEntry> serializer = null;
-    private transient Configuration config;
+    private transient MConfiguration config;
 
     private final String ownerId;
 
-    public DHT(String ownerId, Configuration config)
+    public DHT(String ownerId, MConfiguration config)
     {
         this.ownerId = ownerId;
         this.config = config;
@@ -43,7 +43,7 @@ public class DHT {
         contentManager = new ContentManager();
     }
 
-    public void setConfiguration(Configuration con)
+    public void setConfiguration(MConfiguration con)
     {
         this.config = con;
     }
@@ -119,7 +119,7 @@ public class DHT {
         }
     }
 
-    public boolean store(Content content) throws IOException
+    public boolean store(MContent content) throws IOException
     {
         return this.store(new StorageEntry(content));
     }
@@ -176,7 +176,7 @@ public class DHT {
         throw new NoSuchElementException();
     }
 
-    public void remove(Content content) throws ContentNotFoundException
+    public void remove(MContent content) throws ContentNotFoundException
     {
         this.remove(new StorageEntryMetadata(content));
     }
