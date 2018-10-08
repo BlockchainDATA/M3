@@ -1,7 +1,7 @@
 package eco.data.m3.routing.algorithm.kademlia;
 
-import eco.data.m3.routing.core.MConfiguration;
 import eco.data.m3.routing.core.DHT;
+import eco.data.m3.routing.core.MConfiguration;
 
 public class KademliaDHT extends DHT {
 

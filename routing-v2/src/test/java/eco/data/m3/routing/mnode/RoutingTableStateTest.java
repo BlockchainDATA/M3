@@ -1,14 +1,12 @@
 package eco.data.m3.routing.mnode;
 
-import java.io.IOException;
-import java.util.Scanner;
-
-import org.junit.Test;
-
 import eco.data.m3.net.core.MId;
 import eco.data.m3.routing.MHost;
 import eco.data.m3.routing.MNode;
 import eco.data.m3.routing.core.MContent;
+import org.junit.Test;
+
+import java.io.IOException;
 
 public class RoutingTableStateTest {
     
@@ -19,7 +17,7 @@ public class RoutingTableStateTest {
 
         public int numKads = 10;
     	
-    	public RoutingTableStateTestClass() throws IOException {
+    	public RoutingTableStateTestClass() throws Throwable {
 	
 	        /* Setting up Kad networks */
 	        kads = new MNode[numKads];
@@ -41,7 +39,7 @@ public class RoutingTableStateTest {
 	        }
     	}
 
-        public MContent putContent(String content, MNode owner)
+        public MContent putContent(String content, MNode owner) throws Throwable
         {
         	MContent c = null;
             try
@@ -100,7 +98,7 @@ public class RoutingTableStateTest {
     }
 
 	@Test
-	public void test() throws IOException {
+	public void test() throws Throwable {
 
 		RoutingTableStateTestClass rtss = new RoutingTableStateTestClass();
 

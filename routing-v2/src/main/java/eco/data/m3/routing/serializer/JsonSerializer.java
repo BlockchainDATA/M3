@@ -1,14 +1,10 @@
 package eco.data.m3.routing.serializer;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+
+import java.io.*;
 
 public class JsonSerializer<T> implements ISerializer<T> {
 

@@ -1,13 +1,13 @@
 package eco.data.m3.routing.algorithm.kademlia;
 
+import eco.data.m3.net.core.MId;
+import eco.data.m3.routing.core.Contact;
+import eco.data.m3.routing.core.MConfiguration;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.TreeSet;
-
-import eco.data.m3.net.core.MId;
-import eco.data.m3.routing.core.MConfiguration;
-import eco.data.m3.routing.core.Contact;
 
 public class Bucket {
 	

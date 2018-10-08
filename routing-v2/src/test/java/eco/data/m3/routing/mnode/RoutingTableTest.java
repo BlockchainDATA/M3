@@ -1,18 +1,17 @@
 package eco.data.m3.routing.mnode;
 
-import java.io.IOException;
-
-import org.junit.Test;
-
 import eco.data.m3.net.core.MId;
 import eco.data.m3.routing.MHost;
 import eco.data.m3.routing.MNode;
 import eco.data.m3.routing.core.MContent;
+import org.junit.Test;
+
+import java.io.IOException;
 
 public class RoutingTableTest {
 
 	@Test
-	public void test() throws IOException, InterruptedException {
+	public void test() throws Throwable {
 		MHost host = new MHost();
 		int numKads = 10;
 
@@ -60,7 +59,7 @@ public class RoutingTableTest {
         }
     }
 
-    public MContent putContent(String content, MNode owner)
+    public MContent putContent(String content, MNode owner) throws Throwable
     {
         MContent c = null;
         try

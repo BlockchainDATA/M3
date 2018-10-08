@@ -1,17 +1,15 @@
 package eco.data.m3.routing.message.handler;
 
-import java.io.IOException;
-import java.util.NoSuchElementException;
-
 import eco.data.m3.net.message.Message;
 import eco.data.m3.net.message.MessageHandler;
 import eco.data.m3.net.server.Server;
 import eco.data.m3.routing.MNode;
-import eco.data.m3.routing.core.MConfiguration;
-import eco.data.m3.routing.core.DHT;
 import eco.data.m3.routing.message.ContentLookupMessage;
 import eco.data.m3.routing.message.ContentMessage;
 import eco.data.m3.routing.message.NodeLookupMessage;
+
+import java.io.IOException;
+import java.util.NoSuchElementException;
 
 /**
  * Responds to a ContentLookupMessage by sending a ContentMessage containing the requested content;
@@ -31,7 +29,7 @@ public class ContentLookupHandler extends MessageHandler{
     }
 
 	@Override
-	public void receive(Message incoming, int conversationId) throws IOException {
+	public void receive(Message incoming, int conversationId) throws Throwable {
 
         ContentLookupMessage msg = (ContentLookupMessage) incoming;
         this.localNode.getRoutingTable().insert(msg.getOrigin());

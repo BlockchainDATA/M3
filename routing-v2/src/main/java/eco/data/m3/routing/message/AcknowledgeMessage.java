@@ -1,10 +1,10 @@
 package eco.data.m3.routing.message;
 
-import java.io.DataInputStream;
-import java.io.IOException;
-
 import eco.data.m3.net.core.MId;
 import eco.data.m3.net.message.Message;
+
+import java.io.DataInputStream;
+import java.io.IOException;
 
 /**
  * A message used to acknowledge a request from a node; can be used in many situations.

@@ -1,13 +1,12 @@
 package eco.data.m3.routing.mnode;
 
-import java.io.IOException;
-
-import org.junit.Test;
-
 import eco.data.m3.net.core.MId;
 import eco.data.m3.routing.MHost;
 import eco.data.m3.routing.MNode;
 import eco.data.m3.routing.algorithm.kademlia.KademliaRoutingTable;
+import org.junit.Test;
+
+import java.io.IOException;
 
 public class MNodeSendTest {
 

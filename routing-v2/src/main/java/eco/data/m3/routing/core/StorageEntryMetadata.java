@@ -1,8 +1,8 @@
 package eco.data.m3.routing.core;
 
-import java.util.Objects;
-
 import eco.data.m3.net.core.MId;
+
+import java.util.Objects;
 
 public class StorageEntryMetadata {
 

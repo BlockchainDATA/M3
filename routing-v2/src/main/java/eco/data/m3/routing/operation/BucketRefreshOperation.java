@@ -1,9 +1,9 @@
 package eco.data.m3.routing.operation;
 
-import java.io.IOException;
-
 import eco.data.m3.net.core.MId;
 import eco.data.m3.routing.MNode;
+
+import java.io.IOException;
 
 /**
  * At each time interval t, nodes need to refresh their K-Buckets
@@ -52,7 +52,10 @@ public class BucketRefreshOperation implements IOperation{
                     catch (IOException e)
                     {
                         //System.err.println("Bucket Refresh Operation Failed. Msg: " + e.getMessage());
-                    }
+                    } catch (Throwable e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
                 }
             }.start();
         }

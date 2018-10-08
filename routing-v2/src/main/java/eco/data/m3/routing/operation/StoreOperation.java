@@ -1,16 +1,12 @@
 package eco.data.m3.routing.operation;
 
-import java.io.IOException;
-import java.util.List;
-
 import eco.data.m3.net.core.MId;
 import eco.data.m3.net.message.Message;
-import eco.data.m3.net.server.Server;
 import eco.data.m3.routing.MNode;
-import eco.data.m3.routing.core.MConfiguration;
-import eco.data.m3.routing.core.DHT;
 import eco.data.m3.routing.core.StorageEntry;
 import eco.data.m3.routing.message.StoreContentMessage;
+
+import java.util.List;
 
 /**
  * Operation that stores a DHT Content onto the closest nodes to the content Key
@@ -30,7 +26,7 @@ public class StoreOperation implements IOperation{
     }
     
 	@Override
-	public synchronized void execute() throws IOException {
+	public synchronized void execute() throws Throwable {
         /* Get the nodes on which we need to store the content */
         NodeLookupOperation ndlo = new NodeLookupOperation(this.localNode, this.storageEntry.getContentMetadata().getKey());
         ndlo.execute();

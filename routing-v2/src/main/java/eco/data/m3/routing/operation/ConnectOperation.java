@@ -1,12 +1,9 @@
 package eco.data.m3.routing.operation;
 
-import java.io.IOException;
-
 import eco.data.m3.net.core.MId;
 import eco.data.m3.net.exception.RoutingException;
 import eco.data.m3.net.message.Message;
 import eco.data.m3.net.message.MessageHandler;
-import eco.data.m3.net.server.Server;
 import eco.data.m3.routing.MNode;
 import eco.data.m3.routing.message.AcknowledgeMessage;
 import eco.data.m3.routing.message.ConnectMessage;
@@ -29,7 +26,7 @@ public class ConnectOperation extends MessageHandler implements IOperation{
     }
 
     @Override
-    public synchronized void execute() throws IOException
+    public synchronized void execute() throws Throwable
     {
         try
         {
@@ -110,7 +107,7 @@ public class ConnectOperation extends MessageHandler implements IOperation{
      * @throws java.io.IOException
      */
     @Override
-    public synchronized void timeout(int comm) throws IOException
+    public synchronized void timeout(int comm) throws Throwable
     {
         if (++this.attempts < MAX_CONNECT_ATTEMPTS)
         {

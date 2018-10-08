@@ -1,14 +1,13 @@
 package eco.data.m3.routing.operation;
 
-import java.io.IOException;
-import java.util.List;
-
 import eco.data.m3.net.core.MId;
 import eco.data.m3.net.message.Message;
 import eco.data.m3.routing.MNode;
 import eco.data.m3.routing.core.StorageEntryMetadata;
 import eco.data.m3.routing.exception.ContentNotFoundException;
 import eco.data.m3.routing.message.StoreContentMessage;
+
+import java.util.List;
 
 public class ContentRefreshOperation implements IOperation{
 
@@ -24,11 +23,10 @@ public class ContentRefreshOperation implements IOperation{
  Also delete the content if this node is no longer one of the K closest nodes
 
  We assume that our JKademliaRoutingTable is updated, and we can get the K closest nodes from that table
-     *
-     * @throws java.io.IOException
+     * @throws Throwable 
      */
     @Override
-    public void execute() throws IOException
+    public void execute() throws Throwable
     {
         /* Get a list of all storage entries for content */
         List<StorageEntryMetadata> entries = localNode.getDHT().getStorageEntries();

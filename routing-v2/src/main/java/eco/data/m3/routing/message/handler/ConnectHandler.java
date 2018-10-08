@@ -1,13 +1,13 @@
 package eco.data.m3.routing.message.handler;
 
-import java.io.IOException;
-
 import eco.data.m3.net.message.Message;
 import eco.data.m3.net.message.MessageHandler;
 import eco.data.m3.net.server.Server;
 import eco.data.m3.routing.MNode;
 import eco.data.m3.routing.message.AcknowledgeMessage;
 import eco.data.m3.routing.message.ConnectMessage;
+
+import java.io.IOException;
 
 /**
  * Receives a ConnectMessage and sends an AcknowledgeMessage as reply.
@@ -26,7 +26,7 @@ public class ConnectHandler extends MessageHandler{
     }
     
 	@Override
-	public void receive(Message incoming, int conversationId) throws IOException {
+	public void receive(Message incoming, int conversationId) throws Throwable {
         ConnectMessage mess = (ConnectMessage) incoming;
 
         /* Update the local space by inserting the origin node. */

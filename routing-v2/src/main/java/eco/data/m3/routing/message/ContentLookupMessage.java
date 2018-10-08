@@ -1,13 +1,13 @@
 package eco.data.m3.routing.message;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-
 import eco.data.m3.net.core.MId;
 import eco.data.m3.net.message.Message;
 import eco.data.m3.routing.core.GetParameter;
 import eco.data.m3.routing.serializer.JsonSerializer;
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 
 /**
  * Messages used to send to another node requesting content.

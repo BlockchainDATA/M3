@@ -1,16 +1,15 @@
 package eco.data.m3.routing.message.handler;
 
-import java.io.IOException;
-import java.util.List;
-
 import eco.data.m3.net.core.MId;
 import eco.data.m3.net.message.Message;
 import eco.data.m3.net.message.MessageHandler;
 import eco.data.m3.net.server.Server;
 import eco.data.m3.routing.MNode;
-import eco.data.m3.routing.core.MConfiguration;
 import eco.data.m3.routing.message.NodeLookupMessage;
 import eco.data.m3.routing.message.NodeReplyMessage;
+
+import java.io.IOException;
+import java.util.List;
 
 /**
  * Receives a NodeLookupMessage and sends a NodeReplyMessage as reply with the K-Closest nodes to the ID sent.
@@ -29,7 +28,7 @@ public class NodeLookupHandler extends MessageHandler{
     }
 
 	@Override
-	public void receive(Message incoming, int conversationId) throws IOException {
+	public void receive(Message incoming, int conversationId) throws Throwable {
         NodeLookupMessage msg = (NodeLookupMessage) incoming;
         MId origin = msg.getOrigin();
 

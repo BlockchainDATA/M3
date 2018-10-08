@@ -1,17 +1,13 @@
 package eco.data.m3.routing;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
-
 import eco.data.m3.net.core.MId;
-import eco.data.m3.routing.core.MContent;
 import eco.data.m3.routing.core.GetParameter;
+import eco.data.m3.routing.core.MContent;
 import eco.data.m3.routing.core.StorageEntryMetadata;
 import eco.data.m3.routing.exception.ContentExistException;
 import eco.data.m3.routing.exception.ContentNotFoundException;
+
+import java.util.*;
 
 /**
  * It would be infeasible to keep all content in memory to be send when requested

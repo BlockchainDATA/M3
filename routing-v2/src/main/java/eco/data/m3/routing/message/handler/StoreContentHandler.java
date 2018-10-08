@@ -1,13 +1,12 @@
 package eco.data.m3.routing.message.handler;
 
-import java.io.IOException;
-
 import eco.data.m3.net.message.Message;
 import eco.data.m3.net.message.MessageHandler;
 import eco.data.m3.net.server.Server;
 import eco.data.m3.routing.MNode;
-import eco.data.m3.routing.core.DHT;
 import eco.data.m3.routing.message.StoreContentMessage;
+
+import java.io.IOException;
 
 /**
  * Receiver for incoming StoreContentMessage
@@ -27,7 +26,7 @@ public class StoreContentHandler extends MessageHandler{
 
 
 	@Override
-	public void receive(Message incoming, int conversationId) throws IOException {
+	public void receive(Message incoming, int conversationId) throws Throwable {
         /* It's a StoreContentMessage we're receiving */
         StoreContentMessage msg = (StoreContentMessage) incoming;
 

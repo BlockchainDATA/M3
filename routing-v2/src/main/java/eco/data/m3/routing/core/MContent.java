@@ -1,7 +1,6 @@
 package eco.data.m3.routing.core;
 
 import com.google.gson.Gson;
-
 import eco.data.m3.net.core.MId;
 
 /**

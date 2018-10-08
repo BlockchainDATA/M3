@@ -16,6 +16,6 @@ public interface IOperation {
 	 * 
 	 * @throws IOException
 	 */
-	public void execute() throws IOException;
+	public void execute() throws Throwable;
 	
 }

@@ -11,16 +11,10 @@ repositories {
     mavenCentral()
 }
 
-task copyDependencies(type: Copy) {
-    from configurations.runtime
-    into 'build/libs/lib'
-}
-jar.dependsOn(copyDependencies)
-
 jar {
     manifest {
         attributes 'Main-Class': 'eco.data.m3.cli.MainEntry'
-        attributes 'Class-Path': '. lib/'
+        from configuration.compile.collect { zipTree it}
     }
 }
 

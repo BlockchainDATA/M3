@@ -1,22 +1,17 @@
 package eco.data.m3.routing.serializer;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.lang.reflect.Type;
-import java.util.List;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-
 import eco.data.m3.routing.algorithm.kademlia.KademliaRoutingTable;
-import eco.data.m3.routing.core.MConfiguration;
 import eco.data.m3.routing.core.Contact;
 import eco.data.m3.routing.core.IRoutingTable;
+import eco.data.m3.routing.core.MConfiguration;
+
+import java.io.*;
+import java.lang.reflect.Type;
+import java.util.List;
 
 public class JsonRoutingTableSerializer implements ISerializer<IRoutingTable> {
 

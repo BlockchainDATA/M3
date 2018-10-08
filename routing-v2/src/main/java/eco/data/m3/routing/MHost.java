@@ -1,32 +1,24 @@
 package eco.data.m3.routing;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.net.SocketException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-
 import eco.data.m3.net.core.MId;
 import eco.data.m3.net.exception.MIdAlreadyExistException;
 import eco.data.m3.net.message.MessageFactory;
 import eco.data.m3.net.server.ServerConfig;
 import eco.data.m3.routing.core.MConfiguration;
 import eco.data.m3.routing.core.NodeSetting;
-import eco.data.m3.routing.message.AcknowledgeMessage;
-import eco.data.m3.routing.message.ConnectMessage;
-import eco.data.m3.routing.message.ContentLookupMessage;
-import eco.data.m3.routing.message.ContentMessage;
-import eco.data.m3.routing.message.MessageCode;
-import eco.data.m3.routing.message.NodeLookupMessage;
-import eco.data.m3.routing.message.NodeReplyMessage;
-import eco.data.m3.routing.message.StoreContentMessage;
+import eco.data.m3.routing.message.*;
 import eco.data.m3.routing.message.handler.ConnectHandler;
 import eco.data.m3.routing.message.handler.ContentLookupHandler;
 import eco.data.m3.routing.message.handler.NodeLookupHandler;
 import eco.data.m3.routing.message.handler.StoreContentHandler;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.SocketException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 /**
  * @author xquan
@@ -96,7 +88,7 @@ public class MHost {
 		return node;		
 	}
 	
-	public void joinHostNodes(List<NodeSetting> settings) throws FileNotFoundException, ClassNotFoundException, IOException {
+	public void joinHostNodes(List<NodeSetting> settings) throws Throwable {
 		//Join
 		for (NodeSetting nodeSetting : settings) {
 			MNode node = getNode(nodeSetting.getName());

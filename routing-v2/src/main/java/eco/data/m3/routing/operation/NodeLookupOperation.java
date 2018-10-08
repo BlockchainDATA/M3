@@ -1,23 +1,15 @@
 package eco.data.m3.routing.operation;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-
 import eco.data.m3.net.core.KeyComparator;
 import eco.data.m3.net.core.MId;
-import eco.data.m3.net.exception.RoutingException;
 import eco.data.m3.net.message.Message;
 import eco.data.m3.net.message.MessageHandler;
-import eco.data.m3.net.server.Server;
 import eco.data.m3.routing.MNode;
 import eco.data.m3.routing.core.MConfiguration;
 import eco.data.m3.routing.message.NodeLookupMessage;
 import eco.data.m3.routing.message.NodeReplyMessage;
+
+import java.util.*;
 
 /**
  * Finds the K closest nodes to a specified identifier
@@ -71,11 +63,10 @@ public class NodeLookupOperation extends MessageHandler implements IOperation{
     }
 
     /**
-     * @throws java.io.IOException
-     * @throws kademlia.exceptions.RoutingException
+     * @throws Throwable 
      */
     @Override
-    public synchronized void execute() throws IOException, RoutingException
+    public synchronized void execute() throws Throwable
     {
         try
         {
@@ -146,8 +137,9 @@ public class NodeLookupOperation extends MessageHandler implements IOperation{
      * the algorithm is finished.
      *
      * @return <code>true</code> if finished OR <code>false</code> otherwise
+     * @throws Throwable 
      */
-    private boolean askNodesorFinish() throws IOException
+    private boolean askNodesorFinish() throws Throwable
     {
         /* If >= CONCURRENCY nodes are in transit, don't do anything */
         if (this.config.maxConcurrentMessagesTransiting() <= this.messagesTransiting.size())
@@ -245,11 +237,10 @@ public class NodeLookupOperation extends MessageHandler implements IOperation{
      * Receive and handle the incoming NodeReplyMessage
      *
      * @param comm
-     *
-     * @throws java.io.IOException
+     * @throws Throwable 
      */
     @Override
-    public synchronized void receive(Message incoming, int comm) throws IOException
+    public synchronized void receive(Message incoming, int comm) throws Throwable
     {
         if (!(incoming instanceof NodeReplyMessage))
         {
@@ -278,11 +269,10 @@ public class NodeLookupOperation extends MessageHandler implements IOperation{
      * A node does not respond or a packet was lost, we set this node as failed
      *
      * @param comm
-     *
-     * @throws java.io.IOException
+     * @throws Throwable 
      */
     @Override
-    public synchronized void timeout(int comm) throws IOException
+    public synchronized void timeout(int comm) throws Throwable
     {
         /* Get the node associated with this communication */
     	MId n = this.messagesTransiting.get(comm);

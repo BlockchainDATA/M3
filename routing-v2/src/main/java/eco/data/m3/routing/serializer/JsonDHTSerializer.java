@@ -1,20 +1,15 @@
 package eco.data.m3.routing.serializer;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.lang.reflect.Type;
-import java.util.List;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-
 import eco.data.m3.routing.core.DHT;
 import eco.data.m3.routing.core.StorageEntryMetadata;
+
+import java.io.*;
+import java.lang.reflect.Type;
+import java.util.List;
 
 public class JsonDHTSerializer implements ISerializer<DHT> {
 

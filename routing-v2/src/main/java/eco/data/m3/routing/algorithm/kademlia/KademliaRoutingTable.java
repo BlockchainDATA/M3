@@ -1,14 +1,14 @@
 package eco.data.m3.routing.algorithm.kademlia;
 
+import eco.data.m3.net.core.KeyComparator;
+import eco.data.m3.net.core.MId;
+import eco.data.m3.routing.core.Contact;
+import eco.data.m3.routing.core.IRoutingTable;
+import eco.data.m3.routing.core.MConfiguration;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
-
-import eco.data.m3.net.core.KeyComparator;
-import eco.data.m3.net.core.MId;
-import eco.data.m3.routing.core.MConfiguration;
-import eco.data.m3.routing.core.Contact;
-import eco.data.m3.routing.core.IRoutingTable;
 
 /**
  * Implementation of a Kademlia routing table
