@@ -1,13 +1,24 @@
 package eco.data.m3.routing.core;
 
-public class StorageEntry {
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 
-    private String content;
-    private final StorageEntryMetadata metadata;
+import eco.data.m3.net.core.IStreamable;
+
+public class StorageEntry implements IStreamable{
+
+    private byte [] content;
+    private StorageEntryMetadata metadata;
 
     public StorageEntry(final MContent content)
     {
         this(content, new StorageEntryMetadata(content));
+    }
+
+    public StorageEntry(DataInputStream in) throws IOException
+    {
+    	this.fromStream(in);
     }
 
     public StorageEntry(final MContent content, final StorageEntryMetadata metadata)
@@ -18,12 +29,12 @@ public class StorageEntry {
 
     public final void setContent(final byte[] data)
     {
-        this.content = new String(data);
+        this.content = data;
     }
 
     public final byte[] getContent()
     {
-        return this.content.getBytes();
+        return this.content;
     }
 
     public final StorageEntryMetadata getContentMetadata()
@@ -46,4 +57,19 @@ public class StorageEntry {
 
         return sb.toString();
     }
+
+	@Override
+	public void toStream(DataOutputStream out) throws IOException {
+		this.metadata.toStream(out);
+		out.writeInt(content.length);
+		out.write(content);
+	}
+
+	@Override
+	public void fromStream(DataInputStream in) throws IOException {
+		this.metadata = new StorageEntryMetadata(in);
+		int len = in.readInt();
+		content = new byte [len];
+		in.read(content);
+	}
 }

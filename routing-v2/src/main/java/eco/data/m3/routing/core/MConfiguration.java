@@ -7,6 +7,7 @@ public class MConfiguration {
     private final static long RESTORE_INTERVAL = 60 * 1000; // in milliseconds
     private final static long RESPONSE_TIMEOUT = 100000;
     private final static long OPERATION_TIMEOUT = 100000;
+    private final static long STORE_REPLY_TIMEOUT = 2000;
     private final static int CONCURRENCY = 10;
     private final static int K = 5;
     private final static int RCSIZE = 3;
@@ -17,7 +18,17 @@ public class MConfiguration {
     
     private DHTType dhtType = DHTType.Kademlia;
 
-    public long restoreInterval()
+    private String rootPath = null;
+
+    public String getRootPath() {
+		return rootPath;
+	}
+
+	public void setRootPath(String rootPath) {
+		this.rootPath = rootPath;
+	}
+
+	public long restoreInterval()
     {
         return RESTORE_INTERVAL;
     }
@@ -30,6 +41,11 @@ public class MConfiguration {
     public long operationTimeout()
     {
         return OPERATION_TIMEOUT;
+    }
+
+    public long storeReplyTimeout()
+    {
+        return STORE_REPLY_TIMEOUT;
     }
 
     public int maxConcurrentMessagesTransiting()
@@ -55,7 +71,13 @@ public class MConfiguration {
     public String getNodeDataFolder(String ownerId)
     {
         /* Setup the main storage folder if it doesn't exist */
-        String path = System.getProperty("user.home") + File.separator + MConfiguration.LOCAL_FOLDER;
+        String path = null;
+        
+        if(rootPath!=null)
+            path = rootPath;
+        else
+            path = System.getProperty("user.home") + File.separator + MConfiguration.LOCAL_FOLDER;
+
         File folder = new File(path);
         if (!folder.isDirectory())
         {

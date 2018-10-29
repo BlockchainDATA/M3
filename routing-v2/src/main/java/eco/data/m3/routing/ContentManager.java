@@ -46,7 +46,13 @@ public class ContentManager {
         /* If this entry doesn't already exist, then we add it */
         if (!this.contains(entry))
         {
-            this.entries.get(entry.getKey()).add(entry);
+        	if(entry==null)
+        		System.out.println("");
+        	try {
+        		this.entries.get(entry.getKey()).add(entry);
+        	}catch (NullPointerException e) {
+				e.printStackTrace();
+			}
 
             return entry;
         }

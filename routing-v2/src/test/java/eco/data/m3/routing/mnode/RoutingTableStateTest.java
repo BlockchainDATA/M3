@@ -1,17 +1,18 @@
 package eco.data.m3.routing.mnode;
 
+import java.io.IOException;
+
+import org.junit.Test;
+
 import eco.data.m3.net.core.MId;
 import eco.data.m3.routing.MHost;
 import eco.data.m3.routing.MNode;
 import eco.data.m3.routing.core.MContent;
-import org.junit.Test;
-
-import java.io.IOException;
 
 public class RoutingTableStateTest {
     
     class RoutingTableStateTestClass{
-		MHost host = new MHost();
+    	MHost host = new MHost();
 
         MNode[] kads;
 
@@ -44,13 +45,13 @@ public class RoutingTableStateTest {
         	MContent c = null;
             try
             {
-                c = new MContent(owner.getName(), "Some Data");
+                c = new MContent(owner.getNodeId(), "Some Data");
                 owner.putContent(c);
                 return c;
             }
             catch (IOException e)
             {
-                System.err.println("Error whiles putting content " + content + " from owner: " + owner.getName());
+                System.err.println("Error whiles putting content " + content + " from owner: " + owner.getNodeId());
             }
 
             return c;
@@ -64,7 +65,7 @@ public class RoutingTableStateTest {
             }
             catch (IOException ex)
             {
-                System.err.println("Error whiles shutting down node with owner: " + kad.getName());
+                System.err.println("Error whiles shutting down node with owner: " + kad.getNodeId());
             }
         }
 
@@ -107,7 +108,7 @@ public class RoutingTableStateTest {
             rtss.printRoutingTables();
 
             /* Lets shut down a node to test the node removal operation */
-            System.out.println("Shutdown : "+ rtss.kads[3].getName());
+            System.out.println("Shutdown : "+ rtss.kads[3].getNodeId());
             rtss.shutdownKad(rtss.kads[3]);
 
             rtss.putContent("Content owned by kad0", rtss.kads[0]);

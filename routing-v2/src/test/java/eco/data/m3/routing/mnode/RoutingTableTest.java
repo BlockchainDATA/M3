@@ -1,12 +1,13 @@
 package eco.data.m3.routing.mnode;
 
+import java.io.IOException;
+
+import org.junit.Test;
+
 import eco.data.m3.net.core.MId;
 import eco.data.m3.routing.MHost;
 import eco.data.m3.routing.MNode;
 import eco.data.m3.routing.core.MContent;
-import org.junit.Test;
-
-import java.io.IOException;
 
 public class RoutingTableTest {
 
@@ -64,7 +65,7 @@ public class RoutingTableTest {
         MContent c = null;
         try
         {
-            c = new MContent(owner.getName(), "Some Data");
+            c = new MContent(owner.getNodeId(), "Some Data");
             owner.putContent(c);
             return c;
         }

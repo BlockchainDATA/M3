@@ -1,6 +1,5 @@
 package eco.data.m3.routing.core;
 
-import com.google.gson.Gson;
 import eco.data.m3.net.core.MId;
 
 /**
@@ -10,42 +9,49 @@ import eco.data.m3.net.core.MId;
  */
 public class MContent {
 
-    public static final transient String TYPE = "DHTContent";
+    public static final transient int TYPE = 0x06;
 
     private MId key;
-    private String data;
-    private String ownerId;
+    private byte [] data;
+    private MId ownerId;
     private final long createTs = System.currentTimeMillis() / 1000L;
     private long updateTs = createTs;
 
-    public MContent(String ownerId, String content)
+    public MContent(MId ownerId, String content)
+    {
+        this.ownerId = ownerId;
+        this.key = new MId();
+        setData(content.getBytes());
+    }
+
+    public MContent(MId ownerId, MId key, String content)
+    {
+        this.ownerId = ownerId;
+        this.key = new MId();
+        setData(content.getBytes());
+    }
+
+
+    public MContent(MId ownerId, byte [] content)
     {
         this.ownerId = ownerId;
         this.key = new MId();
         setData(content);
     }
 
-
-    public MContent(String ownerId, byte [] content)
-    {
-        this.ownerId = ownerId;
-        this.key = new MId();
-        setData(new String(content));
-    }
-
-    public MContent(String ownerId, MId key)
+    public MContent(MId ownerId, MId key)
     {
         this.ownerId = ownerId;
         this.key = key;
     }
 
-    public void setData(String newData)
+    public void setData(byte [] newData)
     {
         this.data = newData;
         this.setUpdated();
     }
     
-    public String getData()
+    public byte [] getData()
     {
     	return this.data;
     }
@@ -60,7 +66,7 @@ public class MContent {
     /**
      * @return String The type of content
      */
-    public String getType() {
+    public int getType() {
     	return TYPE;
 	}
 
@@ -102,8 +108,7 @@ public class MContent {
      * @return The content in byte format
      */
     public byte[] toSerializedForm() {
-        Gson gson = new Gson();
-        return gson.toJson(this).getBytes();
+    	return data;
 	}
 
     /**
@@ -114,12 +119,13 @@ public class MContent {
      * @return A new object from the given
      */
     public static MContent fromSerializedForm(byte[] data) {
-        Gson gson = new Gson();
-        MContent val = gson.fromJson(new String(data),MContent.class);
-        return val;
+//        Gson gson = new Gson();
+//        MContent val = gson.fromJson(new String(data),MContent.class);
+    	MContent c = new MContent(new MId(), data);
+        return c;
 	}
 
-	public String getOwnerId() {
+	public MId getOwnerId() {
 		return ownerId;
 	}
 

@@ -1,14 +1,15 @@
 	package eco.data.m3.routing.mnode;
 
-    import eco.data.m3.net.core.MId;
-    import eco.data.m3.routing.MHost;
-    import eco.data.m3.routing.MNode;
-    import eco.data.m3.routing.core.GetParameter;
-    import eco.data.m3.routing.core.MContent;
-    import eco.data.m3.routing.core.StorageEntry;
-    import org.junit.Test;
-
     import java.util.UUID;
+
+import org.junit.Test;
+
+import eco.data.m3.net.core.MId;
+import eco.data.m3.routing.MHost;
+import eco.data.m3.routing.MNode;
+import eco.data.m3.routing.core.GetParameter;
+import eco.data.m3.routing.core.MContent;
+import eco.data.m3.routing.core.StorageEntry;
 
 public class MNodeContentSendingTest {
 
@@ -29,7 +30,7 @@ public class MNodeContentSendingTest {
             data += UUID.randomUUID();
         }
         System.out.println(data);
-        MContent c = new MContent(node2.getName(), data);
+        MContent c = new MContent(node2.getNodeId(), data);
         node2.putContent(c);
 
         /**

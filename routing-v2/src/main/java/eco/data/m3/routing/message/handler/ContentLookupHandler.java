@@ -22,6 +22,8 @@ public class ContentLookupHandler extends MessageHandler{
 
     private final MNode localNode;
 
+    private static int counter = 0;
+
     public ContentLookupHandler(Server server)
     {
     	super(server);
@@ -39,6 +41,7 @@ public class ContentLookupHandler extends MessageHandler{
         {
             try
             {
+                System.out.println("Found Data (" + ContentLookupHandler.counter++ + "), Reply:" + msg.getOrigin());
                 /* Return a ContentMessage with the required data */
                 ContentMessage cMsg = new ContentMessage(localNode.getNodeId(), localNode.getDHT().get(msg.getParam()));
                 localNode.getServer().reply(msg.getOrigin(), cMsg, conversationId);

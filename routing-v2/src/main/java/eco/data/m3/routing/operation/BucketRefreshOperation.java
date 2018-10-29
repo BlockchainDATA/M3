@@ -4,6 +4,7 @@ import eco.data.m3.net.core.MId;
 import eco.data.m3.routing.MNode;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 /**
  * At each time interval t, nodes need to refresh their K-Buckets
@@ -34,10 +35,20 @@ public class BucketRefreshOperation implements IOperation{
     @Override
     public synchronized void execute() throws IOException
     {
+    	int total = 0;
+//    	HashMap<String, Integer> nodeMap = new HashMap<>();
+    	
         for (int i = 1; i < MId.ID_LENGTH; i++)
         {
             /* Construct a NodeId that is i bits away from the current node Id */
             final MId current = (localNode.getNodeId()).generateNodeIdByDistance(i);
+            
+//            // when nodes are not very much , reduce message sent
+//            if(nodeMap.containsKey(current.toString()))
+//            	continue;
+//            
+//            nodeMap.put(current.toString(), i);
+            System.out.println("Bucket Refresh ID " + i + ", " + current+" : " + total++);
 
             /* Run the Node Lookup Operation, each in a different thread to speed up things */
             new Thread()

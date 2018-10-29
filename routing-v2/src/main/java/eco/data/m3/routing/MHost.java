@@ -62,7 +62,7 @@ public class MHost {
 		if(server_config.getMessageFactory()==null)
 			server_config.setMessageFactory(messageFactory);
 		
-		MNode node = new MNode(name, mid, server_config, node_config);
+		MNode node = new MNode(server_config, node_config);
 		nodeMap.put(name, node);
 		return node;
 	}
@@ -77,7 +77,7 @@ public class MHost {
 	
 	public void shutdownNode(MNode node, boolean saveState) throws IOException {
 		node.shutdown(saveState);
-		nodeMap.remove(node.getName());
+		nodeMap.remove(node.getNodeId());
 	}
 	
 	public MNode loadFromFile(String nodeName) throws FileNotFoundException, ClassNotFoundException, IOException {

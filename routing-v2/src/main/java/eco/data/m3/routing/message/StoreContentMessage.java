@@ -42,23 +42,14 @@ public class StoreContentMessage extends Message{
     public void toStream(DataOutputStream out) throws IOException
     {
         this.origin.toStream(out);
-
-        /* Serialize the KadContent, then send it to the stream */
-        new JsonSerializer<StorageEntry>().write(content, out);
+        this.content.toStream(out);
     }
 
     @Override
     public final void fromStream(DataInputStream in) throws IOException
     {
         this.origin = new MId(in);
-        try
-        {
-            this.content = new JsonSerializer<StorageEntry>().read(in);
-        }
-        catch (ClassNotFoundException e)
-        {
-            e.printStackTrace();
-        }
+        this.content = new StorageEntry(in);
     }
 
 }

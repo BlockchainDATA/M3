@@ -1,5 +1,13 @@
 package eco.data.m3.routing.operation;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
 import eco.data.m3.net.core.KeyComparator;
 import eco.data.m3.net.core.MId;
 import eco.data.m3.net.message.Message;
@@ -8,8 +16,6 @@ import eco.data.m3.routing.MNode;
 import eco.data.m3.routing.core.MConfiguration;
 import eco.data.m3.routing.message.NodeLookupMessage;
 import eco.data.m3.routing.message.NodeReplyMessage;
-
-import java.util.*;
 
 /**
  * Finds the K closest nodes to a specified identifier
@@ -149,6 +155,11 @@ public class NodeLookupOperation extends MessageHandler implements IOperation{
 
         /* Get unqueried nodes among the K closest seen that have not FAILED */
         List<MId> unasked = this.closestNodesNotFailed(UNASKED);
+//        
+//        System.out.println("UnAsked :");
+//        for (MId mId : unasked) {
+//			System.out.println(mId);
+//		}
 
         if (unasked.isEmpty() && this.messagesTransiting.isEmpty())
         {
@@ -164,12 +175,25 @@ public class NodeLookupOperation extends MessageHandler implements IOperation{
         {
         	MId n = (MId) unasked.get(i);
 
-            int comm = server.sendMessage(n, lookupMessage, this);
+        	try {
+	            int comm = server.sendMessage(n, lookupMessage, this);
+	
+	            this.nodes.put(n, AWAITING);
+	            this.messagesTransiting.put(comm, n);
+        	}catch (Exception e) {
 
-            this.nodes.put(n, AWAITING);
-            this.messagesTransiting.put(comm, n);
+//    			System.out.println(" -- Failed +" + n );
+                /* Mark this node as failed and inform the routing table that it is unresponsive */
+                this.nodes.put(n, FAILED);
+                this.localNode.getRoutingTable().setUnresponsiveContact(n);
+			}
         }
 
+//        unasked = this.closestNodesNotFailed(UNASKED);
+//        System.out.println("UnAsked After :");
+//        for (MId mId : unasked) {
+//			System.out.println(mId);
+//		}
         /* We're not finished as yet, return false */
         return false;
     }

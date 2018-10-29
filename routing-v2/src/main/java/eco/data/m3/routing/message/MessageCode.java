@@ -15,5 +15,6 @@ public class MessageCode {
 	public static final byte NODE_LOOKUP = 0x05;
 	public static final byte NODE_REPLY = 0x06;
 	public static final byte STORE_CONTENT = 0x07;
+	public static final byte STORE_CONTENT_REPLY = 0x08;
 	
 }

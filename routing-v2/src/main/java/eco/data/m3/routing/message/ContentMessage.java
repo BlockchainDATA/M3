@@ -41,24 +41,14 @@ public class ContentMessage extends Message{
     public void toStream(DataOutputStream out) throws IOException
     {
     	super.toStream(out);
-
-        /* Serialize the KadContent, then send it to the stream */
-        new JsonSerializer<StorageEntry>().write(content, out);
+    	content.toStream(out);
     }
 
     @Override
     public final void fromStream(DataInputStream in) throws IOException
     {
     	super.fromStream(in);
-
-        try
-        {
-            this.content = new JsonSerializer<StorageEntry>().read(in);
-        }
-        catch (ClassNotFoundException e)
-        {
-            System.err.println("ClassNotFoundException when reading StorageEntry; Message: " + e.getMessage());
-        }
+    	this.content = new StorageEntry(in);
     }
 	
 }

@@ -1,9 +1,10 @@
 package eco.data.m3.routing.mnode;
 
+import org.junit.Test;
+
 import eco.data.m3.net.core.MId;
 import eco.data.m3.routing.MHost;
 import eco.data.m3.routing.MNode;
-import org.junit.Test;
 
 public class MNodeConnectionTest {
 

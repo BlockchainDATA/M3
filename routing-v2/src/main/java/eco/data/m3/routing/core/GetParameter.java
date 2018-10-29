@@ -5,8 +5,8 @@ import eco.data.m3.net.core.MId;
 public class GetParameter {
 
     private MId key;
-    private String ownerId = null;
-    private String type = null;
+    private MId ownerId = null;
+    private int type = 0;
 
     /**
      * Construct a GetParameter to search for data by NodeId and owner
@@ -14,7 +14,7 @@ public class GetParameter {
      * @param key
      * @param type
      */
-    public GetParameter(MId key, String type)
+    public GetParameter(MId key, int type)
     {
         this.key = key;
         this.type = type;
@@ -27,7 +27,7 @@ public class GetParameter {
      * @param type
      * @param owner
      */
-    public GetParameter(MId key, String type, String owner)
+    public GetParameter(MId key, int type, MId owner)
     {
         this(key, type);
         this.ownerId = owner;
@@ -42,7 +42,7 @@ public class GetParameter {
     {
         this.key = c.getKey();
 
-        if (c.getType() != null)
+        if (c.getType() != 0)
         {
             this.type = c.getType();
         }
@@ -62,7 +62,7 @@ public class GetParameter {
     {
         this.key = md.getKey();
 
-        if (md.getType() != null)
+        if (md.getType() != 0)
         {
             this.type = md.getType();
         }
@@ -78,22 +78,22 @@ public class GetParameter {
         return this.key;
     }
 
-    public void setOwnerId(String ownerId)
+    public void setOwnerId(MId ownerId)
     {
         this.ownerId = ownerId;
     }
 
-    public String getOwnerId()
+    public MId getOwnerId()
     {
         return this.ownerId;
     }
 
-    public void setType(String type)
+    public void setType(int type)
     {
         this.type = type;
     }
 
-    public String getType()
+    public int getType()
     {
         return this.type;
     }

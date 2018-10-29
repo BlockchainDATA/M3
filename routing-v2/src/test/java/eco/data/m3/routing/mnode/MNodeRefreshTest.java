@@ -1,12 +1,13 @@
 package eco.data.m3.routing.mnode;
 
+import org.junit.Test;
+
 import eco.data.m3.net.core.MId;
 import eco.data.m3.routing.MHost;
 import eco.data.m3.routing.MNode;
 import eco.data.m3.routing.core.GetParameter;
 import eco.data.m3.routing.core.MContent;
 import eco.data.m3.routing.core.StorageEntry;
-import org.junit.Test;
 
 public class MNodeRefreshTest {
 
@@ -18,7 +19,7 @@ public class MNodeRefreshTest {
 		node2.join(node1.getNodeId());
 
         /* Lets create the content and share it */
-        MContent c = new MContent(node2.getName(), "Some Data");
+        MContent c = new MContent(node2.getNodeId(), "Some Data");
         node2.putContent(c);
 
         /* Lets retrieve the content */

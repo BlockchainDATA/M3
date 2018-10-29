@@ -175,10 +175,17 @@ public class ContentLookupOperation extends MessageHandler implements IOperation
         {
         	MId n = (MId) unasked.get(i);
 
-            int comm = server.sendMessage(n, lookupMessage, this);
+            try{
+                int comm = server.sendMessage(n, lookupMessage, this);
 
-            this.nodes.put(n, AWAITING);
-            this.messagesTransiting.put(comm, n);
+                this.nodes.put(n, AWAITING);
+                this.messagesTransiting.put(comm, n);
+            }catch(Exception e){
+
+                /* Mark this node as failed and inform the routing table that it's unresponsive */
+                this.nodes.put(n, FAILED);
+                this.localNode.getRoutingTable().setUnresponsiveContact(n);
+            }
         }
 
         /* We're not finished as yet, return false */

@@ -1,5 +1,19 @@
 package eco.data.m3.routing;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.SocketException;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import eco.data.m3.naming.rpc.async.NamingAsyncClient;
 import eco.data.m3.net.NetService;
 import eco.data.m3.net.core.MId;
 import eco.data.m3.net.exception.MIdAlreadyExistException;
@@ -7,29 +21,30 @@ import eco.data.m3.net.server.Server;
 import eco.data.m3.net.server.ServerConfig;
 import eco.data.m3.routing.algorithm.kademlia.KademliaDHT;
 import eco.data.m3.routing.algorithm.kademlia.KademliaRoutingTable;
-import eco.data.m3.routing.core.*;
+import eco.data.m3.routing.core.DHT;
+import eco.data.m3.routing.core.DHTType;
+import eco.data.m3.routing.core.GetParameter;
+import eco.data.m3.routing.core.IRoutingTable;
+import eco.data.m3.routing.core.MConfiguration;
+import eco.data.m3.routing.core.MContent;
+import eco.data.m3.routing.core.StorageEntry;
 import eco.data.m3.routing.exception.ContentNotFoundException;
-import eco.data.m3.routing.operation.*;
+import eco.data.m3.routing.operation.ConnectOperation;
+import eco.data.m3.routing.operation.ContentLookupOperation;
+import eco.data.m3.routing.operation.IOperation;
+import eco.data.m3.routing.operation.RefreshOperation;
+import eco.data.m3.routing.operation.StoreOperation;
 import eco.data.m3.routing.serializer.JsonDHTSerializer;
 import eco.data.m3.routing.serializer.JsonRoutingTableSerializer;
 import eco.data.m3.routing.serializer.JsonSerializer;
-
-import java.io.*;
-import java.net.SocketException;
-import java.util.NoSuchElementException;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * @author xquan
  *
  */
 public class MNode {
-	
-    private final String name;
 
     /* Objects to be used */
-    private final transient MId nodeId;
     private transient MId parentId;
     private final transient Server server;
     private final transient DHT dht;
@@ -60,34 +75,30 @@ public class MNode {
      *                     from disk <i>or</i> a network error occurred while
      *                     attempting to bootstrap to the network
      * */    
-    public MNode(String name, MId nodeId, ServerConfig server_config, MConfiguration node_config) throws MIdAlreadyExistException, SocketException {
-        this.name = name;
-        this.nodeId = nodeId;
+    public MNode(ServerConfig server_config, MConfiguration node_config) throws SocketException {
         this.config = node_config;
+        MId nodeId = server_config.getMid();
+        
         if(node_config.getDhtType()==DHTType.Kademlia) {
-	        this.routingTable = new KademliaRoutingTable(nodeId, node_config);
-	    	this.dht = new KademliaDHT(name, config);
+	        this.routingTable = new KademliaRoutingTable(server_config.getMid(), node_config);
+	    	this.dht = new KademliaDHT(server_config.getMid().toString(), config);
         }else {
         	this.routingTable = null;
         	this.dht = null;
         }
-    	this.server = NetService.getInstance().createServer(server_config, nodeId);
+    	this.server = NetService.getInstance().createServer(server_config);
     	this.server.setData(this);
-    	this.server.listen();
     	
     	startRefreshOperation();
     }
 
-    public MNode(String name, MId nodeId, DHT dht, IRoutingTable rt, ServerConfig server_config, MConfiguration node_config) throws MIdAlreadyExistException, SocketException {
-    	this.name = name;
-    	this.nodeId = nodeId;
+    public MNode(DHT dht, IRoutingTable rt, ServerConfig server_config, MConfiguration node_config) throws MIdAlreadyExistException, SocketException {
     	this.routingTable = rt;
     	this.dht = dht;
         this.config = node_config;
 
-    	this.server = NetService.getInstance().createServer(server_config, nodeId);
+    	this.server = NetService.getInstance().createServer(server_config);
     	this.server.setData(this);
-    	this.server.listen();
     	
     	startRefreshOperation();
     }
@@ -163,18 +174,18 @@ public class MNode {
         this.statistician.setBootstrapTime(endTime - startTime);
     }
 
-    public int putContent(MContent content) throws Throwable
+    public List<MId> putContent(MContent content) throws Throwable
     {
         return this.put(new StorageEntry(content));
     }
 
-    public int put(StorageEntry entry) throws Throwable
+    public List<MId> put(StorageEntry entry) throws Throwable
     {
         StoreOperation sop = new StoreOperation(this, entry);
         sop.execute();
 
         /* Return how many nodes the content was stored on */
-        return sop.numNodesStoredAt();
+        return sop.getNodesStoredAt();
     }
 
     public void putLocally(MContent content) throws IOException
@@ -208,15 +219,15 @@ public class MNode {
         new RefreshOperation(this).execute();
     }
 
-    public String getName()
+    public String getDeviceInfo()
     {
-        return this.name;
+        return NamingAsyncClient.PEER_INFO.deviceInfo;
     }
 
     public void shutdown(final boolean saveState) throws IOException
     {
         /* Shut down the server */
-        NetService.getInstance().destroyServer(nodeId);
+        NetService.getInstance().destroyServer();
 
         this.stopRefreshOperation();
 
@@ -267,38 +278,42 @@ public class MNode {
         din = new DataInputStream(new FileInputStream(getStateStorageFolderName(ownerId, nodeConfig) + File.separator + "dht.kns"));
         DHT dht = new JsonDHTSerializer().read(din);
         dht.setConfiguration(nodeConfig);
+        
+        serverConfig.setMid(MId.fromHexString(ownerId));
 
-        return new MNode(ownerId, nodeId, dht, rt, serverConfig, nodeConfig);
+        return new MNode(dht, rt, serverConfig, nodeConfig);
     } 
 
     public void saveState() throws IOException
     {
         DataOutputStream dout;
+        
+        String folderName = getNodeId().toString();
 
         /**
          * @section Store Basic Kad data
          */
-        dout = new DataOutputStream(new FileOutputStream(getStateStorageFolderName(this.name, this.config) + File.separator + "kad.kns"));
+        dout = new DataOutputStream(new FileOutputStream(getStateStorageFolderName(folderName, this.config) + File.separator + "kad.kns"));
         new JsonSerializer<MNode>().write(this, dout);
 
         /**
          * @section Save the node state
          */
-        dout = new DataOutputStream(new FileOutputStream(getStateStorageFolderName(this.name, this.config) + File.separator + "node.kns"));
-        new JsonSerializer<MId>().write(this.nodeId, dout);
+        dout = new DataOutputStream(new FileOutputStream(getStateStorageFolderName(folderName, this.config) + File.separator + "node.kns"));
+        new JsonSerializer<MId>().write(getNodeId(), dout);
 
         /**
          * @section Save the routing table
          * We need to save the routing table separate from the node since the routing table will contain the node and the node will contain the routing table
          * This will cause a serialization recursion, and in turn a Stack Overflow
          */
-        dout = new DataOutputStream(new FileOutputStream(getStateStorageFolderName(this.name, this.config) + File.separator + "routingtable.kns"));
+        dout = new DataOutputStream(new FileOutputStream(getStateStorageFolderName(folderName, this.config) + File.separator + "routingtable.kns"));
         new JsonRoutingTableSerializer(this.config).write(this.getRoutingTable(), dout);
 
         /**
          * @section Save the DHT
          */
-        dout = new DataOutputStream(new FileOutputStream(getStateStorageFolderName(this.name, this.config) + File.separator + "dht.kns"));
+        dout = new DataOutputStream(new FileOutputStream(getStateStorageFolderName(folderName, this.config) + File.separator + "dht.kns"));
         new JsonDHTSerializer().write(this.dht, dout);
 
     }
@@ -339,12 +354,12 @@ public class MNode {
     public String toString()
     {
         StringBuilder sb = new StringBuilder("\n\nPrinting Kad State for instance with owner: ");
-        sb.append(this.name);
+        sb.append(this.getDeviceInfo());
         sb.append("\n\n");
 
         sb.append("\n");
         sb.append("Local Node");
-        sb.append(this.nodeId);
+        sb.append(this.getNodeId());
         sb.append("\n");
 
         sb.append("\n");
@@ -363,7 +378,7 @@ public class MNode {
     }
 
 	public MId getNodeId() {
-		return nodeId;
+		return MId.fromHexString(NamingAsyncClient.PEER_INFO.murl);
 	}
 
 	public MId getParentId() {

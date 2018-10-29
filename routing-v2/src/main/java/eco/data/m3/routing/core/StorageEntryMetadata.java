@@ -1,16 +1,22 @@
 package eco.data.m3.routing.core;
 
+import eco.data.m3.net.core.IStreamable;
 import eco.data.m3.net.core.MId;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.util.Objects;
 
-public class StorageEntryMetadata {
+import com.google.gson.Gson;
 
-    private final MId key;
-    private final String ownerId;
-    private final String type;
-    private final int contentHash;
-    private final long updatedTs;
+public class StorageEntryMetadata implements IStreamable{
+
+    private MId key;
+    private MId ownerId;
+    private int type;
+    private int contentHash;
+    private long updatedTs;
 
     /* This value is the last time this content was last updated from the network */
     private long lastRepublished;
@@ -26,17 +32,42 @@ public class StorageEntryMetadata {
         this.lastRepublished = System.currentTimeMillis() / 1000L;
     }
 
+    public StorageEntryMetadata(DataInputStream in) throws IOException
+    {
+    	this.fromStream(in);
+    }
+
+	@Override
+	public void toStream(DataOutputStream out) throws IOException {
+		key.toStream(out);
+		ownerId.toStream(out);
+		out.writeInt(type);
+		out.writeInt(contentHash);
+		out.writeLong(updatedTs);
+		out.writeLong(lastRepublished);
+	}
+
+	@Override
+	public void fromStream(DataInputStream in) throws IOException {
+		key = new MId(in);
+		ownerId = new MId(in);
+		type = in.readInt();
+		contentHash = in.readInt();
+		updatedTs = in.readLong();
+		lastRepublished = in.readLong();
+	}
+
     public MId getKey()
     {
         return this.key;
     }
 
-    public String getOwnerId()
+    public MId getOwnerId()
     {
         return this.ownerId;
     }
 
-    public String getType()
+    public int getType()
     {
         return this.type;
     }
@@ -68,13 +99,13 @@ public class StorageEntryMetadata {
         }
 
         /* Check that type matches */
-        if ((params.getType() != null) && (!params.getType().equals(this.type)))
+        if ((params.getType() != 0) && ((params.getType() != this.type)))
         {
             return false;
         }
 
         /* Check that key matches */
-        if ((params.getKey() != null) && (!params.getKey().equals(this.key)))
+        if ((params.getKey() != null) && (!(params.getKey().equals(this.key))))
         {
             return false;
         }
