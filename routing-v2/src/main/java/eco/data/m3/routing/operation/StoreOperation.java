@@ -88,10 +88,15 @@ public class StoreOperation extends MessageHandler implements IOperation{
         }
         nodesStoredAt = new ArrayList<>();
         for (String murl : replyNodeMap.keySet()) {
+        	try {
         	MId m = MId.fromHexString(murl);
-        	byte code = replyNodeMap.get(m);
+        	byte code = replyNodeMap.get(m.toString());
         	if(code == 0) // code success
         		nodesStoredAt.add(m);
+        	}catch (Exception e) {
+        		e.printStackTrace();
+				// TODO: handle exception
+			}
 		}
 	}
     

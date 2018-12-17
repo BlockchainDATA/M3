@@ -35,6 +35,12 @@ public class BucketRefreshOperation implements IOperation{
     @Override
     public synchronized void execute() throws IOException
     {
+    	System.out.println("--------- All Nodes --------");
+    	for (MId node : localNode.getRoutingTable().getAllNodes()) {
+			System.out.println(node);
+		};
+    	System.out.println("---------   End     --------");
+    	
     	int total = 0;
 //    	HashMap<String, Integer> nodeMap = new HashMap<>();
     	
@@ -48,7 +54,7 @@ public class BucketRefreshOperation implements IOperation{
 //            	continue;
 //            
 //            nodeMap.put(current.toString(), i);
-            System.out.println("Bucket Refresh ID " + i + ", " + current+" : " + total++);
+            // System.out.println("Bucket Refresh ID " + i + ", " + current+" : " + total++);
 
             /* Run the Node Lookup Operation, each in a different thread to speed up things */
             new Thread()

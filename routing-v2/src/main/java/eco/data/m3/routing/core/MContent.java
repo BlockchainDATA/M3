@@ -119,8 +119,6 @@ public class MContent {
      * @return A new object from the given
      */
     public static MContent fromSerializedForm(byte[] data) {
-//        Gson gson = new Gson();
-//        MContent val = gson.fromJson(new String(data),MContent.class);
     	MContent c = new MContent(new MId(), data);
         return c;
 	}

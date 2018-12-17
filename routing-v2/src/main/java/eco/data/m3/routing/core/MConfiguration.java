@@ -5,9 +5,9 @@ import java.io.File;
 public class MConfiguration {
 
     private final static long RESTORE_INTERVAL = 60 * 1000; // in milliseconds
-    private final static long RESPONSE_TIMEOUT = 100000;
-    private final static long OPERATION_TIMEOUT = 100000;
-    private final static long STORE_REPLY_TIMEOUT = 2000;
+    private final static long RESPONSE_TIMEOUT = 10 * 1000;
+    private final static long OPERATION_TIMEOUT = 10 * 1000;
+    private final static long STORE_REPLY_TIMEOUT = 2 * 1000;
     private final static int CONCURRENCY = 10;
     private final static int K = 5;
     private final static int RCSIZE = 3;

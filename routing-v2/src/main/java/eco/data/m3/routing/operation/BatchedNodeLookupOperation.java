@@ -13,6 +13,7 @@ import eco.data.m3.net.message.Message;
 import eco.data.m3.net.message.MessageHandler;
 import eco.data.m3.routing.MNode;
 import eco.data.m3.routing.core.MConfiguration;
+import eco.data.m3.routing.message.BatchedNodeLookupMessage;
 import eco.data.m3.routing.message.NodeLookupMessage;
 import eco.data.m3.routing.message.NodeReplyMessage;
 
@@ -24,7 +25,7 @@ import eco.data.m3.routing.message.NodeReplyMessage;
  * @author xquan
  *
  */
-public class NodeLookupOperation extends MessageHandler implements IOperation{
+public class BatchedNodeLookupOperation extends MessageHandler implements IOperation{
 
     /* Constants */
     private static final String UNASKED = "UnAsked";
@@ -42,7 +43,8 @@ public class NodeLookupOperation extends MessageHandler implements IOperation{
     private final Map<Integer, MId> messagesTransiting = new HashMap<>();
 
     /* Used to sort nodes */
-    private final Comparator comparator;
+    
+    private final List<MId> lookupIds;
 
     /**
      * @param server    KadServer used for communication
@@ -50,21 +52,21 @@ public class NodeLookupOperation extends MessageHandler implements IOperation{
      * @param lookupId  The ID for which to find nodes close to
      * @param config
      */
-    public NodeLookupOperation(MNode localNode, MId lookupId)
+    public BatchedNodeLookupOperation(MNode localNode, List<MId> lookupIds)
     {
     	super(localNode.getServer());
     	
         this.localNode = localNode;
         this.config = localNode.getCurrentConfiguration();
 
-        this.lookupMessage = new NodeLookupMessage(localNode.getNodeId(), lookupId);
+        this.lookupMessage = new BatchedNodeLookupMessage(localNode.getNodeId(), lookupIds);
 
         /**
          * We initialize a TreeMap to store nodes.
          * This map will be sorted by which nodes are closest to the lookupId
          */
-        this.comparator = new KeyComparator(lookupId);
-        this.nodes = new TreeMap(this.comparator);
+        this.nodes = new TreeMap<>(new KeyComparator(localNode.getNodeId()));
+        this.lookupIds = lookupIds;
     }
 
     /**
@@ -102,7 +104,6 @@ public class NodeLookupOperation extends MessageHandler implements IOperation{
 
             /* Now after we've finished, we would have an idea of offline nodes, lets update our routing table */
             this.localNode.getRoutingTable().setUnresponsiveContacts(this.getFailedNodes());
-
         }
         catch (InterruptedException e)
         {
