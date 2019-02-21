@@ -1,62 +1,62 @@
 package eco.data.m3.routing;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.SocketException;
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
-import eco.data.m3.naming.rpc.async.NamingAsyncClient;
-import eco.data.m3.net.NetService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import data.eco.net.p2p.channel.PeerChannel;
+import data.eco.net.p2p.channel.PeerLink;
+import eco.data.m3.content.MContent;
+import eco.data.m3.content.MContentKey;
+import eco.data.m3.content.MContentManager;
 import eco.data.m3.net.core.MId;
-import eco.data.m3.net.exception.MIdAlreadyExistException;
-import eco.data.m3.net.server.Server;
-import eco.data.m3.net.server.ServerConfig;
-import eco.data.m3.routing.algorithm.kademlia.KademliaDHT;
+import eco.data.m3.net.core.PeerNode;
+import eco.data.m3.net2.NetService;
+import eco.data.m3.net2.NetServiceConfig;
+import eco.data.m3.net2.NetServiceListener;
 import eco.data.m3.routing.algorithm.kademlia.KademliaRoutingTable;
-import eco.data.m3.routing.core.DHT;
-import eco.data.m3.routing.core.DHTType;
-import eco.data.m3.routing.core.GetParameter;
 import eco.data.m3.routing.core.IRoutingTable;
-import eco.data.m3.routing.core.MConfiguration;
-import eco.data.m3.routing.core.MContent;
-import eco.data.m3.routing.core.StorageEntry;
-import eco.data.m3.routing.exception.ContentNotFoundException;
+import eco.data.m3.routing.core.MDHT;
 import eco.data.m3.routing.operation.ConnectOperation;
 import eco.data.m3.routing.operation.ContentLookupOperation;
+import eco.data.m3.routing.operation.ContentRetrieveOperation;
 import eco.data.m3.routing.operation.IOperation;
 import eco.data.m3.routing.operation.RefreshOperation;
 import eco.data.m3.routing.operation.StoreOperation;
-import eco.data.m3.routing.serializer.JsonDHTSerializer;
-import eco.data.m3.routing.serializer.JsonRoutingTableSerializer;
-import eco.data.m3.routing.serializer.JsonSerializer;
+import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.util.concurrent.ScheduledFuture;
+
 
 /**
  * @author xquan
  *
  */
-public class MNode {
+public class MNode extends PeerNode implements NetServiceListener{
 
+    private static final Logger logger =
+            LoggerFactory.getLogger(MNode.class.getName());
+    
     /* Objects to be used */
     private transient MId parentId;
-    private final transient Server server;
-    private final transient DHT dht;
+    private final transient NetService netService;
+    private final transient MDHT dht;
     private transient IRoutingTable routingTable;
     private transient MConfiguration config;
+    private MContentManager contentManager;
 
-    /* Timer used to execute refresh operations */
-    private transient Timer refreshOperationTimer;
-    private transient TimerTask refreshOperationTTask;
+    /* Timer used to execute refresh operations */    
+    private transient ScheduledFuture<?> refreshScheduleTask;
+    private transient ScheduledFuture<?> persistanceScheduleTask;
 
     /* Statistics */
     private final transient Statistician statistician = new Statistician();
+    
+    private transient NioEventLoopGroup eventLoop = new NioEventLoopGroup();
+    
+//    private transient NioEventLoopGroup lookupEventLoop = new NioEventLoopGroup(2);
 
     /**
      * Creates a Kademlia DistributedMap using the specified name as filename base.
@@ -70,91 +70,69 @@ public class MNode {
      * @param dht          The DHT for this instance
      * @param config
      * @param routingTable
+     * @throws Exception 
      *
      * @throws IOException If an error occurred while reading id or local map
      *                     from disk <i>or</i> a network error occurred while
      *                     attempting to bootstrap to the network
      * */    
-    public MNode(ServerConfig server_config, MConfiguration node_config) throws SocketException {
+    public MNode(NetServiceConfig net_config, MConfiguration node_config) throws Exception {
         this.config = node_config;
-        MId nodeId = server_config.getMid();
-        
-        if(node_config.getDhtType()==DHTType.Kademlia) {
-	        this.routingTable = new KademliaRoutingTable(server_config.getMid(), node_config);
-	    	this.dht = new KademliaDHT(server_config.getMid().toString(), config);
-        }else {
-        	this.routingTable = null;
-        	this.dht = null;
-        }
-    	this.server = NetService.getInstance().createServer(server_config);
-    	this.server.setData(this);
+        MId nodeId = net_config.getMId();
+
+    	this.netService = new NetService(this, net_config);
+    	this.netService.addListener(this);
+
+        this.contentManager = new MContentManager(nodeId, config.getRootPath(), config.isOnAndroid());
+        this.routingTable = new KademliaRoutingTable(contentManager, node_config);
+    	this.dht = new MDHT(contentManager);
     	
-    	startRefreshOperation();
+    	startScheduleOperation();
     }
 
-    public MNode(DHT dht, IRoutingTable rt, ServerConfig server_config, MConfiguration node_config) throws MIdAlreadyExistException, SocketException {
-    	this.routingTable = rt;
-    	this.dht = dht;
-        this.config = node_config;
-
-    	this.server = NetService.getInstance().createServer(server_config);
-    	this.server.setData(this);
-    	
-    	startRefreshOperation();
+    public void startScheduleOperation()
+    {
+    	logger.debug("startScheduleOperation");
+         this.refreshScheduleTask = eventLoop.scheduleAtFixedRate(new Runnable() {			
+			@Override
+			public void run() {
+				logger.debug("******  Refresh : " + getNodeId());
+				refresh();
+			}
+		}, this.config.restoreInterval(), this.config.restoreInterval(), TimeUnit.MILLISECONDS);
+         
+         this.persistanceScheduleTask = eventLoop.scheduleAtFixedRate(new Runnable() {
+			
+			@Override
+			public void run() {
+				//Save Routing Table To File
+				routingTable.save();				
+			}
+		}, this.config.persistanceInterval(), this.config.persistanceInterval(), TimeUnit.MILLISECONDS);
     }
     
-
-    public final void startRefreshOperation()
-    {
-        this.refreshOperationTimer = new Timer(true);
-        refreshOperationTTask = new TimerTask()
+    public void refresh() {
+        try
         {
-            @Override
-            public void run()
-            {
-                try
-                {
-                    /* Runs a DHT RefreshOperation  */
-                    MNode.this.refresh();
-                }
-                catch (Throwable e)
-                {
-                    System.err.println("KademliaNode: Refresh Operation Failed; Message: " + e.getMessage());
-                }
-            }
-        };
-        refreshOperationTimer.schedule(refreshOperationTTask, this.config.restoreInterval(), this.config.restoreInterval());
+            new RefreshOperation(getNode()).execute();
+        }
+        catch (Throwable e)
+        {
+            logger.error("Refresh Operation Failed; Message: " + e.getMessage());
+            e.printStackTrace();
+        }
+		
     }
 
     public final void stopRefreshOperation()
     {
-        /* Close off the timer tasks */
-        this.refreshOperationTTask.cancel();
-        this.refreshOperationTimer.cancel();
-        this.refreshOperationTimer.purge();
+    	if(this.refreshScheduleTask!=null) {
+	        this.refreshScheduleTask.cancel(true);
+	        this.refreshScheduleTask = null;
+    	}
     }
 
-    /**
-     * Load Stored state using default configuration
-     *
-     * @param ownerId The ID of the owner for the stored state
-     *
-     * @return A Kademlia instance loaded from a stored state in a file
-     *
-     * @throws java.io.FileNotFoundException
-     * @throws java.lang.ClassNotFoundException
-     */
-    public static MNode loadFromFile(String ownerId, ServerConfig serverConfig) throws FileNotFoundException, IOException, ClassNotFoundException
-    {
-        return MNode.loadFromFile(ownerId, serverConfig, new MConfiguration());
-    }
-
-    public Server getServer()
-    {
-        return this.server;
-    }
-
-    public DHT getDHT()
+    public MDHT getDHT()
     {
         return this.dht;
     }
@@ -173,166 +151,78 @@ public class MNode {
         long endTime = System.nanoTime();
         this.statistician.setBootstrapTime(endTime - startTime);
     }
+    
+    public void putContentLocally(MContent content) throws Throwable
+    {
+    	this.dht.put(content.getMeta());
+    	this.dht.store(content);
+    }
 
     public List<MId> putContent(MContent content) throws Throwable
     {
-        return this.put(new StorageEntry(content));
-    }
-
-    public List<MId> put(StorageEntry entry) throws Throwable
-    {
-        StoreOperation sop = new StoreOperation(this, entry);
+        StoreOperation sop = new StoreOperation(this, content);
         sop.execute();
 
         /* Return how many nodes the content was stored on */
         return sop.getNodesStoredAt();
     }
 
-    public void putLocally(MContent content) throws IOException
+    public MContent get(MContentKey key) throws Throwable
     {
-        this.dht.store(new StorageEntry(content));
-    }
-    
-    public MContent getContent(GetParameter param) throws NoSuchElementException, IOException, ContentNotFoundException{
-		return null;    	
-    }
-
-    public StorageEntry get(GetParameter param) throws Throwable
-    {
-        if (this.dht.contains(param))
+        if (this.dht.contains(key))
         {
             /* If the content exist in our own DHT, then return it. */
-            return this.dht.get(param);
+            return this.dht.getContent(key);
         }
 
-        /* Seems like it doesn't exist in our DHT, get it from other Nodes */
-        long startTime = System.nanoTime();
-        ContentLookupOperation clo = new ContentLookupOperation(this, param);
+        System.nanoTime();
+        List<MId> nodesFound = lookupContent(key, 1);
+        if(nodesFound.size()==0)
+        	return null;
+        
+        /* Retrieve Content From Other Node */
+        retrive(nodesFound.get(0), key);
+        System.nanoTime();
+
+        /* Load From Local DHT */
+        return this.dht.getContent(key);
+    }
+    
+    public boolean contains(MContentKey key) {
+    	return this.dht.contains(key);
+    }
+    
+    /**
+     * 
+     * Lookup content on Nodes exclude local node
+     * 
+     * @param param
+     * @param maxNodes
+     * @return
+     * @throws Throwable
+     */
+    public List<MId> lookupContent(MContentKey key, int maxNodes) throws Throwable{
+        ContentLookupOperation clo = new ContentLookupOperation(this, key, maxNodes);
         clo.execute();
-        long endTime = System.nanoTime();
-        this.statistician.addContentLookup(endTime - startTime, clo.routeLength(), clo.isContentFound());
-        return clo.getContentFound();
+        return clo.getNodesFound();
+    }
+    
+    public void retrive(MId remoteNode, MContentKey key) throws Throwable {
+        ContentRetrieveOperation cro = new ContentRetrieveOperation(this, key, remoteNode);
+        cro.execute();
     }
 
-    public void refresh() throws Throwable
-    {
-        new RefreshOperation(this).execute();
+    public NetService getNetService() {
+    	return netService;
     }
 
-    public String getDeviceInfo()
-    {
-        return NamingAsyncClient.PEER_INFO.deviceInfo;
-    }
-
-    public void shutdown(final boolean saveState) throws IOException
+    public void shutdown() throws IOException
     {
         /* Shut down the server */
-        NetService.getInstance().destroyServer();
+    	netService.shutdown();
+    	routingTable.save();
 
         this.stopRefreshOperation();
-
-        /* Save this Kademlia instance's state if required */
-        if (saveState)
-        {
-            /* Save the system state */
-            this.saveState();
-        }
-    }
-
-    /**
-     * Load Stored state
-     *
-     * @param ownerId The ID of the owner for the stored state
-     * @param iconfig Configuration information to work with
-     *
-     * @return A Kademlia instance loaded from a stored state in a file
-     *
-     * @throws java.io.FileNotFoundException
-     * @throws java.lang.ClassNotFoundException
-     */
-    public static MNode loadFromFile(String ownerId, ServerConfig serverConfig, MConfiguration nodeConfig) throws FileNotFoundException, IOException, ClassNotFoundException
-    {
-        DataInputStream din;
-
-        /**
-         * @section Read Basic Kad data
-         */
-        din = new DataInputStream(new FileInputStream(getStateStorageFolderName(ownerId, nodeConfig) + File.separator + "kad.kns"));
-        MNode ikad = new JsonSerializer<MNode>().read(din);
-
-        /**
-         * @section Read the routing table
-         */
-        din = new DataInputStream(new FileInputStream(getStateStorageFolderName(ownerId, nodeConfig) + File.separator + "routingtable.kns"));
-        IRoutingTable rt = new JsonRoutingTableSerializer(nodeConfig).read(din);
-
-        /**
-         * @section Read the node state
-         */
-        din = new DataInputStream(new FileInputStream(getStateStorageFolderName(ownerId, nodeConfig) + File.separator + "node.kns"));
-        MId nodeId = new JsonSerializer<MId>().read(din);
-
-        /**
-         * @section Read the DHT
-         */
-        din = new DataInputStream(new FileInputStream(getStateStorageFolderName(ownerId, nodeConfig) + File.separator + "dht.kns"));
-        DHT dht = new JsonDHTSerializer().read(din);
-        dht.setConfiguration(nodeConfig);
-        
-        serverConfig.setMid(MId.fromHexString(ownerId));
-
-        return new MNode(dht, rt, serverConfig, nodeConfig);
-    } 
-
-    public void saveState() throws IOException
-    {
-        DataOutputStream dout;
-        
-        String folderName = getNodeId().toString();
-
-        /**
-         * @section Store Basic Kad data
-         */
-        dout = new DataOutputStream(new FileOutputStream(getStateStorageFolderName(folderName, this.config) + File.separator + "kad.kns"));
-        new JsonSerializer<MNode>().write(this, dout);
-
-        /**
-         * @section Save the node state
-         */
-        dout = new DataOutputStream(new FileOutputStream(getStateStorageFolderName(folderName, this.config) + File.separator + "node.kns"));
-        new JsonSerializer<MId>().write(getNodeId(), dout);
-
-        /**
-         * @section Save the routing table
-         * We need to save the routing table separate from the node since the routing table will contain the node and the node will contain the routing table
-         * This will cause a serialization recursion, and in turn a Stack Overflow
-         */
-        dout = new DataOutputStream(new FileOutputStream(getStateStorageFolderName(folderName, this.config) + File.separator + "routingtable.kns"));
-        new JsonRoutingTableSerializer(this.config).write(this.getRoutingTable(), dout);
-
-        /**
-         * @section Save the DHT
-         */
-        dout = new DataOutputStream(new FileOutputStream(getStateStorageFolderName(folderName, this.config) + File.separator + "dht.kns"));
-        new JsonDHTSerializer().write(this.dht, dout);
-
-    }
-
-    /**
-     * Get the name of the folder for which a content should be stored
-     *
-     * @return String The name of the folder to store node states
-     */
-    private static String getStateStorageFolderName(String name, MConfiguration iconfig)
-    {
-        /* Setup the nodes storage folder if it doesn't exist */
-        String path = iconfig.getNodeDataFolder(name) + File.separator + "nodeState";
-        File nodeStateFolder = new File(path);
-        if (!nodeStateFolder.isDirectory())
-        {
-            nodeStateFolder.mkdir();
-        }
-        return nodeStateFolder.toString();
     }
 
     public IRoutingTable getRoutingTable()
@@ -344,6 +234,10 @@ public class MNode {
     {
         return this.statistician;
     }
+    
+    public void clearCache(int maxContentBytes) {
+    	
+    }
 
     /**
      * Creates a string containing all data about this Kademlia instance
@@ -353,32 +247,35 @@ public class MNode {
     @Override
     public String toString()
     {
-        StringBuilder sb = new StringBuilder("\n\nPrinting Kad State for instance with owner: ");
-        sb.append(this.getDeviceInfo());
-        sb.append("\n\n");
-
-        sb.append("\n");
-        sb.append("Local Node");
+        StringBuilder sb = new StringBuilder("\n\nPrinting Kad State for instance with owner : \n");
+        
+        sb.append("Local Node : ");
         sb.append(this.getNodeId());
-        sb.append("\n");
+        // sb.append("\n");
 
-        sb.append("\n");
-        sb.append("Routing Table: ");
-        sb.append(this.getRoutingTable());
-        sb.append("\n");
+        // sb.append("\n");
+        // sb.append("Routing Table: ");
+        // sb.append(this.getRoutingTable());
+        // sb.append("\n");
 
-        sb.append("\n");
-        sb.append("DHT: ");
+        // sb.append("\n");
+        sb.append("\nDHT: ");
         sb.append(this.dht);
-        sb.append("\n");
-
-        sb.append("\n\n\n");
+        sb.append("\n\n");
 
         return sb.toString();
     }
+    
+    public void setName(String name) {
+    	netService.getPeerInfo().setDeviceInfo(name);
+    }
+    
+    public String getName() {
+    	return netService.getPeerInfo().getDeviceInfo();
+    }
 
 	public MId getNodeId() {
-		return MId.fromHexString(NamingAsyncClient.PEER_INFO.murl);
+		return netService.getMId();
 	}
 
 	public MId getParentId() {
@@ -387,6 +284,31 @@ public class MNode {
 
 	public void setParentId(MId parentId) {
 		this.parentId = parentId;
-	} 
+	}
 
+	@Override
+	public NioEventLoopGroup getEventLoop() {
+		return eventLoop;
+	}
+
+	public void setEventLoop(NioEventLoopGroup eventLoop) {
+		this.eventLoop = eventLoop;
+	}
+	
+	public MNode getNode() {
+		return this;
+	}
+	
+	@Override
+	public void onPeerLinkOpen(NetService service, PeerLink link) {
+		routingTable.insert(link.getRemoteMId());
+		System.out.println("Routing Table insert Link " + link.getRemoteMId());
+	}
+
+	@Override
+	public void onPeerLinkClose(NetService service, PeerLink link) {
+		routingTable.setUnresponsiveContact(link.getRemoteMId());
+		System.out.println("Routing Table Remove Link " + link.getRemoteMId());
+	}
+	
 }

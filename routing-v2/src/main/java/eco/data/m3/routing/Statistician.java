@@ -43,7 +43,7 @@ public class Statistician {
             return 0L;
         }
         
-        return this.totalDataSent / 1000L;
+        return this.totalDataSent;
     }
 
     public void receivedData(long size)
@@ -58,7 +58,7 @@ public class Statistician {
         {
             return 0L;
         }
-        return this.totalDataReceived / 1000L;
+        return this.totalDataReceived ;
     }
 
     public void setBootstrapTime(long time)

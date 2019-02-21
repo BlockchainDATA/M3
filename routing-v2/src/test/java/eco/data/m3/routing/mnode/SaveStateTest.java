@@ -1,15 +1,16 @@
 package eco.data.m3.routing.mnode;
 
+import org.junit.Test;
+
+import eco.data.m3.content.MContentKey;
+import eco.data.m3.content.impl.MTextContent;
 import eco.data.m3.net.core.MId;
 import eco.data.m3.routing.MHost;
 import eco.data.m3.routing.MNode;
-import eco.data.m3.routing.core.GetParameter;
-import eco.data.m3.routing.core.MContent;
-import eco.data.m3.routing.core.StorageEntry;
 
 public class SaveStateTest {
 
-//	@Test
+	@Test
 	public void test() throws Throwable {
 		MHost host = new MHost();
 		MNode node1 = host.createNode("JoshuaK", new MId("12345678901234567890"));
@@ -21,32 +22,28 @@ public class SaveStateTest {
         System.out.println(node1);
         System.out.println(node2);
 
-        MContent c;
-        synchronized (this)
-        {
-            System.out.println("\n\n\n\nSTORING CONTENT 1\n\n\n\n");
-            c = new MContent(node2.getNodeId(), "Some Data");
-            System.out.println(c);
-            node1.putLocally(c);
-        }
+        MTextContent c;
+        System.out.println("\n\n\n\nSTORING CONTENT 1\n\n\n\n");
+        c = new MTextContent(node2.getNodeId(), new MId(), "Some Data");
+        System.out.println(c);
+        node1.putContent(c);
 
         System.out.println(node1);
         System.out.println(node2);
 
         /* Shutting down node1 and restarting it */
         System.out.println("\n\n\nShutting down Kad 1 instance");
-        node1.shutdown(true);
+        node1.shutdown();
 
         System.out.println("\n\n\nReloading Kad instance from file");
-        node1 = host.loadFromFile("JoshuaK");
+        node1 = host.createNode(node1.getName(), node1.getNodeId());
         node1.join(node2.getNodeId());
         System.out.println(node2);
 
         /* Trying to get a content stored on the restored node */
-        GetParameter gp = new GetParameter(c.getKey(), c.getType(), node2.getNodeId());
-        StorageEntry content = node2.get(gp);
-        MContent cc = MContent.fromSerializedForm(content.getContent());
-        System.out.println("Content received: " + cc);
+        MContentKey gp = new MContentKey(c);
+        MTextContent content = (MTextContent) node2.get(gp);
+        System.out.println("Content received: " + content);
 	}
 
 }

@@ -1,13 +1,13 @@
 package eco.data.m3.routing.message;
 
-import eco.data.m3.net.core.MId;
-import eco.data.m3.net.message.Message;
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import data.eco.net.p2p.message.Message;
+import eco.data.m3.net.core.MId;
 
 /**
  * A message used to connect nodes.
@@ -20,9 +20,8 @@ public class NodeReplyMessage extends Message{
 	
 	private List<MId> nodes;
 
-    public NodeReplyMessage(MId origin, List<MId> nodes)
+    public NodeReplyMessage(List<MId> nodes)
     {
-    	super(origin);
         this.nodes = nodes;
     }
 	

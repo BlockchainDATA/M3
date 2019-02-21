@@ -8,15 +8,20 @@ package eco.data.m3.routing.message;
  */
 public class MessageCode {
 
-	public static final byte ACKNOWLEDGE = 0x01;
-	public static final byte CONNECT = 0x02;
-	public static final byte CONTENT_LOOKUP = 0x03;
-	public static final byte CONTENT = 0x04;
-	public static final byte NODE_LOOKUP = 0x05;
-	public static final byte NODE_REPLY = 0x06;
-	public static final byte STORE_CONTENT = 0x07;
-	public static final byte STORE_CONTENT_REPLY = 0x08;
-	public static final byte BATCHED_NODE_LOOKUP = 0x09;
-	public static final byte BATCHED_NODE_REPLY = 0x0A;
+	public static final byte ACKNOWLEDGE = 0x11;
+	
+	public static final byte NODE_LOOKUP = 0x12;
+	public static final byte NODE_REPLY = 0x13;
+
+	public static final byte CONTENT_LOOKUP = 0x14;
+	public static final byte CONTENT_LOOKUP_REPLY = 0x15;
+	
+	public static final byte CONTENT_RETRIEVE = 0x16;
+	public static final byte CONTENT_RETRIEVE_REPLY = 0x17;
+	public static final byte CONTENT_DATA = 0x18;
+	
+	public static final byte STORE_INIT = 0x19;
+	public static final byte STORE_INIT_REPLY = 0x1A;
+	public static final byte STORE_CONTENT = 0x1B;
 	
 }

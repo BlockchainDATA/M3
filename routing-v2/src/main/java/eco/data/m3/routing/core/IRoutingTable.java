@@ -1,8 +1,10 @@
 package eco.data.m3.routing.core;
 
-import eco.data.m3.net.core.MId;
-
 import java.util.List;
+
+import eco.data.m3.content.data.Contact;
+import eco.data.m3.net.core.MId;
+import eco.data.m3.routing.MConfiguration;
 
 public interface IRoutingTable {
 
@@ -24,6 +26,8 @@ public interface IRoutingTable {
      * @param c The contact to add
      */
     public void insert(Contact c);
+	
+	public void save() ;
 
     /**
      * Adds a node to the routing table based on how far it is from the LocalNode.

@@ -2,10 +2,12 @@ package eco.data.m3.routing.mnode;
 
 import org.junit.Test;
 
+import eco.data.m3.content.MContent;
+import eco.data.m3.content.MContentKey;
+import eco.data.m3.content.impl.MTextContent;
 import eco.data.m3.net.core.MId;
 import eco.data.m3.routing.MHost;
 import eco.data.m3.routing.MNode;
-import eco.data.m3.routing.core.MContent;
 
 public class SaveStateTest2 {
 
@@ -47,15 +49,16 @@ public class SaveStateTest2 {
         synchronized (this)
         {
             System.out.println("\n\n\n\nSTORING CONTENT 1\n\n\n\n");
-            MContent c = new MContent(node2.getNodeId(), "Some Data");
+            MTextContent c = new MTextContent(node2.getNodeId(), new MId(), "Some Data");
             System.out.println(c);
             node2.putContent(c);
         }
 
+        MTextContent c2;
         synchronized (this)
         {
             System.out.println("\n\n\n\nSTORING CONTENT 2\n\n\n\n");
-            MContent c2 = new MContent(node2.getNodeId(), "Some other Data");
+            c2 = new MTextContent(node2.getNodeId(), new MId(), "Some other Data");
             System.out.println(c2);
             node4.putContent(c2);
         }
@@ -69,11 +72,16 @@ public class SaveStateTest2 {
         /* Shutting down node1 and restarting it */
         System.out.println("\n\n\nShutting down Kad instance");
         System.out.println(node2);
-        node1.shutdown(true);
+        node1.shutdown();
 
         System.out.println("\n\n\nReloading Kad instance from file");
-        MNode nodeR2 = host.loadFromFile("JoshuaK");
+        MNode nodeR2 = host.createNode(node1.getName(), node1.getNodeId()); 
         System.out.println(nodeR2);
+
+        /* Trying to get a content stored on the restored node */
+        MContentKey gp = new MContentKey(c2);
+        MContent content = nodeR2.get(gp);
+        System.out.println("Content received: " + content);
 	}
 
 }

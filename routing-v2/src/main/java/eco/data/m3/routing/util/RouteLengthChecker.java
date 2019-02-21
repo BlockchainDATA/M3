@@ -1,9 +1,9 @@
 package eco.data.m3.routing.util;
 
-import eco.data.m3.net.core.MId;
-
 import java.util.Collection;
 import java.util.HashMap;
+
+import eco.data.m3.net.core.MId;
 
 /**
  * Class that helps compute the route length taken to complete an operation.
@@ -60,7 +60,6 @@ public class RouteLengthChecker {
         {
             this.maxRouteLength = inputSetRL;
         }
-
         /* Add the nodes to our set */
         for (MId n : inputSet)
         {
@@ -70,6 +69,7 @@ public class RouteLengthChecker {
                 this.nodes.put(n, inputSetRL);
             }
         }
+
     }
 
     /**

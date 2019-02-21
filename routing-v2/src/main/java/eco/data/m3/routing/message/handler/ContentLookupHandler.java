@@ -1,15 +1,15 @@
 package eco.data.m3.routing.message.handler;
 
-import eco.data.m3.net.message.Message;
-import eco.data.m3.net.message.MessageHandler;
-import eco.data.m3.net.server.Server;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import data.eco.net.p2p.channel.PeerLink;
+import data.eco.net.p2p.message.Message;
+import data.eco.net.p2p.message.MessageHandler;
 import eco.data.m3.routing.MNode;
 import eco.data.m3.routing.message.ContentLookupMessage;
-import eco.data.m3.routing.message.ContentMessage;
+import eco.data.m3.routing.message.ContentLookupReplyMessage;
 import eco.data.m3.routing.message.NodeLookupMessage;
-
-import java.io.IOException;
-import java.util.NoSuchElementException;
 
 /**
  * Responds to a ContentLookupMessage by sending a ContentMessage containing the requested content;
@@ -19,37 +19,26 @@ import java.util.NoSuchElementException;
  *
  */
 public class ContentLookupHandler extends MessageHandler{
-
-    private final MNode localNode;
-
-    private static int counter = 0;
-
-    public ContentLookupHandler(Server server)
-    {
-    	super(server);
-        this.localNode = (MNode) server.getData();
-    }
+	
+    private static final Logger logger =
+            LoggerFactory.getLogger(ContentLookupHandler.class.getName());
 
 	@Override
-	public void receive(Message incoming, int conversationId) throws Throwable {
-
+	public void handle(PeerLink link, Message incoming) throws Throwable {
         ContentLookupMessage msg = (ContentLookupMessage) incoming;
-        this.localNode.getRoutingTable().insert(msg.getOrigin());
+        MNode localNode = (MNode) link.getPeerNode();
+        localNode.getRoutingTable().insert(link.getRemoteMId());
 
         /* Check if we can have this data */
         if (localNode.getDHT().contains(msg.getParam()))
         {
-            try
-            {
-                System.out.println("Found Data (" + ContentLookupHandler.counter++ + "), Reply:" + msg.getOrigin());
-                /* Return a ContentMessage with the required data */
-                ContentMessage cMsg = new ContentMessage(localNode.getNodeId(), localNode.getDHT().get(msg.getParam()));
-                localNode.getServer().reply(msg.getOrigin(), cMsg, conversationId);
-            }
-            catch (NoSuchElementException ex)
-            {
-                /* @todo Not sure why this exception is thrown here, checkup the system when tests are writtem*/
-            }
+            logger.debug("Found Data");
+            
+            /* Return a ContentMessage with the required data */
+            ContentLookupReplyMessage cMsg = new ContentLookupReplyMessage(true);
+            cMsg.setDestConvId(incoming.getSrcConvId());
+            link.sendMessage(cMsg, null);
+
         }
         else
         {
@@ -57,13 +46,14 @@ public class ContentLookupHandler extends MessageHandler{
              * Return a the K closest nodes to this content identifier
              * We create a NodeLookupReceiver and let this receiver handle this operation
              */
-            NodeLookupMessage lkpMsg = new NodeLookupMessage(msg.getOrigin(), msg.getParam().getKey());
-            new NodeLookupHandler(localNode.getServer()).receive(lkpMsg, conversationId);
-        }		
+            NodeLookupMessage lkpMsg = new NodeLookupMessage(msg.getParam().getKey());
+            new NodeLookupHandler().handle(link, lkpMsg);
+        }
+        
 	}
 
 	@Override
-	public void timeout(int conversationId) throws IOException {
+	public void timeout(PeerLink link, Message msg) {
 		
 	}
 

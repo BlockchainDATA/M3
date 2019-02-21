@@ -2,12 +2,11 @@ package eco.data.m3.routing.mnode;
 
 import org.junit.Test;
 
+import eco.data.m3.content.MContentKey;
+import eco.data.m3.content.impl.MTextContent;
 import eco.data.m3.net.core.MId;
 import eco.data.m3.routing.MHost;
 import eco.data.m3.routing.MNode;
-import eco.data.m3.routing.core.GetParameter;
-import eco.data.m3.routing.core.MContent;
-import eco.data.m3.routing.core.StorageEntry;
 
 public class MNodeContentUpdatingTest {
 
@@ -22,19 +21,19 @@ public class MNodeContentUpdatingTest {
         /**
          * Lets create the content and share it
          */
-        MContent c = new MContent(node2.getNodeId(), "Some Data");
+		MTextContent c = new MTextContent(node2.getNodeId(), new MId(), "Some Data");
         node2.putContent(c);
 
         /**
          * Lets retrieve the content
          */
         System.out.println("Retrieving Content");
-        GetParameter gp = new GetParameter(c.getKey(), MContent.TYPE);
+        MContentKey gp = new MContentKey(c);
         
         System.out.println("Get Parameter: " + gp);
-        StorageEntry conte = node2.get(gp);
-        System.out.println("Content Found: " + MContent.fromSerializedForm(conte.getContent()));
-        System.out.println("Content Metadata: " + conte.getContentMetadata());
+        MTextContent conte = (MTextContent) node2.get(gp);
+        System.out.println("Content Found: " + conte);
+        System.out.println("Content Metadata: " + conte.getMeta());
 
         /* Lets update the content and put it again */
         c.setData(new String("Some New Data").getBytes());
@@ -42,9 +41,9 @@ public class MNodeContentUpdatingTest {
 
         /* Lets retrieve the content */
         System.out.println("Retrieving Content Again");
-        conte = node2.get(gp);
-        System.out.println("Content Found: " + MContent.fromSerializedForm(conte.getContent()));
-        System.out.println("Content Metadata: " + conte.getContentMetadata());
+        conte = (MTextContent) node2.get(gp);
+        System.out.println("Content Found: " + conte);
+        System.out.println("Content Metadata: " + conte.getMeta());
 	}
 
 }

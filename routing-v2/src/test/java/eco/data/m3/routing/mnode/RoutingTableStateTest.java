@@ -4,10 +4,10 @@ import java.io.IOException;
 
 import org.junit.Test;
 
+import eco.data.m3.content.impl.MTextContent;
 import eco.data.m3.net.core.MId;
 import eco.data.m3.routing.MHost;
 import eco.data.m3.routing.MNode;
-import eco.data.m3.routing.core.MContent;
 
 public class RoutingTableStateTest {
     
@@ -40,12 +40,12 @@ public class RoutingTableStateTest {
 	        }
     	}
 
-        public MContent putContent(String content, MNode owner) throws Throwable
+        public MTextContent putContent(String content, MNode owner) throws Throwable
         {
-        	MContent c = null;
+        	MTextContent c = null;
             try
             {
-                c = new MContent(owner.getNodeId(), "Some Data");
+                c = new MTextContent(owner.getNodeId(), new MId(), "Some Data");
                 owner.putContent(c);
                 return c;
             }
@@ -61,7 +61,7 @@ public class RoutingTableStateTest {
         {
             try
             {
-            	host.shutdownNode(kad, false);
+            	host.shutdownNode(kad);
             }
             catch (IOException ex)
             {

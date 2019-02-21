@@ -1,11 +1,11 @@
 package eco.data.m3.routing.message;
 
-import eco.data.m3.net.core.MId;
-import eco.data.m3.net.message.Message;
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+
+import data.eco.net.p2p.message.Message;
+import eco.data.m3.net.core.MId;
 
 /**
  * A message sent to other nodes requesting the Closest nodes to a key sent in this message.
@@ -17,8 +17,7 @@ public class NodeLookupMessage extends Message{
 	
 	private MId lookupId;
 	
-	public NodeLookupMessage(MId origin, MId lookup) {
-		super(origin);
+	public NodeLookupMessage(MId lookup) {
 		this.lookupId = lookup;
 	}
 	

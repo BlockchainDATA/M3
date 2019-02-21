@@ -1,7 +1,5 @@
 package eco.data.m3.routing.mnode;
 
-import java.io.IOException;
-
 import org.junit.Test;
 
 import eco.data.m3.net.core.MId;
@@ -12,7 +10,7 @@ import eco.data.m3.routing.algorithm.kademlia.KademliaRoutingTable;
 public class MNodeSendTest {
 
 	@Test
-	public void test() throws IOException {
+	public void test() throws Exception {
 		MHost host = new MHost();
 		
 		MNode node1 = host.createNode("JoshuaK", new MId("ASF45678947584567463"));

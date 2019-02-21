@@ -1,83 +1,82 @@
 package eco.data.m3.routing.operation;
 
-import eco.data.m3.net.core.MId;
-import eco.data.m3.net.message.Message;
-import eco.data.m3.routing.MNode;
-import eco.data.m3.routing.core.StorageEntryMetadata;
-import eco.data.m3.routing.exception.ContentNotFoundException;
-import eco.data.m3.routing.message.StoreContentMessage;
-
 import java.util.List;
 
-public class ContentRefreshOperation implements IOperation{
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-    private final MNode localNode;
+import eco.data.m3.content.MContent;
+import eco.data.m3.content.MContentKey;
+import eco.data.m3.content.MContentMeta;
+import eco.data.m3.net.core.MId;
+import eco.data.m3.routing.MNode;
 
-    public ContentRefreshOperation(MNode localNode)
-    {
-        this.localNode = localNode;
-    }
+public class ContentRefreshOperation implements IOperation {
 
-    /**
-     * For each content stored on this DHT, distribute it to the K closest nodes
- Also delete the content if this node is no longer one of the K closest nodes
+	private static final Logger logger = LoggerFactory.getLogger(ContentRefreshOperation.class.getName());
 
- We assume that our JKademliaRoutingTable is updated, and we can get the K closest nodes from that table
-     * @throws Throwable 
-     */
-    @Override
-    public void execute() throws Throwable
-    {
-        /* Get a list of all storage entries for content */
-        List<StorageEntryMetadata> entries = localNode.getDHT().getStorageEntries();
+	private final MNode localNode;
 
-        /* If a content was last republished before this time, then we need to republish it */
-        final long minRepublishTime = (System.currentTimeMillis() / 1000L) - localNode.getCurrentConfiguration().restoreInterval();
+	public ContentRefreshOperation(MNode localNode) {
+		this.localNode = localNode;
+	}
 
-        /* For each storage entry, distribute it */
-        for (StorageEntryMetadata e : entries)
-        {
-            /* Check last update time of this entry and only distribute it if it has been last updated > 1 hour ago */
-            if (e.lastRepublished() > minRepublishTime)
-            {
-                continue;
-            }
+	/**
+	 * For each content stored on this DHT, distribute it to the K closest nodes
+	 * Also delete the content if this node is no longer one of the K closest nodes
+	 * 
+	 * We assume that our JKademliaRoutingTable is updated, and we can get the K
+	 * closest nodes from that table
+	 * 
+	 * @throws Throwable
+	 */
+	@Override
+	public void execute() throws Throwable {
+		/* Get a list of all storage entries for content */
+		List<MContentMeta> entries = localNode.getDHT().getContents();
 
-            /* Set that this content is now republished */
-            e.updateLastRepublished();
+		/*
+		 * If a content was last republished before this time, then we need to republish
+		 * it
+		 */
+		final long minRepublishTime = (System.currentTimeMillis())
+				- localNode.getCurrentConfiguration().restoreInterval();
 
-            /* Get the K closest nodes to this entries */
-            List<MId> closestNodes = this.localNode.getRoutingTable().findClosest(e.getKey(), localNode.getCurrentConfiguration().k());
+		/* For each storage entry, distribute it */
+		for (MContentMeta e : entries) {
+			/*
+			 * Check last update time of this entry and only distribute it if it has been
+			 * last updated > 1 hour ago
+			 */
+			if (e.getLastRepublished() > minRepublishTime) {
+				continue;
+			}
 
-            /* Create the message */
-            Message msg = new StoreContentMessage(this.localNode.getNodeId(), localNode.getDHT().get(e));
+			/* Set that this content is now republished */
+			e.setLastRepublished(System.currentTimeMillis());
+			this.localNode.getDHT().put(e);
 
-            /*Store the message on all of the K-Nodes*/
-            for (MId n : closestNodes)
-            {
-                /*We don't need to again store the content locally, it's already here*/
-                if (!n.equals(this.localNode.getNodeId()))
-                {
-                    /* Send a contentstore operation to the K-Closest nodes */
-                	localNode.getServer().sendMessage(n, msg, null);
-                }
-            }
+			/* Get the K closest nodes to this entries */
+			List<MId> closestNodes = this.localNode.getRoutingTable().findClosest(e.getKey(),
+					localNode.getCurrentConfiguration().k());
+			
+			try {
+				MContent content = localNode.getDHT().getContent(new MContentKey(e));
+				
+				StoreToNodesOperation sop = new StoreToNodesOperation(localNode, content, closestNodes);
+				sop.execute();
+			}catch (Exception e1) {
+				e1.printStackTrace();
+			}
 
-            /* Delete any content on this node that this node is not one of the K-Closest nodes to */
-            try
-            {
-                if (!closestNodes.contains(this.localNode.getNodeId()))
-                {
-                	localNode.getDHT().remove(e);
-                }
-            }
-            catch (ContentNotFoundException cnfe)
-            {
-                /* It would be weird if the content is not found here */
-                System.err.println("ContentRefreshOperation: Removing content from local node, content not found... Message: " + cnfe.getMessage());
-            }
-        }
-
-    }
+			/*
+			 * Delete any content on this node that this node is not one of the K-Closest
+			 * nodes to
+			 */ 
+			if (!closestNodes.contains(this.localNode.getNodeId())) {
+				localNode.getDHT().remove(e);
+			}
+		}
+	}
 
 }

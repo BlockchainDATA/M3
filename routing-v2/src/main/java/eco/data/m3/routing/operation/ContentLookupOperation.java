@@ -1,139 +1,82 @@
 package eco.data.m3.routing.operation;
 
-import eco.data.m3.net.core.KeyComparator;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import data.eco.net.p2p.channel.PeerLink;
+import data.eco.net.p2p.message.Message;
+import data.eco.net.p2p.message.MessageHandler;
+import eco.data.m3.content.MContentKey;
 import eco.data.m3.net.core.MId;
-import eco.data.m3.net.message.Message;
-import eco.data.m3.net.message.MessageHandler;
 import eco.data.m3.routing.MNode;
-import eco.data.m3.routing.core.GetParameter;
-import eco.data.m3.routing.core.StorageEntry;
-import eco.data.m3.routing.exception.ContentNotFoundException;
-import eco.data.m3.routing.exception.UnknownMessageException;
 import eco.data.m3.routing.message.ContentLookupMessage;
-import eco.data.m3.routing.message.ContentMessage;
+import eco.data.m3.routing.message.ContentLookupReplyMessage;
 import eco.data.m3.routing.message.NodeReplyMessage;
 import eco.data.m3.routing.util.RouteLengthChecker;
 
-import java.util.*;
-
 public class ContentLookupOperation extends MessageHandler implements IOperation{
 
+    private static final Logger logger =
+        LoggerFactory.getLogger(ContentLookupOperation.class.getName());
 
-    /* Constants */
-    private static final Byte UNASKED = (byte) 0x00;
-    private static final Byte AWAITING = (byte) 0x01;
-    private static final Byte ASKED = (byte) 0x02;
-    private static final Byte FAILED = (byte) 0x03;
+    private List<MId> nodesFound = new ArrayList<>();
 
     private final MNode localNode;
-    private StorageEntry contentFound = null;
 
-    private final ContentLookupMessage lookupMessage;
-
-    private boolean isContentFound;
-    private final SortedMap<MId, Byte> nodes;
-
-    /* Tracks messages in transit and awaiting reply */
-    private final Map<Integer, MId> messagesTransiting;
-
-    /* Used to sort nodes */
-    private final Comparator comparator;
+	private final ContentLookupMessage lookupMessage;
+	
+	private LookupQueue loopupQueue;
+    
+    private int maxNodes;
 
     /* Statistical information */
-    private final RouteLengthChecker routeLengthChecker;
-
+    private final RouteLengthChecker routeLengthChecker = new RouteLengthChecker();
     
-    {
-        messagesTransiting = new HashMap<>();
-        isContentFound = false;
-        routeLengthChecker = new RouteLengthChecker();
-    }
-
     /**
      * @param server
      * @param localNode
      * @param params    The parameters to search for the content which we need to find
      * @param config
      */
-    public ContentLookupOperation(MNode localNode, GetParameter params)
+    public ContentLookupOperation(MNode localNode, MContentKey lookupKey, int maxNodes)
     {
-    	super(localNode.getServer());
-    	
         /* Construct our lookup message */
-        this.lookupMessage = new ContentLookupMessage(localNode.getNodeId(), params);
-
+        this.lookupMessage = new ContentLookupMessage(lookupKey);
         this.localNode = localNode;
+        this.maxNodes = maxNodes;
+
+		this.loopupQueue = new LookupQueue(lookupKey.getKey(), localNode.getCurrentConfiguration().k());
+    }
+
+    @Override
+    public void execute() throws Throwable
+    {    	
+		/* Set the local node as already asked */
+		loopupQueue.put(this.localNode.getNodeId(), LookupStatus.Asked);
+        
+        /* Also add the initial set of nodes to the routeLengthChecker */
+		loopupQueue.addNodes(this.localNode.getRoutingTable().getAllNodes());
 
         /**
-         * We initialize a TreeMap to store nodes.
-         * This map will be sorted by which nodes are closest to the lookupId
-         */
-        this.comparator = new KeyComparator(params.getKey());
-        this.nodes = new TreeMap(this.comparator);
-    }
-
-    /**
-     * @throws Throwable 
-     */
-    @Override
-    public synchronized void execute() throws Throwable
-    {
-        try
-        {
-            /* Set the local node as already asked */
-            nodes.put(this.localNode.getNodeId(), ASKED);
-
-            /**
-             * We add all nodes here instead of the K-Closest because there may be the case that the K-Closest are offline
-             * - The operation takes care of looking at the K-Closest.
-             */
-            List<MId> allNodes = this.localNode.getRoutingTable().getAllNodes();
-            this.addNodes(allNodes);
-            
-            /* Also add the initial set of nodes to the routeLengthChecker */
-            this.routeLengthChecker.addInitialNodes(allNodes);
-
-            /**
-             * If we haven't found the requested amount of content as yet,
-             * keey trying until config.operationTimeout() time has expired
-             */
-            int totalTimeWaited = 0;
-            int timeInterval = 10;     // We re-check every n milliseconds
-            while (totalTimeWaited < localNode.getCurrentConfiguration().operationTimeout())
-            {
-                if (!this.askNodesorFinish() && !isContentFound)
-                {
-                    wait(timeInterval);
-                    totalTimeWaited += timeInterval;
-                }
-                else
-                {
-                    break;
-                }
-            }
-        }
-        catch (InterruptedException e)
-        {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * Add nodes from this list to the set of nodes to lookup
-     *
-     * @param list The list from which to add nodes
-     */
-    public void addNodes(List<MId> list)
-    {
-        for (MId o : list)
-        {
-            /* If this node is not in the list, add the node */
-            if (!nodes.containsKey(o))
-            {
-                nodes.put(o, UNASKED);
-            }
-        }
-    }
+		 * If we haven't found the requested amount of content as yet, keey trying until
+		 * config.operationTimeout() time has expired
+		 */
+		int totalTimeWaited = 0;
+		int timeInterval = 10; // We re-check every n milliseconds
+		while (totalTimeWaited < localNode.getCurrentConfiguration().operationTimeout()) {
+			if (this.askNodesorFinish() || isLookupDone()) {
+				break;
+			} else {
+				synchronized (this) {
+					wait(timeInterval);
+					totalTimeWaited += timeInterval;
+				}
+			}
+		}
+	}
 
     /**
      * Asks some of the K closest nodes seen but not yet queried.
@@ -147,128 +90,90 @@ public class ContentLookupOperation extends MessageHandler implements IOperation
      * @return <code>true</code> if finished OR <code>false</code> otherwise
      * @throws Throwable 
      */
-    private boolean askNodesorFinish() throws Throwable
+    private boolean askNodesorFinish()
     {
+		int awaitNodeSize = loopupQueue.getAwatingNodes().size();
+		
         /* If >= CONCURRENCY nodes are in transit, don't do anything */
-        if (localNode.getCurrentConfiguration().maxConcurrentMessagesTransiting() <= this.messagesTransiting.size())
+        if (localNode.getCurrentConfiguration().maxConcurrentMessagesTransiting() <= awaitNodeSize)
         {
             return false;
         }
 
         /* Get unqueried nodes among the K closest seen that have not FAILED */
-        List<MId> unasked = this.closestNodesNotFailed(UNASKED);
+        List<MId> unasked = this.loopupQueue.closestNodesNotFailed(LookupStatus.UnAsked);
 
-        if (unasked.isEmpty() && this.messagesTransiting.isEmpty())
+        if (unasked.isEmpty() && awaitNodeSize==0)
         {
             /* We have no unasked nodes nor any messages in transit, we're finished! */
             return true;
         }
 
-        /* Sort nodes according to criteria */
-        Collections.sort(unasked, this.comparator);
 
         /**
          * Send messages to nodes in the list;
          * making sure than no more than CONCURRENCY messsages are in transit
          */
-        for (int i = 0; (this.messagesTransiting.size() < localNode.getCurrentConfiguration().maxConcurrentMessagesTransiting()) && (i < unasked.size()); i++)
+        for (int i = 0; (awaitNodeSize < localNode.getCurrentConfiguration().maxConcurrentMessagesTransiting()) && (i < unasked.size()); i++)
         {
         	MId n = (MId) unasked.get(i);
 
             try{
-                int comm = server.sendMessage(n, lookupMessage, this);
-
-                this.nodes.put(n, AWAITING);
-                this.messagesTransiting.put(comm, n);
+            	PeerLink link = localNode.getNetService().getPeerLink(n);
+        		link.sendMessage(lookupMessage, this);
+        		loopupQueue.put(n, LookupStatus.Awating);
             }catch(Exception e){
-
                 /* Mark this node as failed and inform the routing table that it's unresponsive */
-                this.nodes.put(n, FAILED);
-                this.localNode.getRoutingTable().setUnresponsiveContact(n);
+				loopupQueue.put(n, LookupStatus.Failed);
+                localNode.getRoutingTable().setUnresponsiveContact(n);
             }
         }
+
 
         /* We're not finished as yet, return false */
         return false;
     }
 
-    /**
-     * Find The K closest nodes to the target lookupId given that have not FAILED.
-     * From those K, get those that have the specified status
-     *
-     * @param status The status of the nodes to return
-     *
-     * @return A List of the closest nodes
-     */
-    private List<MId> closestNodesNotFailed(Byte status)
-    {
-        List<MId> closestNodes = new ArrayList<>(localNode.getCurrentConfiguration().k());
-        int remainingSpaces = localNode.getCurrentConfiguration().k();
-
-        for (Map.Entry e : this.nodes.entrySet())
-        {
-            if (!FAILED.equals(e.getValue()))
-            {
-                if (status.equals(e.getValue()))
-                {
-                    /* We got one with the required status, now add it */
-                    closestNodes.add((MId) e.getKey());
-                }
-
-                if (--remainingSpaces == 0)
-                {
-                    break;
-                }
-            }
-        }
-
-        return closestNodes;
+    private boolean isLookupDone() {
+    	return this.maxNodes<=nodesFound.size();
     }
 
-    @Override
-    public synchronized void receive(Message incoming, int comm) throws Throwable
-    {
-        if (this.isContentFound)
-        {
+	@Override
+	public void handle(PeerLink link, Message incoming) throws Throwable {
+        if (isLookupDone()){
             return;
         }
 
-        if (incoming instanceof ContentMessage)
-        {
-            /* The reply received is a content message with the required content, take it in */
-            ContentMessage msg = (ContentMessage) incoming;
+		synchronized (this) {
 
             /* Add the origin node to our routing table */
-            this.localNode.getRoutingTable().insert(msg.getOrigin());
-
-            /* Get the Content and check if it satisfies the required parameters */
-            StorageEntry content = msg.getContent();
-            this.contentFound = content;
-            this.isContentFound = true;
-        }
-        else
-        {
-            /* The reply received is a NodeReplyMessage with nodes closest to the content needed */
-            NodeReplyMessage msg = (NodeReplyMessage) incoming;
-
-            /* Add the origin node to our routing table */
-            MId origin = msg.getOrigin();
-            this.localNode.getRoutingTable().insert(origin);
+            this.localNode.getRoutingTable().insert(link.getRemoteMId());
 
             /* Set that we've completed ASKing the origin node */
-            this.nodes.put(origin, ASKED);
+			this.loopupQueue.put(link.getRemoteMId(), LookupStatus.Asked);
 
-            /* Remove this msg from messagesTransiting since it's completed now */
-            this.messagesTransiting.remove(comm);
-            
-            /* Add the received nodes to the routeLengthChecker */
-            this.routeLengthChecker.addNodes(msg.getNodes(), origin);
+			if (incoming instanceof ContentLookupReplyMessage) {
+//				ContentLookupReplyMessage msg = (ContentLookupReplyMessage) incoming;
 
-            /* Add the received nodes to our nodes list to query */
-            this.addNodes(msg.getNodes());
-            this.askNodesorFinish();
-        }
-    }
+				/* Add the origin node to our routing table */
+				this.nodesFound.add(link.getRemoteMId());
+			} else {
+				/*
+				 * The reply received is a NodeReplyMessage with nodes closest to the content
+				 * needed
+				 */
+				NodeReplyMessage msg = (NodeReplyMessage) incoming;
+
+				/* Add the received nodes to the routeLengthChecker */
+				this.routeLengthChecker.addNodes(msg.getNodes(), link.getRemoteMId());
+
+				/* Add the received nodes to our nodes list to query */
+				this.loopupQueue.addNodes(msg.getNodes());
+			}
+			notify();
+		}
+	}
+
 
     /**
      * A node does not respond or a packet was lost, we set this node as failed
@@ -276,49 +181,20 @@ public class ContentLookupOperation extends MessageHandler implements IOperation
      * @param comm
      * @throws Throwable 
      */
-    @Override
-    public synchronized void timeout(int comm) throws Throwable
-    {
+	@Override
+	public void timeout(PeerLink link, Message msg) {
+
         /* Get the node associated with this communication */
-    	MId n = this.messagesTransiting.get(new Integer(comm));
+    	MId n = link.getRemoteMId();
 
-        if (n == null)
-        {
-            throw new UnknownMessageException("Unknown comm: " + comm);
-        }
-
+		this.localNode.getRoutingTable().setUnresponsiveContact(n);
+		
         /* Mark this node as failed and inform the routing table that it's unresponsive */
-        this.nodes.put(n, FAILED);
-        this.localNode.getRoutingTable().setUnresponsiveContact(n);
-        this.messagesTransiting.remove(comm);
-
-        this.askNodesorFinish();
-    }
-    
-    /**
-     * @return Whether the content was found or not.
-     */
-    public boolean isContentFound()
-    {
-        return this.isContentFound;
-    }
-
-    /**
-     * @return The list of all content found during the lookup operation
-     *
-     * @throws kademlia.exceptions.ContentNotFoundException
-     */
-    public StorageEntry getContentFound() throws ContentNotFoundException
-    {
-        if (this.isContentFound)
-        {
-            return this.contentFound;
-        }
-        else
-        {
-            throw new ContentNotFoundException("No Value was found for the given key.");
-        }
-    }
+        synchronized (this) {
+			this.loopupQueue.put(n, LookupStatus.Failed);
+			notify();
+		}
+	}
 
     /**
      * @return How many hops it took in order to get to the content.
@@ -327,4 +203,8 @@ public class ContentLookupOperation extends MessageHandler implements IOperation
     {
         return this.routeLengthChecker.getRouteLength();
     }
+
+    public List<MId> getNodesFound() {
+		return nodesFound;
+	}
 }

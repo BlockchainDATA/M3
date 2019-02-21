@@ -1,10 +1,9 @@
 package eco.data.m3.routing.message;
 
-import eco.data.m3.net.core.MId;
-import eco.data.m3.net.message.Message;
-
 import java.io.DataInputStream;
 import java.io.IOException;
+
+import data.eco.net.p2p.message.Message;
 
 /**
  * A message used to acknowledge a request from a node; can be used in many situations.
@@ -14,9 +13,8 @@ import java.io.IOException;
  *
  */
 public class AcknowledgeMessage extends Message{
-
-	public AcknowledgeMessage(MId origin) {
-		super(origin);
+	
+	public AcknowledgeMessage() {
 	}
 	
 	public AcknowledgeMessage(DataInputStream in) throws IOException {

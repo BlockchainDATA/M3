@@ -1,13 +1,13 @@
 package eco.data.m3.routing.algorithm.kademlia;
 
-import eco.data.m3.net.core.MId;
-import eco.data.m3.routing.core.Contact;
-import eco.data.m3.routing.core.MConfiguration;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.TreeSet;
+
+import eco.data.m3.content.data.Contact;
+import eco.data.m3.net.core.MId;
+import eco.data.m3.routing.MConfiguration;
 
 public class Bucket {
 	
@@ -41,8 +41,8 @@ public class Bucket {
              * We need to remove and re-add the contact to get the Sorted Set to update sort order
              */
             Contact tmp = this.removeFromContacts(c.getNode());
-            tmp.setSeenNow();
-            tmp.resetStaleCount();
+            tmp.setLastSeen(System.currentTimeMillis());
+            tmp.setStaleCount(0);
             this.contacts.add(tmp);
         }
         else
@@ -54,14 +54,14 @@ public class Bucket {
                 Contact stalest = null;
                 for (Contact tmp : this.contacts)
                 {
-                    if (tmp.staleCount() >= this.config.stale())
+                    if (tmp.getStaleCount() >= this.config.stale())
                     {
                         /* Contact is stale */
                         if (stalest == null)
                         {
                             stalest = tmp;
                         }
-                        else if (tmp.staleCount() > stalest.staleCount())
+                        else if (tmp.getStaleCount() > stalest.getStaleCount())
                         {
                             stalest = tmp;
                         }
@@ -122,7 +122,7 @@ public class Bucket {
         else
         {
             /* There is no replacement, just increment the contact's stale count */
-            this.getFromContacts(c.getNode()).incrementStaleCount();
+            this.getFromContacts(c.getNode()).increaseStaleCount();
         }
 
         return true;
@@ -204,7 +204,7 @@ public class Bucket {
              * We need to remove and re-add the contact to get the Sorted Set to update sort order
              */
             Contact tmp = this.removeFromReplacementCache(c.getNode());
-            tmp.setSeenNow();
+            tmp.setLastSeen(System.currentTimeMillis());
             this.replacementCache.add(tmp);
         }
         else if (this.replacementCache.size() > this.config.k())
@@ -245,7 +245,7 @@ public class Bucket {
             sb.append("Node: ");
             sb.append(n.getNode().toString());
             sb.append(" (stale: ");
-            sb.append(n.staleCount());
+            sb.append(n.getStaleCount());
             sb.append(")");
             sb.append("\n");
         }
