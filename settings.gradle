@@ -4,4 +4,5 @@ include 'EC'
 include 'cli'
 include 'android'
 include 'routing-web'
+include 'demo-android:demo-netperf'
 
